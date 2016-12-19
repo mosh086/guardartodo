@@ -1,0 +1,26 @@
+.navbar-guardartodo {
+    background-color: white;
+}
+
+.navbar-guardartodo {
+    .navbar-header, .navbar-nav {
+        a {
+            vertical-align: middle;
+            line-height: 45px;
+        }
+        height: 80px;
+    }
+
+    .navbar-brand {
+        height: inherit;
+    }
+}
+
+.navbar-header {
+    a {
+        padding: 5px;
+        img {
+            width: 115px
+        }
+    }
+}

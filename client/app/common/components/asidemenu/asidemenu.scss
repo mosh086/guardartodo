@@ -1,0 +1,65 @@
+.fixed-sidebar aside#leftmenu  {
+    position: fixed;
+    overflow-x: hidden;
+    overflow-y: hidden;
+    width: 200px;
+    height: 100%;
+    background-color: rgba(185, 185, 185, 0.65);
+}
+
+
+.profile-picture {
+    padding: 20px 20px;
+    text-align: center;
+}
+
+.font-uppercase {
+    text-transform: uppercase;
+}
+.font-extra-bold {
+    font-weight: 700;
+}
+
+#leftmenu {
+    background: #f7f9fa;
+}
+
+#leftmenu li.active a, #leftmenu li:hover a {
+    color: #34495e;
+}
+
+#leftmenu li:first-child {
+    border-top: 1px solid #e4e5e7;
+}
+
+#leftmenu li a {
+    color: #6a6c6f;
+    text-transform: uppercase;
+    font-weight: 700;
+    padding: 15px 20px;
+}
+a:hover, a:focus {
+    color: #34495e;
+    text-decoration: none;
+}
+
+#leftmenu li.active {
+    background: #fff;
+}
+
+#leftmenu li {
+    border-bottom: 1px solid #e4e5e7;
+}
+
+.m-b {
+    margin-bottom: 15px;
+}
+
+.img-circle {
+    border-radius: 50%;
+    width: 150px;
+}
+
+img {
+    vertical-align: middle;
+}

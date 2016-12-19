@@ -1,0 +1,27 @@
+[
+    {
+        "storagelokertype_id":"1",
+        "name":"Mini bodega",
+        "description":"",
+        "price":638.00,
+        "size":"3mts²"
+    },{
+        "storagelokertype_id":"2",
+        "name":"Chica",
+        "description":"",
+        "price":1624.00,
+        "size":"7mts²"
+    },{
+        "storagelokertype_id":"3",
+        "name":"Mediana",
+        "description":"",
+        "price":2552.00,
+        "size":"11mts²"
+    },{
+        "storagelokertype_id":"4",
+        "name":"Grande",
+        "description":"",
+        "price":3712.00,
+        "size":"16mts²"
+    }
+]
