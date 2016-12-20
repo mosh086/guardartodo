@@ -1,25 +1,20 @@
 class DashboardController {
-  constructor() {
+  constructor(DashboardService) {
     this.name = 'dashboard';
-    this.posts = [];
   }
 
   $onInit() {
-    console.log("initializing Posts...");
-    this.posts = [
-       { id: 1, title: 'Getting started with REST', content: 'Content of Getting started with REST', createdAt: '9/22/16 4:15 PM' },
-       { id: 2, title: 'Getting started with AngularJS 1.x', content: 'Content of Getting started with AngularJS 1.x', createdAt: '9/22/16 4:15 PM' },
-       { id: 3, title: 'Getting started with Angular2', content: 'Content of Getting started with Angular2', createdAt: '9/22/16 4:15 PM' },
-    ]
+    console.log("initializing Dashboard...");
   }
 
   $onDestroy() {
-    console.log("destroying Posts...");
+    console.log("destroying Dashboard...");
   }
 
   search() {
-    console.log("query posts by keyword" + this.q);
+    console.log("query dashboard by keyword" + this.q);
   }
 }
 
+DashboardController.$inject = ['DashboardService'];
 export default DashboardController;

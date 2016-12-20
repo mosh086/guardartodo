@@ -1,13 +1,31 @@
-import data from './storageloker.data.json';
-
 class Storageloker {
+  constructor(AppConstants, $http, $q) {
+    'ngInject';
 
-  constructor() {
+    this._AppConstants = AppConstants;
+    this._$http = $http;
+    this._$q = $q;
   }
 
-  getAll(){
-    return data;
+  query(keyword) {
+    let deferred = this._$q.defer();
+    // Create the $http object for this request
+    let request = {
+      url: this._AppConstants.api + '/storagelokers',
+      method: 'GET',
+      params: !!keyword ? { 'q': keyword } : null
+    };
+
+    this._$http(request)
+      .then(
+        (res) => deferred.resolve(res.data),
+        (err) => deferred.reject(err)
+      );
+
+    return deferred.promise;
   }
+
 }
 
+Storageloker.$inject = ['AppConstants', '$http', '$q'];
 export default Storageloker;

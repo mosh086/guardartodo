@@ -1,25 +1,22 @@
 class StoragelokerController {
-  constructor() {
+  constructor(StoragelokerService) {
     this.name = 'storageloker';
-    this.posts = [];
+    this.storageloker = [];
+    this._Storageloker = StoragelokerService;
   }
 
   $onInit() {
-    console.log("initializing Posts...");
-    this.posts = [
-       { id: 1, title: 'Getting started with REST', content: 'Content of Getting started with REST', createdAt: '9/22/16 4:15 PM' },
-       { id: 2, title: 'Getting started with AngularJS 1.x', content: 'Content of Getting started with AngularJS 1.x', createdAt: '9/22/16 4:15 PM' },
-       { id: 3, title: 'Getting started with Angular2', content: 'Content of Getting started with Angular2', createdAt: '9/22/16 4:15 PM' },
-    ]
+    console.log("initializing Storageloker...");
   }
 
   $onDestroy() {
-    console.log("destroying Posts...");
+    console.log("destroying Storageloker...");
   }
 
   search() {
-    console.log("query posts by keyword" + this.q);
+    console.log("query storageloker by keyword" + this.q);
   }
 }
 
+StoragelokerController.$inject = ['StoragelokerService'];
 export default StoragelokerController;

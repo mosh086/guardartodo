@@ -1,25 +1,20 @@
 class SignupController {
-  constructor() {
+  constructor(SignupService) {
     this.name = 'signup';
-    this.posts = [];
   }
 
   $onInit() {
-    console.log("initializing Posts...");
-    this.posts = [
-       { id: 1, title: 'Getting started with REST', content: 'Content of Getting started with REST', createdAt: '9/22/16 4:15 PM' },
-       { id: 2, title: 'Getting started with AngularJS 1.x', content: 'Content of Getting started with AngularJS 1.x', createdAt: '9/22/16 4:15 PM' },
-       { id: 3, title: 'Getting started with Angular2', content: 'Content of Getting started with Angular2', createdAt: '9/22/16 4:15 PM' },
-    ]
+    console.log("initializing Signup...");
   }
 
   $onDestroy() {
-    console.log("destroying Posts...");
+    console.log("destroying Signup...");
   }
 
   search() {
-    console.log("query posts by keyword" + this.q);
+    console.log("query signup by keyword" + this.q);
   }
 }
 
+SignupController.$inject = ['SignupService'];
 export default SignupController;

@@ -4,6 +4,20 @@ var HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
+  entry: [
+    'webpack-hot-middleware/client?reload=true',
+    path.join(__dirname, 'client/app/app.js')
+  ],
+  output: {
+    filename: '[name].bundle.js',
+    publicPath: '/',
+    path: path.join(__dirname, '/dist/'),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, PATCH, OPTIONS",
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type, Authorization"
+    }
+  },
   entry: {},
   module: {
     loaders: [
@@ -30,6 +44,12 @@ module.exports = {
       jquery: 'jquery',
       "Tether": 'tether',
       "window.Tether": 'tether'
+    }),
+    new webpack.optimize.OccurenceOrderPlugin(),
+    new webpack.HotModuleReplacementPlugin(),
+    new webpack.NoErrorsPlugin(),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify('development')
     }),
     // Automatically move all modules defined outside of application directory to vendor bundle.
     // If you are using more complicated project structure, consider to specify common chunks manually.

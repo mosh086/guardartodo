@@ -1,25 +1,32 @@
 class UserController {
-  constructor() {
+  constructor(UserService) {
     this.name = 'user';
-    this.posts = [];
+    this.user = [];
+    this._User = UserService;
   }
 
   $onInit() {
-    console.log("initializing Posts...");
-    this.posts = [
-       { id: 1, title: 'Getting started with REST', content: 'Content of Getting started with REST', createdAt: '9/22/16 4:15 PM' },
-       { id: 2, title: 'Getting started with AngularJS 1.x', content: 'Content of Getting started with AngularJS 1.x', createdAt: '9/22/16 4:15 PM' },
-       { id: 3, title: 'Getting started with Angular2', content: 'Content of Getting started with Angular2', createdAt: '9/22/16 4:15 PM' },
-    ]
+    console.log("initializing Users...");
+    this.searchUsers();
   }
 
   $onDestroy() {
-    console.log("destroying Posts...");
+    console.log("destroying Users...");
   }
 
   search() {
-    console.log("query posts by keyword" + this.q);
+    console.log("query user by keyword" + this.q);
+  }
+
+  searchUsers() {
+    let self = this;
+    this._User
+      .query(this.q)
+      .then(
+      (res) => self.user = res
+      );
   }
 }
 
+UserController.$inject = ['UserService'];
 export default UserController;

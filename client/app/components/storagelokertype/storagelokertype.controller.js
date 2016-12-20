@@ -6,16 +6,25 @@ class StoragelokertypeController {
   }
 
   $onInit() {
-    console.log("initializing Posts...");
-    this.storagelokertype = this._Storagelokertype.getAll();
+    console.log("initializing Storagelokertype...");
+    this.searchStoragelokertypes();
   }
 
   $onDestroy() {
-    console.log("destroying Posts...");
+    console.log("destroying Storagelokertype...");
   }
 
   search() {
-    console.log("query posts by keyword" + this.q);
+    console.log("query storagelokertype by keyword" + this.q);
+  }
+
+  searchStoragelokertypes() {
+    let self = this;
+    this._Storagelokertype
+      .query(this.q)
+      .then(
+      (res) => self.storagelokertype = res
+      );
   }
 }
 
