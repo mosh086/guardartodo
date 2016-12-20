@@ -6,7 +6,8 @@ let userComponent = {
   restrict: 'E',
   bindings: {},
   template,
-  controller
+  controller,
+  controllerAs: '$ctrl'
 };
 
 export default userComponent;

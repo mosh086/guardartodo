@@ -4,7 +4,7 @@
     <div class="wrapper">
       <div class="form-group filters">
         <div class="col-md-8">
-          <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nuevo cliente</button>
+          <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nuevo tipo de bodega</button>
         </div>
         <div class="col-md-4">
           <div class="input-group">
@@ -14,7 +14,7 @@
         </div>
       </div>
       <ul>
-        <li ng-repeat="type in $ctrl.storagelokertype track by type.storagelokertype_id">
+        <li ng-repeat="type in $ctrl.storagelokertype track by type.storagelokertypeId">
           <div class="well row">
             <div class="col-md-1">
             </div>
@@ -26,11 +26,11 @@
               <p>{{type.price}}</p>
               <p>{{type.size}}</p>
             </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.storagelokertype_id)">
+            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.storagelokertypeId)">
               <span class="glyphicon glyphicon-pencil" ></span>
               <span class="glyphicon-label">Cambiar</span>
             </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.storagelokertype_id)">
+            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.storagelokertypeId)">
               <span class="glyphicon glyphicon-trash" ></span>
               <span class="glyphicon-label">Borrar</span>
             </div>

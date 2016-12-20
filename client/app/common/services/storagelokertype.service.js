@@ -25,6 +25,28 @@ class Storagelokertype {
     return deferred.promise;
   }
 
+  get(id) {
+
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("storagelokertype id is empty");
+      return deferred.promise;
+    }
+    if (!id.replace(" ", "")) {
+      deferred.reject("storagelokertype id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/storagelokertypes/' + id,
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
 }
 
 Storagelokertype.$inject = ['AppConstants', '$http', '$q'];

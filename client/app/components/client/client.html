@@ -2,6 +2,42 @@
   <div class="fixed-sidebar">
     <gt-asidemenu active="client"></gt-asidemenu>
     <div class="wrapper">
+      <div class="form-group filters">
+        <div class="col-md-8">
+          <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nuevo cliente</button>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+            <input class="form-control"  placeholder="busca por nombre">
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li ng-repeat="type in $ctrl.client track by type.clientId">
+          <div class="well row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-6">
+              <h3>{{type.fullName}}</h3>
+              <p>{{type.address}}</p>
+
+            </div>
+            <div class="col-md-3">
+              <p>Email: {{type.email}}</p>
+              <p>Celular: {{type.cellPhone}}</p>
+              <p>Telefono: {{type.phone}}</p>
+            </div>
+            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.clientId)">
+              <span class="glyphicon glyphicon-pencil" ></span>
+              <span class="glyphicon-label">Cambiar</span>
+            </div>
+            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.clientId)">
+              <span class="glyphicon glyphicon-trash" ></span>
+              <span class="glyphicon-label">Borrar</span>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
-</div>

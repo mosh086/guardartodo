@@ -1,7 +1,11 @@
+import modalTemplate from './storagelokertype.modal.html'
+import modalInstanceCtrl from './storagelokertype.modal.controller'
+
 class StoragelokertypeController {
-  constructor(StoragelokertypeService) {
+  constructor($uibModal, StoragelokertypeService) {
     this.name = 'storagelokertype';
     this.storagelokertype = [];
+    this._uibModal = $uibModal;
     this._Storagelokertype = StoragelokertypeService;
   }
 
@@ -12,6 +16,30 @@ class StoragelokertypeController {
 
   $onDestroy() {
     console.log("destroying Storagelokertype...");
+  }
+
+  openDialog(id){
+    let self = this;
+    let modalInstance = this._uibModal.open({
+      animation: true,
+      ariaLabelledBy: 'modal-title',
+      ariaDescribedBy: 'modal-body',
+      template: modalTemplate,
+      controller: modalInstanceCtrl,
+      controllerAs: '$ctrl',
+      size: 'lg',
+      resolve: {
+        storagelokertype: function () {
+          return (id)?self._Storagelokertype.get(id):undefined;
+        }
+      }
+    });
+
+    modalInstance.result.then(function (selectedItem) {
+        //$ctrl.selected = selectedItem;
+    }, function () {
+
+    });
   }
 
   search() {
@@ -28,5 +56,5 @@ class StoragelokertypeController {
   }
 }
 
-StoragelokertypeController.$inject = ['StoragelokertypeService'];
+StoragelokertypeController.$inject = ['$uibModal','StoragelokertypeService'];
 export default StoragelokertypeController;

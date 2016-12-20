@@ -25,6 +25,28 @@ class Dashboard {
     return deferred.promise;
   }
 
+  get(id) {
+
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("dashboar id is empty");
+      return deferred.promise;
+    }
+    if (!id.replace(" ", "")) {
+      deferred.reject("dashboard id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/dashboard/' + id,
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
 }
 
 Dashboard.$inject = ['AppConstants', '$http', '$q'];

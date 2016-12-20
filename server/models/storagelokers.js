@@ -7,7 +7,8 @@ var model = {};
 
 model.getAll = function(callback) {
   if (connection) {
-    var sql = 'SELECT * FROM storageloker';
+    var sql = `SELECT sl.*, slt.name, slt.size FROM guardartodo.storageloker sl
+              INNER JOIN guardartodo.storagelokertype slt ON sl.storagelokertypeid = slt.storagelokertypeid`;
     connection.query(sql, function(error, rows) {
       if(error)
         throw error;

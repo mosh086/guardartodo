@@ -3,8 +3,11 @@ var router=express.Router();
 var bodyParser  = require("body-parser");
 var aplicacion = express();
 
+
+var clients = require("./routes/clients");
 var storagelokers = require("./routes/storagelokers");
 var storagelokertypes = require("./routes/storagelokertypes");
+var users = require("./routes/users");
 
 aplicacion.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -14,8 +17,10 @@ aplicacion.use(function(req, res, next) {
 
 aplicacion.use(bodyParser.json());
 
+aplicacion.use(clients);
 aplicacion.use(storagelokers);
 aplicacion.use(storagelokertypes);
+aplicacion.use(users);
 
 aplicacion.listen(5000, function() {
 console.log("Servidor iniciado");

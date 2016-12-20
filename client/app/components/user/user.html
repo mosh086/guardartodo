@@ -2,6 +2,38 @@
   <div class="fixed-sidebar">
     <gt-asidemenu active="user"></gt-asidemenu>
     <div class="wrapper">
+      <div class="form-group filters">
+        <div class="col-md-8">
+          <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nuevo usuario</button>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+            <input class="form-control"  placeholder="busca por nombre">
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li ng-repeat="type in $ctrl.user track by type.userId">
+          <div class="well row">
+            <div class="col-md-1">
+            </div>
+            <div class="col-md-6">
+              <h3>{{type.fullName}}</h3>
+              <p>{{type.name}}</p>
+            </div>
+            <div class="col-md-3">
+            </div>
+            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.userId)">
+              <span class="glyphicon glyphicon-pencil" ></span>
+              <span class="glyphicon-label">Cambiar</span>
+            </div>
+            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.userId)">
+              <span class="glyphicon glyphicon-trash" ></span>
+              <span class="glyphicon-label">Borrar</span>
+            </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
-</div>

@@ -6,7 +6,8 @@ let clientComponent = {
   restrict: 'E',
   bindings: {},
   template,
-  controller
+  controller,
+  controllerAs: '$ctrl'
 };
 
 export default clientComponent;

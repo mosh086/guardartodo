@@ -1,6 +1,7 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import clientComponent from './client.component';
+import clientModal from './client.modal.controller';
 
 let clientModule = angular.module('app.components.client', [
   uiRouter
@@ -14,7 +15,7 @@ let clientModule = angular.module('app.components.client', [
     });
 })
 .component('client', clientComponent)
-
+.controller('clientModal',clientModal)
 .name;
 
 export default clientModule;
