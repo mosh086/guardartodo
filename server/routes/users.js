@@ -31,44 +31,28 @@ router.post('/api/users', function(request, response) {
   });
 });
 
-//Modificar un usuario
-router.put('/api/users', function(request, response) {
-    var datosUsuario = {
-      id:request.query.id,
-      nombre : request.query.nombre
-      };
-
-    model.update(datosUsuario,function(error, datos)
-    {
-      //si el usuario se ha actualizado correctamente mostramos un mensaje
-      if(datos && datos.mensaje)
-      {
-        response.status(200).json(datos);
-      }
-      else
-      {
-        response.status(500).json({"mensaje":"Error"});
-
-      }
-    });
-
+router.put('/api/users/:id', function(request, response) {
+  var id = request.params.id;
+  model.update(id, request.body, function(error, data) {
+    if(data && data.mensaje) {
+      response.status(200).json(data);
+    }
+    else {
+      response.status(500).json({"mensaje":"Error"});
+    }
+  });
 });
-//Borrar un usuario
 
-router.delete('/api/users', function(request, response) {
-    var id = request.query.id;
-    model.delete(id,function(error, datos)
-    {
-      if(datos && datos.mensaje === "Borrado")
-      {
-        response.status(200).json(datos);
-      }
-      else
-      {
-        response.status(500).json({"mensaje":"Error"});
-      }
-    });
-
+router.delete('/api/users/:id', function(request, response) {
+  var id = request.params.id;
+  model.delete(id,function(error, data) {
+    if(data && data.mensaje === "Borrado") {
+      response.status(200).json(data);
+    }
+    else {
+      response.status(500).json({"mensaje":"Error"});
+    }
+  });
 });
 
 module.exports = router;

@@ -41,46 +41,31 @@ model.insert = function(data,callback) {
   }
 }
 
-//Actualizar un usuario
-model.update = function(clientData, callback)
-{
-
-    if(connection)
-    {
-        var sql = 'UPDATE client SET firstName = ' + connection.escape(clientData.firstName)  +' WHERE clientId = ' + clientData.clientId;
-        connection.query(sql, function(error, result)
-        {
-            if(error)
-            {
-                throw error;
-            }
-            else
-            {
-                callback(null,{"mensaje":"Actualizado"});
-            }
-        });
-    }
+model.update = function(id, data, callback) {
+  console.log(JSON.stringify(data));
+  if(connection) {
+    connection.query('UPDATE client SET ? WHERE clientId = ?', [data, id], function(error, result) {
+      if(error) {
+        throw error;
+      }
+      else {
+        callback(null,{"mensaje":"Actualizado"});
+      }
+    });
+  }
 }
 
-//Eliminar un usuario por su id
-model.delete = function(id, callback)
-{
-    if(connection)
-    {
-        var sql = 'DELETE FROM client WHERE storagelokerId = ' + connection.escape(id);
-        connection.query(sql, function(error, result)
-            {
-                if(error)
-                    {
-                        throw error;
-                    }
-                else
-                    {
-                        callback(null,{"mensaje":"Borrado"});
-                    }
-            });
-    }
-
+model.delete = function(id, callback){
+  if(connection) {
+    connection.query('DELETE FROM client WHERE clientId = ?', id, function(error, result) {
+      if(error) {
+        throw error;
+      }
+      else {
+        callback(null,{"mensaje":"Borrado"});
+      }
+    });
+  }
 }
 
 module.exports = model;

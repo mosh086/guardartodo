@@ -41,46 +41,31 @@ model.insert = function(data,callback) {
   }
 }
 
-//Actualizar un usuario
-model.update = function(datosStorageloker, callback)
-{
-
-    if(connection)
-    {
-        var sql = 'UPDATE storageloker SET nombre = ' + connection.escape(datosUsuario.nombre)  +' WHERE id = ' + datosStorageloker.storagelokerId;
-        connection.query(sql, function(error, result)
-        {
-            if(error)
-            {
-                throw error;
-            }
-            else
-            {
-                callback(null,{"mensaje":"Actualizado"});
-            }
-        });
-    }
+model.update = function(id, data, callback) {
+  console.log(JSON.stringify(data));
+  if(connection) {
+    connection.query('UPDATE storageloker SET ? WHERE storagelokerId = ?', [data, id], function(error, result) {
+      if(error) {
+        throw error;
+      }
+      else {
+        callback(null,{"mensaje":"Actualizado"});
+      }
+    });
+  }
 }
 
-//Eliminar un usuario por su id
-model.delete = function(id, callback)
-{
-    if(connection)
-    {
-        var sql = 'DELETE FROM storageloker WHERE storagelokerId = ' + connection.escape(id);
-        connection.query(sql, function(error, result)
-            {
-                if(error)
-                    {
-                        throw error;
-                    }
-                else
-                    {
-                        callback(null,{"mensaje":"Borrado"});
-                    }
-            });
-    }
-
+model.delete = function(id, callback){
+  if(connection) {
+    connection.query('DELETE FROM storageloker WHERE storagelokerId = ?', id, function(error, result) {
+      if(error) {
+        throw error;
+      }
+      else {
+        callback(null,{"mensaje":"Borrado"});
+      }
+    });
+  }
 }
 
 module.exports = model;
