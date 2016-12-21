@@ -7,8 +7,7 @@ var model = {};
 
 model.getAll = function(callback) {
   if (connection) {
-    var sql = `SELECT CONCAT_WS(' ',firstName,lastName) as fullName, u.* FROM user u`;
-    connection.query(sql, function(error, rows) {
+    connection.query(`SELECT CONCAT_WS(' ',firstName,lastName) as fullName, u.* FROM user u`, function(error, rows) {
       if(error)
         throw error;
       else
@@ -19,8 +18,7 @@ model.getAll = function(callback) {
 
 model.getById = function(id,callback) {
   if (connection) {
-    var sql = 'SELECT * FROM user WHERE userId = ' + connection.escape(id);
-    connection.query(sql, function(error, row) {
+    connection.query('SELECT * FROM user WHERE userId = ?', id, function(error, row) {
       if(error)
         throw error;
       else
@@ -30,24 +28,17 @@ model.getById = function(id,callback) {
 }
 
 
-model.insert = function(userData,callback)
-{
-    if (connection)
-    {
-        connection.query('INSERT INTO user SET ?', userData, function(error, result)
-        {
-            if(error)
-            {
-
-                throw error;
-            }
-            else
-            {
-                //devolvemos el id del usuario insertado
-                callback(null, result.insertId);
-            }
-        });
-    }
+model.insert = function(data,callback) {
+  if (connection) {
+    connection.query('INSERT INTO user SET ?', data, function(error, result) {
+      if(error) {
+        throw error;
+      }
+      else {
+        callback(null, result.insertId);
+      }
+    });
+  }
 }
 
 //Actualizar un usuario

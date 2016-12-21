@@ -7,9 +7,8 @@ var model = {};
 
 model.getAll = function(callback) {
   if (connection) {
-    var sql = `SELECT sl.*, slt.name, slt.size FROM guardartodo.storageloker sl
-              INNER JOIN guardartodo.storagelokertype slt ON sl.storagelokertypeid = slt.storagelokertypeid`;
-    connection.query(sql, function(error, rows) {
+    connection.query(`SELECT sl.*, slt.name, slt.size FROM guardartodo.storageloker sl
+                      INNER JOIN guardartodo.storagelokertype slt ON sl.storagelokertypeid = slt.storagelokertypeid`, function(error, rows) {
       if(error)
         throw error;
       else
@@ -20,8 +19,7 @@ model.getAll = function(callback) {
 
 model.getById = function(id,callback) {
   if (connection) {
-    var sql = 'SELECT * FROM storageloker WHERE storagelokerId = ' + connection.escape(id);
-    connection.query(sql, function(error, row) {
+    connection.query('SELECT * FROM storageloker WHERE storagelokerId = ?', id, function(error, row) {
       if(error)
         throw error;
       else
@@ -30,25 +28,17 @@ model.getById = function(id,callback) {
   }
 }
 
-
-model.insert = function(storagelokerData,callback)
-{
-    if (connection)
-    {
-        connection.query('INSERT INTO storageloker SET ?', storagelokerData, function(error, result)
-        {
-            if(error)
-            {
-
-                throw error;
-            }
-            else
-            {
-                //devolvemos el id del usuario insertado
-                callback(null, result.insertId);
-            }
-        });
-    }
+model.insert = function(data,callback) {
+  if (connection) {
+    connection.query('INSERT INTO storageloker SET ?', data, function(error, result) {
+      if(error) {
+          throw error;
+      }
+      else {
+          callback(null, result.insertId);
+      }
+    });
+  }
 }
 
 //Actualizar un usuario

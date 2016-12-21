@@ -1,0 +1,25 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{$ctrl._title}}</h3>
+</div>
+<div class="modal-body">
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="utFirstName">Nombre</label>
+      <input type="text" class="form-control" id="utFirstName" placeholder="Nombre">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="utLastName">Apellidos</label>
+      <input type="text" class="form-control" id="utLastName" placeholder="Apellidos">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="uUsername">Username</label>
+      <input type="text" class="form-control" id="uUsername" placeholder="Username">
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">Guardar</button>
+  <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+</div>

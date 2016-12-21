@@ -1,17 +1,20 @@
 export default class InstanceCtrl {
-    constructor($uibModalInstance, $log, $filter, storagelokertype) {
-        this._uibModalInstance = $uibModalInstance;
-        this._log = $log;
-        this._storagelokertype = storagelokertype;
-    }
+  constructor($uibModalInstance, $log, $filter, storagelokertype) {
+    this._uibModalInstance = $uibModalInstance;
+    this._log = $log;
+    this._storagelokertype = storagelokertype;
 
-    ok() {
-      _uibModalInstance.close();
-    };
+    this._title = (storagelokertype)?'Editar tipo de bodega':'Nuevo tipo de bodega';
+    this._data = { storagelokertypeId:null, name:'', description: '', price: 0.00, size: '' };
+  }
 
-    cancel() {
-      _uibModalInstance.dismiss(InstanceCtrl,'cancel');
-    };
+  save() {
+    this._uibModalInstance.close(this._data);
+  };
+
+  cancel() {
+    this._uibModalInstance.dismiss(undefined, 'Cancel');
+  };
 
 }
 

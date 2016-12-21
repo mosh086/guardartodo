@@ -1,7 +1,31 @@
 <div class="modal-header">
-    <h3 class="modal-title" id="modal-title-{{$ctrl.name}}">The {{$ctrl.client.name}} modal!</h3>
-    <p>{{$ctrl.client.size}}</p>
+  <h3 class="modal-title">{{$ctrl._title}}</h3>
 </div>
-<div class="modal-body" id="modal-body-{{$ctrl.name}}">
-    Having multiple modals open at once is probably bad UX but it's technically possible.
+<div class="modal-body">
+  <div class="row ">
+    <div class="form-group col-md-6">
+      <label for="sltName">Nombre *</label>
+      <input type="text" class="form-control" id="sltName" placeholder="Nombre" ng-model="$ctrl._data.name" required>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-12">
+      <label for="sltDescription">Descripción</label>
+      <input type="text" class="form-control" id="sltDescription" placeholder="Descripción" ng-model="$ctrl._data.description">
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="sltPrice">Precio</label>
+      <input type="number" step="any" class="form-control" id="sltPrice" placeholder="Precio" ng-model="$ctrl._data.price">
+    </div>
+    <div class="form-group col-md-6">
+      <label for="sltSize">Medidas</label>
+      <input type="text" class="form-control" id="sltSize" placeholder="Medidas" ng-model="$ctrl._data.size">
+    </div>
+  </div>
+</div>
+<div class="modal-footer">
+  <button class="btn btn-primary" type="button" ng-click="$ctrl.save()">Guardar</button>
+  <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
 </div>

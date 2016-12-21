@@ -9,7 +9,7 @@ router.get('/api/clients', function(request, response) {
 });
 
 router.get('/api/clients/:id', function(request, response) {
-  var id = request.query.id;
+  var id = request.params.id;
   model.getById(id,function(error, data) {
     if (typeof data !== 'undefined' && data.length > 0) {
       response.status(200).json(data);
@@ -20,26 +20,19 @@ router.get('/api/clients/:id', function(request, response) {
   });
 });
 
-router.post('/api/client', function(request, response) {
-  var datosUsuario = {
-      id : null,
-      nombre : request.body.nombre
-    };
-    model.insert(datosUsuario,function(error, datos)
-    {
-      if(datos)
-      {
-        response.status(200).json({"Mensaje":"Insertado"});
-      }
-      else
-      {
-        response.status(500).json({"Mensaje":"Error"});
-      }
-    });
+router.post('/api/clients', function(request, response) {
+  model.insert(request.body,function(error, data) {
+    if(data) {
+      response.status(200).json({"Mensaje":"Insertado"});
+    }
+    else {
+      response.status(500).json({"Mensaje":"Error"});
+    }
+  });
 });
 
 //Modificar un usuario
-router.put('/api/client', function(request, response) {
+router.put('/api/clients', function(request, response) {
     var datosUsuario = {
       id:request.query.id,
       nombre : request.query.nombre
@@ -62,7 +55,7 @@ router.put('/api/client', function(request, response) {
 });
 //Borrar un usuario
 
-router.delete('/api/client', function(request, response) {
+router.delete('/api/clients', function(request, response) {
     var id = request.query.id;
     model.delete(id,function(error, datos)
     {

@@ -8,11 +8,11 @@ router.get('/api/users', function(request, response) {
   });
 });
 
-router.get('/api/user', function(request, response) {
-  var id = request.query.id;
-  model.getById(id,function(error, datos) {
-    if (typeof data !== 'undefined' && datos.length > 0) {
-      response.status(200).json(datos);
+router.get('/api/users/:id', function(request, response) {
+  var id = request.params.id;
+  model.getById(id,function(error, data) {
+    if (typeof data !== 'undefined' && data.length > 0) {
+      response.status(200).json(data);
     }
     else {
       response.status(404).json({"Mensaje":"No existe"});
@@ -20,26 +20,19 @@ router.get('/api/user', function(request, response) {
   });
 });
 
-router.post('/api/user', function(request, response) {
-  var datosUsuario = {
-      id : null,
-      nombre : request.body.nombre
-    };
-    model.insert(datosUsuario,function(error, datos)
-    {
-      if(datos)
-      {
-        response.status(200).json({"Mensaje":"Insertado"});
-      }
-      else
-      {
-        response.status(500).json({"Mensaje":"Error"});
-      }
-    });
+router.post('/api/users', function(request, response) {
+  model.insert(request.body,function(error, data) {
+    if(data) {
+      response.status(200).json({"Mensaje":"Insertado"});
+    }
+    else {
+      response.status(500).json({"Mensaje":"Error"});
+    }
+  });
 });
 
 //Modificar un usuario
-router.put('/api/user', function(request, response) {
+router.put('/api/users', function(request, response) {
     var datosUsuario = {
       id:request.query.id,
       nombre : request.query.nombre
@@ -62,7 +55,7 @@ router.put('/api/user', function(request, response) {
 });
 //Borrar un usuario
 
-router.delete('/api/user', function(request, response) {
+router.delete('/api/users', function(request, response) {
     var id = request.query.id;
     model.delete(id,function(error, datos)
     {

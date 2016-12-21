@@ -7,8 +7,7 @@ var model = {};
 
 model.getAll = function(callback) {
   if (connection) {
-    var sql = 'SELECT * FROM storagelokertype';
-    connection.query(sql, function(error, rows) {
+    connection.query('SELECT * FROM storagelokertype', function(error, rows) {
       if(error)
         throw error;
       else
@@ -19,8 +18,7 @@ model.getAll = function(callback) {
 
 model.getById = function(id,callback) {
   if (connection) {
-    var sql = 'SELECT * FROM storagelokertype WHERE storagelokertypeId = ' + connection.escape(id);
-    connection.query(sql, function(error, row) {
+    connection.query('SELECT * FROM storagelokertype WHERE storagelokertypeId = ?', id, function(error, row) {
       if(error)
         throw error;
       else
@@ -29,25 +27,17 @@ model.getById = function(id,callback) {
   }
 }
 
-
-model.insert = function(storagelokertypeData,callback)
-{
-    if (connection)
-    {
-        connection.query('INSERT INTO storagelokertype SET ?', storagelokertypeData, function(error, result)
-        {
-            if(error)
-            {
-
-                throw error;
-            }
-            else
-            {
-                //devolvemos el id del usuario insertado
-                callback(null, result.insertId);
-            }
-        });
-    }
+model.insert = function(data,callback) {
+  if (connection) {
+    connection.query('INSERT INTO storagelokertype SET ?', data, function(error, result) {
+      if(error) {
+        throw error;
+      }
+      else {
+        callback(null, result.insertId);
+      }
+    });
+  }
 }
 
 //Actualizar un usuario

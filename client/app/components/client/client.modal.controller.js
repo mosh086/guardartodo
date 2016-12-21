@@ -3,14 +3,16 @@ export default class InstanceCtrl {
         this._uibModalInstance = $uibModalInstance;
         this._log = $log;
         this._client = client;
+
+        this._title = (client)?'Editar cliente':'Nuevo cliente';
     }
 
     ok() {
-      _uibModalInstance.close();
+      this._uibModalInstance.close();
     };
 
     cancel() {
-      _uibModalInstance.dismiss(InstanceCtrl,'cancel');
+      this._uibModalInstance.dismiss(InstanceCtrl,'cancel');
     };
 
 }

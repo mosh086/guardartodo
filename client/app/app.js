@@ -11,11 +11,14 @@ import 'scrollTo';
 import angular from 'angular';
 import toastr from 'angular-toastr';
 import 'angular-toastr/dist/angular-toastr.css';
+import 'ui-select/dist/select.css';
 import 'angular-messages';
 import 'angular-animate';
 import 'angular-touch';
+import 'angular-sanitize';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
+import uiSelect from 'ui-select';
 import Common from './common';
 import Components from './components';
 import AppComponent from './app.component';
@@ -28,9 +31,11 @@ const requires = [
   'ngTouch',
   'ngMessages',
   'ngAnimate',
+  'ngSanitize',
   toastr,
   uiRouter,
   uiBootstrap,
+  uiSelect,
   Common,
   Components
 ];

@@ -9,30 +9,26 @@ class Storagelokertype {
 
   query(keyword) {
     let deferred = this._$q.defer();
-
     let request = {
       url: this._AppConstants.api + '/storagelokertypes',
       method: 'GET',
       params: !!keyword ? { 'q': keyword } : null
     };
-
     this._$http(request)
       .then(
         (res) => deferred.resolve(res.data),
         (err) => deferred.reject(err)
       );
-
     return deferred.promise;
   }
 
   get(id) {
-
     let deferred = this._$q.defer();
     if (!id) {
       deferred.reject("storagelokertype id is empty");
       return deferred.promise;
     }
-    if (!id.replace(" ", "")) {
+    if (!id.toString().replace(" ", "")) {
       deferred.reject("storagelokertype id is empty");
       return deferred.promise;
     }
@@ -45,6 +41,20 @@ class Storagelokertype {
       (err) => deferred.reject(err)
       );
     return deferred.promise;
+  }
+
+  save(storagelokertype) {
+    let request = {};
+    if (storagelokertype.storagelokertypeId) {
+      request.url = `${this._AppConstants.api}/storagelokertypes/${storagelokertype.storagelokertypeId}`;
+      request.method = 'PUT';
+      delete storagelokertype.storagelokertypeId;
+    } else {
+      request.url = `${this._AppConstants.api}/storagelokertypes`;
+      request.method = 'POST';
+    }
+    request.data = storagelokertype;
+    return this._$http(request);
   }
 
 }

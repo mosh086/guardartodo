@@ -29,7 +29,7 @@ class UserController {
       controllerAs: '$ctrl',
       size: 'lg',
       resolve: {
-        client: function () {
+        user: function () {
           return (id)?self._User.get(id):undefined;
         }
       }

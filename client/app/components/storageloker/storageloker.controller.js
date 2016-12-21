@@ -2,16 +2,19 @@ import modalTemplate from './storageloker.modal.html'
 import modalInstanceCtrl from './storageloker.modal.controller'
 
 class StoragelokerController {
-  constructor($uibModal, StoragelokerService) {
+  constructor($uibModal, StoragelokerService, StoragelokertypeService) {
     this.name = 'storageloker';
     this.storageloker = [];
+    this.storagelokertype = [];
     this._uibModal = $uibModal;
     this._Storageloker = StoragelokerService;
+    this._Storagelokertypes = StoragelokertypeService;
   }
 
   $onInit() {
     console.log("initializing Storageloker...");
     this.searchStoragelokers();
+    this.searchStoragelokertypes();
   }
 
   $onDestroy() {
@@ -31,15 +34,27 @@ class StoragelokerController {
       resolve: {
         storageloker: function () {
           return (id)?self._Storageloker.get(id):undefined;
+        },
+        storagelokertypes: function () {
+          return self.storagelokertype;
         }
       }
     });
 
-    modalInstance.result.then(function (selectedItem) {
-        //$ctrl.selected = selectedItem;
+    modalInstance.result.then(function (data) {
+      self.save(data);
     }, function () {
 
     });
+  }
+
+  save(data) {
+    let self = this;
+    console.log(JSON.stringify(data))
+    this._Storagelokertype.save(data)
+      .then((res) => {
+        self.searchStorageloker();
+      })
   }
 
   search() {
@@ -50,12 +65,17 @@ class StoragelokerController {
     let self = this;
     this._Storageloker
       .query(this.q)
-      .then(
-      (res) => self.storageloker = res
-      );
+      .then((res) => self.storageloker = res);
+  }
+
+  searchStoragelokertypes() {
+    let self = this;
+    this._Storagelokertypes
+      .query(this.q)
+      .then((res) => self.storagelokertype = res);
   }
 
 }
 
-StoragelokerController.$inject = ['$uibModal', 'StoragelokerService'];
+StoragelokerController.$inject = ['$uibModal', 'StoragelokerService', 'StoragelokertypeService'];
 export default StoragelokerController;

@@ -3,10 +3,11 @@ import modalInstanceCtrl from './storagelokertype.modal.controller'
 
 class StoragelokertypeController {
   constructor($uibModal, StoragelokertypeService) {
-    this.name = 'storagelokertype';
-    this.storagelokertype = [];
+    this._name = 'storagelokertype';
+    this._storagelokertype = [];
     this._uibModal = $uibModal;
     this._Storagelokertype = StoragelokertypeService;
+
   }
 
   $onInit() {
@@ -35,11 +36,19 @@ class StoragelokertypeController {
       }
     });
 
-    modalInstance.result.then(function (selectedItem) {
-        //$ctrl.selected = selectedItem;
+    modalInstance.result.then(function (data) {
+      self.save(data);
     }, function () {
 
     });
+  }
+
+  save(data) {
+    let self = this;
+    this._Storagelokertype.save(data)
+      .then((res) => {
+        self.searchStoragelokertypes();
+      })
   }
 
   search() {
@@ -50,11 +59,10 @@ class StoragelokertypeController {
     let self = this;
     this._Storagelokertype
       .query(this.q)
-      .then(
-      (res) => self.storagelokertype = res
-      );
+      .then((res) => self._storagelokertype = res);
   }
+
 }
 
-StoragelokertypeController.$inject = ['$uibModal','StoragelokertypeService'];
+StoragelokertypeController.$inject = ['$uibModal', 'StoragelokertypeService'];
 export default StoragelokertypeController;

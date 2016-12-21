@@ -9,24 +9,20 @@ class Client {
 
   query(keyword) {
     let deferred = this._$q.defer();
-    // Create the $http object for this request
     let request = {
       url: this._AppConstants.api + '/clients',
       method: 'GET',
       params: !!keyword ? { 'q': keyword } : null
     };
-
     this._$http(request)
       .then(
         (res) => deferred.resolve(res.data),
         (err) => deferred.reject(err)
       );
-
     return deferred.promise;
   }
 
   get(id) {
-
     let deferred = this._$q.defer();
     if (!id) {
       deferred.reject("client id is empty");
@@ -45,6 +41,20 @@ class Client {
       (err) => deferred.reject(err)
       );
     return deferred.promise;
+  }
+
+  save(client) {
+    let request = {};
+    if (client.clientId) {
+      request.url = `${this._AppConstants.api}/clients/${client.clientId}`;
+      request.method = 'PUT';
+      delete client.clientId;
+    } else {
+      request.url = `${this._AppConstants.api}/clients`;
+      request.method = 'POST';
+    }
+    request.data = client;
+    return this._$http(request);
   }
 
 }
