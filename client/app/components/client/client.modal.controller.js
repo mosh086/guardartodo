@@ -5,14 +5,19 @@ export default class InstanceCtrl {
         this._client = client;
 
         this._title = (client)?'Editar cliente':'Nuevo cliente';
+        this._data = {
+          clientId:null, firstName: '', lastName: '',
+          phone: '', cellPhone: '', email: ''
+        };
     }
 
-    ok() {
-      this._uibModalInstance.close();
+    save() {
+      console.log(JSON.stringify(this._data));
+      this._uibModalInstance.close(this._data);
     };
 
     cancel() {
-      this._uibModalInstance.dismiss(InstanceCtrl,'cancel');
+      this._uibModalInstance.dismiss(undefined,'cancel');
     };
 
 }

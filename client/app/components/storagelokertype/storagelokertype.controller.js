@@ -44,8 +44,17 @@ class StoragelokertypeController {
   }
 
   save(data) {
+    console.log('2');
     let self = this;
     this._Storagelokertype.save(data)
+      .then((res) => {
+        self.searchStoragelokertypes();
+      })
+  }
+
+  remove(id) {
+    let self = this;
+    this._Storagelokertype.remove(id)
       .then((res) => {
         self.searchStoragelokertypes();
       })

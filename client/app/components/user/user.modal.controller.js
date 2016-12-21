@@ -5,14 +5,15 @@ export default class InstanceCtrl {
         this._user = user;
 
         this._title = (user)?'Editar usuario':'Nuevo usuario';
+        this._data = { userId:null, firstName:'', lastName: '', username:''};
     }
 
-    ok() {
-      this._uibModalInstance.close();
+    save() {
+      this._uibModalInstance.close(this._data);
     };
 
     cancel() {
-      this._uibModalInstance.dismiss('cancel');
+      this._uibModalInstance.dismiss(undefined,'cancel');
     };
 
 }

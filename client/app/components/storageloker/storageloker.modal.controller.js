@@ -12,7 +12,6 @@ export default class InstanceCtrl {
 
     save() {
       this._data.storagelokertypeId = this._selectSlt.storagelokertypeId;
-      console.log(JSON.stringify(this._data))
       this._uibModalInstance.close(this._data);
     };
 

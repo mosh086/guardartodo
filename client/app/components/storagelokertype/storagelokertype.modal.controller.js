@@ -8,7 +8,16 @@ export default class InstanceCtrl {
     this._data = { storagelokertypeId:null, name:'', description: '', price: 0.00, size: '' };
   }
 
+  $onInit() {
+    if (this._storagelokertype) {
+      this._data = this._storagelokertype[0];
+      delete this._data.enable;
+      delete this._data.createDatetime;
+    }
+  }
+
   save() {
+    console.log('1');
     this._uibModalInstance.close(this._data);
   };
 

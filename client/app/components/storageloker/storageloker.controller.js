@@ -50,10 +50,9 @@ class StoragelokerController {
 
   save(data) {
     let self = this;
-    console.log(JSON.stringify(data))
-    this._Storagelokertype.save(data)
+    this._Storageloker.save(data)
       .then((res) => {
-        self.searchStorageloker();
+        self.searchStoragelokers();
       })
   }
 

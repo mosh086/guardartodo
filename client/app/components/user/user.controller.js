@@ -35,11 +35,19 @@ class UserController {
       }
     });
 
-    modalInstance.result.then(function (selectedItem) {
-        //$ctrl.selected = selectedItem;
+    modalInstance.result.then(function (data) {
+      self.save(data);
     }, function () {
 
     });
+  }
+
+  save(data) {
+    let self = this;
+    this._User.save(data)
+      .then((res) => {
+        self.searchUsers();
+      })
   }
 
   search() {

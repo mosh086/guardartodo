@@ -5,8 +5,8 @@ class ClientController {
   constructor($uibModal, ClientService) {
     this.name = 'client';
     this.client = [];
-    this._Client = ClientService;
     this._uibModal = $uibModal;
+    this._Client = ClientService;
   }
 
   $onInit() {
@@ -36,11 +36,20 @@ class ClientController {
       }
     });
 
-    modalInstance.result.then(function (selectedItem) {
-        //$ctrl.selected = selectedItem;
+    modalInstance.result.then(function (data) {
+      self.save(data);
     }, function () {
 
     });
+  }
+
+  save(data) {
+    let self = this;
+    console.log(JSON.stringify(this.data));
+    this._Client.save(data)
+      .then((res) => {
+        self.searchClients();
+      })
   }
 
   search() {
