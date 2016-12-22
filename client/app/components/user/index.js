@@ -12,7 +12,7 @@ let userModule = angular.module('app.components.user', [
       url: '/user',
       component: 'user',
       data: {
-        requiresAuth: true
+        requiresAuth: false
       }
     });
 })
