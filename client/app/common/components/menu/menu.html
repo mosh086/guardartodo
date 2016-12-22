@@ -11,22 +11,17 @@
                 <img src="images/GuardarTodo.png" alt="guardartodo" />
             </a>
         </div>
-        <div id="navbar" class="collapse navbar-collapse">
+        <div id="navbar" class="navbar-collapse navbar-left collapse">
             <ul class="nav navbar-nav">
                 <li><a href="#about" id="scrollTo-about-us">¿Quiénes Somos?</a></li>
                 <li><a href="#contact" id="scrollTo-contact-us">Contáctanos</a></li>
-
-                <li class="nav-item" show-authed="false">
-                  <button class="btn btn-outline-success" ng-click="$ctrl.onSignin()">{{'signin'}}</button>
-                </li>
-                <li class="nav-item" show-authed="false">
-                  <span><a class="nav-link" href="#" ui-sref="app.signup">{{'signup'}}</a></span>
-                </li>
-                <li class="nav-item" show-authed="true">
-                  <span><button type="button" class="btn btn-outline-danger" ng-click="$ctrl.onLogout()">{{'logout'}}</button></span>
-                </li>
-
             </ul>
+        </div>
+        <div class="navbar-collapse navbar-right collapse">
+          <ul class="nav navbar-nav">
+            <li show-authed="false" ><button class="btn btn-default" ng-click="$ctrl.onSignin()">Iniciar sesión</button></li>
+            <li show-authed="true"><button type="button" class="btn btn-danger" ng-click="$ctrl.onLogout()">Salir</button></li>
+          </ul>
         </div>
         <!--/.nav-collapse -->
     </div>

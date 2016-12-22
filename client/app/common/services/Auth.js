@@ -19,14 +19,19 @@ class Auth {
       method: 'POST',
       data: credentials
     };
-
+    console.log(request.url)
     return this._$http(request)
-      .then((res) => {
-
-        this._JWT.save(res.data.id_token);
-        this.current = res.data.user;
-        return res;
-      });
+      .then(
+        (res) => {
+          console.log(JSON.stringify(res));
+          this._JWT.save(res.data.id_token);
+          this.current = res.data.user;
+          return res;
+        },
+        (err) => {
+          console.log(JSON.stringify(err.data));
+          return err;
+        });
   }
 
   ensureAuthIs(b) {
@@ -57,7 +62,7 @@ class Auth {
       deferred.resolve(true);
     } else {
       this._$http({
-        url: this._AppConstants.api + '/me',
+        url: this._AppConstants.api + '/users/me',
         method: 'GET'
       })
         .then(

@@ -10,11 +10,15 @@ class SigninController {
   }
 
   signin() {
-    console.log("signin with credentials:" + this.data);
+    console.log("signin with credentials:" + JSON.stringify(this.data));
     this._Auth.attempAuth('signin', this.data)
       .then((res) => {
-        this._toastr.success('Welcome back,' + this.data.username);
-        this._$state.go('app.posts');
+        console.log(JSON.stringify(res));
+        if (res.status == '201'){
+          this._toastr.success('Welcome back,' + this.data.username);
+        }
+
+        //this._$state.go('app.posts');
       });
   }
 }

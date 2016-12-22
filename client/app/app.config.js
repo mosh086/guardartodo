@@ -43,7 +43,7 @@ function jwtInterceptor(JWT, AppConstants, $window, $q) {
         // clear any JWT token being stored
         JWT.destroy();
         // do a hard page refresh
-        $window.location.reload();
+        //$window.location.reload();
       }
       return $q.reject(rejection);
     }

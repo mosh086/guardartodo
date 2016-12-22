@@ -1,10 +1,13 @@
 var express = require('express'),
     _       = require('lodash'),
     config  = require('../config'),
-    jwt     = require('jsonwebtoken')
-    db      = require('../db');
+    jwt     = require('jsonwebtoken'),
+    db      = require('../db'),
+    ejwt    = require('express-jwt');
+
 var app = module.exports = express.Router();
 var secretKey = "don't share this key";
+
 function createToken(user) {
   return jwt.sign(_.omit(user, 'password'), config.secretKey, { expiresIn: 60*60*5 });
 }
@@ -61,6 +64,66 @@ app.post('/user/login', function(req, res) {
     });
   });
 });
+app.post('/api/auth/login', function(req, res) {
+console.log(JSON.stringify(req.body))
+  if (!req.body.username || !req.body.password) {
+    console.log('You must send the username and the password')
+    return res.status(400).send("You must send the username and the password");
+  }
+  getUserDB(req.body.username, function(user){
+    if (!user) {
+      console.log('The username is not existing')
+      return res.status(401).send("The username is not existing");
+    }
+    if (user.password !== req.body.password) {
+      console.log('The username or password dont match')
+      return res.status(401).send("The username or password don't match");
+    }
+    res.status(201).send({
+      id_token: createToken(user)
+    });
+  });
+});
+
+
+
+
+app.get('/api/users/me', function(req, res) {
+
+  var token;
+  if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.query && req.query.token) {
+    token = req.query.token;
+  }
+
+  console.log(token);
+  if (token) {
+    try {
+      var decoded = ejwt.decode(token, config.secretKey);
+      if (decoded.exp <= Date.now()) {
+        res.end('Access token has expired', 400);
+      }
+      getByUsername(decoded.iss, function(result) {
+        console.log('pass');
+        res.status(200).send(result);
+      });
+    } catch (err) {
+      return next();
+    }
+  } else {
+    next();
+  }
+
+  getUserDB(req.params.username, function(user){
+    if(!user) res.status(201).send({username: "OK"});
+    else res.status(400).send("A user with that username already exists");
+  });
+
+});
+
+
+
 app.get('/user/check/:username', function(req, res) {
   if (!req.params.username) {
     return res.status(400).send("You must send a username");
@@ -81,6 +144,13 @@ function getAll (done) {
 
 function getById (id,done) {
   db.get().query('SELECT * FROM user WHERE userId = ?', id, function(err, row) {
+    if(err) throw err;
+    done(row);
+  });
+}
+
+function getByUsername (id,done) {
+  db.get().query('SELECT * FROM user WHERE username = ?', id, function(err, row) {
     if(err) throw err;
     done(row);
   });
