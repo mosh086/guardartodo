@@ -1,8 +1,8 @@
--- MySQL dump 10.13  Distrib 5.7.12, for Win64 (x86_64)
+-- MySQL dump 10.13  Distrib 5.7.9, for Win64 (x86_64)
 --
 -- Host: localhost    Database: guardartodo
 -- ------------------------------------------------------
--- Server version	5.7.17-log
+-- Server version	5.7.10-log
 
 /*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
 /*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
@@ -26,7 +26,11 @@ CREATE TABLE `client` (
   `clientId` int(11) NOT NULL AUTO_INCREMENT,
   `firstName` varchar(200) NOT NULL,
   `lastName` varchar(200) NOT NULL,
-  `address` varchar(400) DEFAULT NULL,
+  `street` varchar(200) DEFAULT NULL,
+  `town` varchar(200) DEFAULT NULL,
+  `country` varchar(200) DEFAULT NULL,
+  `state` varchar(200) DEFAULT NULL,
+  `zipcode` varchar(5) DEFAULT NULL,
   `rfc` varchar(45) DEFAULT NULL,
   `phone` varchar(45) DEFAULT NULL,
   `cellPhone` varchar(45) DEFAULT NULL,
@@ -38,7 +42,7 @@ CREATE TABLE `client` (
   `createByUserId` int(11) DEFAULT NULL,
   `createDatetime` datetime DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`clientId`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -47,7 +51,7 @@ CREATE TABLE `client` (
 
 LOCK TABLES `client` WRITE;
 /*!40000 ALTER TABLE `client` DISABLE KEYS */;
-INSERT INTO `client` VALUES (1,'Rosa Elia','Sanchez Sauceda','Mario Talavera 221, Col. Lomas del Roble, 66450, San Nicolas de los Garza NL',NULL,'83769430','8119111667','',NULL,'HOGAR','Persona Fisica','',NULL,'2016-12-19 23:12:06'),(2,'Dino Renzo','Viacava Paradio','Col. villa del Olvo 114, General Escobedo Nuevo Leon, Colonia Villas de Anahuac',NULL,'80089451','8119166338','r_viacava@hotmail.com',NULL,'HOGAR','','',NULL,'2016-12-19 23:12:06');
+INSERT INTO `client` VALUES (1,'Rosa Elia','Sanchez Sauceda','efsd','dfgsfd','cvdsf','gdsfg','45355','fgfdsgfdhfgh','83769430','8119111667','gfdgr@sdfdf.com',NULL,'HOGAR','Persona Fisica','',NULL,'2016-12-19 23:12:06'),(2,'Dino Renzo','Viacava Paradio',NULL,NULL,NULL,NULL,NULL,NULL,'80089451','8119166338','r_viacava@hotmail.com',NULL,'','HOGAR','',NULL,'2016-12-19 23:12:06');
 /*!40000 ALTER TABLE `client` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -60,4 +64,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2016-12-20  1:04:45
+-- Dump completed on 2016-12-21 18:14:49
