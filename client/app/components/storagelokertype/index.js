@@ -10,7 +10,10 @@ let storagelokertypeModule = angular.module('app.components.storagelokertype', [
   $stateProvider
     .state('storagelokertype', {
       url: '/storagelokertype',
-      component: 'storagelokertype'
+      component: 'storagelokertype',
+      data: {
+        requiresAuth: true
+      }
     });
 })
 .component('storagelokertype', storagelokertypeComponent)

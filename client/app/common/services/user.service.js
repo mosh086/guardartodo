@@ -25,15 +25,15 @@ class User {
   get(id) {
     let deferred = this._$q.defer();
     if (!id) {
-      deferred.reject("storagelokertype id is empty");
+      deferred.reject("user id is empty");
       return deferred.promise;
     }
     if (!id.toString().replace(" ", "")) {
-      deferred.reject("storagelokertype id is empty");
+      deferred.reject("user id is empty");
       return deferred.promise;
     }
     this._$http({
-      url: this._AppConstants.api + '/storagelokertypes/' + id,
+      url: this._AppConstants.api + '/users/' + id,
       method: 'GET'
     })
       .then(
@@ -55,6 +55,28 @@ class User {
     }
     request.data = user;
     return this._$http(request);
+  }
+
+  remove(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("user id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("user id is empty");
+      return deferred.promise;
+    }
+    console.log(id);
+    this._$http({
+      url: this._AppConstants.api + '/users/' + id,
+      method: 'DELETE'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
   }
 
 }

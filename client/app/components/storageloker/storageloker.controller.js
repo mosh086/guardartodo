@@ -56,6 +56,14 @@ class StoragelokerController {
       })
   }
 
+  remove(id) {
+    let self = this;
+    this._Storageloker.remove(id)
+      .then((res) => {
+        self.searchStoragelokers();
+      })
+  }
+
   search() {
     console.log("query storageloker by keyword" + this.q);
   }

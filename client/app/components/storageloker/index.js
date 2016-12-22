@@ -11,7 +11,10 @@ let storagelokerModule = angular.module('app.components.storageloker', [
   $stateProvider
     .state('storageloker', {
       url: '/storageloker',
-      component: 'storageloker'
+      component: 'storageloker',
+      data: {
+        requiresAuth: true
+      }
     });
 })
 .component('storageloker', storagelokerComponent)

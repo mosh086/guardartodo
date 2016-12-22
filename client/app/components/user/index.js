@@ -10,7 +10,10 @@ let userModule = angular.module('app.components.user', [
   $stateProvider
     .state('user', {
       url: '/user',
-      component: 'user'
+      component: 'user',
+      data: {
+        requiresAuth: true
+      }
     });
 })
 .component('user', userComponent)

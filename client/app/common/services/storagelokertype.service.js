@@ -44,10 +44,8 @@ class Storagelokertype {
   }
 
   save(storagelokertype) {
-    console.log('3');
     let request = {};
     if (storagelokertype.storagelokertypeId) {
-      console.log('4');
       request.url = `${this._AppConstants.api}/storagelokertypes/${storagelokertype.storagelokertypeId}`;
       request.method = 'PUT';
       delete storagelokertype.storagelokertypeId;
@@ -55,7 +53,6 @@ class Storagelokertype {
       request.url = `${this._AppConstants.api}/storagelokertypes`;
       request.method = 'POST';
     }
-    console.log('5');
     request.data = storagelokertype;
     return this._$http(request);
   }

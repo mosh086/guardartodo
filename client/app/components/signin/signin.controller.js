@@ -1,20 +1,23 @@
 class SigninController {
-  constructor(SigninService) {
+  constructor(Auth, $state, toastr) {
+    'ngInject';
+
+    this._Auth = Auth;
+    this._$state = $state;
+    this._toastr = toastr;
     this.name = 'signin';
+    this.data = { username: '', password: '' };
   }
 
-  $onInit() {
-    console.log("initializing Signin...");
-  }
-
-  $onDestroy() {
-    console.log("destroying Signin...");
-  }
-
-  search() {
-    console.log("query signin by keyword" + this.q);
+  signin() {
+    console.log("signin with credentials:" + this.data);
+    this._Auth.attempAuth('signin', this.data)
+      .then((res) => {
+        this._toastr.success('Welcome back,' + this.data.username);
+        this._$state.go('app.posts');
+      });
   }
 }
 
-SigninController.$inject = ['SigninService'];
+SigninController.$inject = ['Auth', '$state', 'toastr'];
 export default SigninController;

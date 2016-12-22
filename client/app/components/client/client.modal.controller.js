@@ -1,24 +1,35 @@
 export default class InstanceCtrl {
-    constructor($uibModalInstance, $log, $filter, client) {
-        this._uibModalInstance = $uibModalInstance;
-        this._log = $log;
-        this._client = client;
+  constructor($uibModalInstance, $log, $filter, client) {
+    this._uibModalInstance = $uibModalInstance;
+    this._log = $log;
+    this._client = client;
 
-        this._title = (client)?'Editar cliente':'Nuevo cliente';
-        this._data = {
-          clientId:null, firstName: '', lastName: '',
-          phone: '', cellPhone: '', email: ''
-        };
+    this._title = (client)?'Editar cliente':'Nuevo cliente';
+    this._data = {
+      clientId:null, firstName: '', lastName: '',
+      street: '', town: '',
+      country: '', state: '', zipcode: '',
+      phone: '', cellPhone: '', email: '',
+      rfc: '',
+      kindOfBusiness: '', legalRepresentative: '', lineOfBusiness: '',
+    };
+  }
+
+  $onInit() {
+    if (this._client) {
+      this._data = this._client[0];
+      delete this._data.enable;
+      delete this._data.createDatetime;
     }
+  }
 
-    save() {
-      console.log(JSON.stringify(this._data));
-      this._uibModalInstance.close(this._data);
-    };
+  save() {
+    this._uibModalInstance.close(this._data);
+  };
 
-    cancel() {
-      this._uibModalInstance.dismiss(undefined,'cancel');
-    };
+  cancel() {
+    this._uibModalInstance.dismiss(undefined,'cancel');
+  };
 
 }
 

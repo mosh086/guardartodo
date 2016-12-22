@@ -16,64 +16,63 @@
   <div class="row">
     <div class="form-group col-md-4">
       <label for="cStreet">Calle</label>
-      <input type="text" class="form-control" id="cStreet" placeholder="Calle">
+      <input type="text" class="form-control" id="cStreet" placeholder="Calle" ng-model="$ctrl._data.street">
     </div>
     <div class="form-group col-md-4">
-      <label for="cLocaly">Colonia</label>
-      <input type="text" class="form-control" id="cLocaly" placeholder="Colonia">
+      <label for="cTown">Colonia</label>
+      <input type="text" class="form-control" id="cTown" placeholder="Colonia" ng-model="$ctrl._data.town">
     </div>
   </div>
 
   <div class="row">
     <div class="form-group col-md-4">
       <label for="cCountry">Municipio</label>
-      <input type="text" class="form-control" id="cCountry" placeholder="Municipio">
+      <input type="text" class="form-control" id="cCountry" placeholder="Municipio" ng-model="$ctrl._data.country">
     </div>
     <div class="form-group col-md-4">
       <label for="cState">Estado</label>
-      <input type="text" class="form-control" id="cState" placeholder="Estado">
+      <input type="text" class="form-control" id="cState" placeholder="Estado" ng-model="$ctrl._data.state">
     </div>
     <div class="form-group col-md-4">
-      <label for="cZc">Codigo postal</label>
-      <input type="text" class="form-control" id="cZc" placeholder="Codigo postal" ng-model="$ctrl._data.zipCode" required>
+      <label for="cZipcode">Codigo postal</label>
+      <input type="text" class="form-control" id="cZipcode" placeholder="Codigo postal" ng-model="$ctrl._data.zipcode">
     </div>
   </div>
 
   <div class="row">
     <div class="form-group col-md-4">
       <label for="cPhone">Telefono</label>
-      <input type="text" class="form-control" id="cPhone" placeholder="Telefono"ng-model="$ctrl._data.phone" required>
+      <input type="text" class="form-control" id="cPhone" placeholder="Telefono"ng-model="$ctrl._data.phone">
     </div>
     <div class="form-group col-md-4">
       <label for="cCellphone">Celular</label>
-      <input type="text" class="form-control" id="cCellphone" placeholder="Celular"ng-model="$ctrl._data.cellPhone" required>
+      <input type="text" class="form-control" id="cCellphone" placeholder="Celular"ng-model="$ctrl._data.cellPhone">
     </div>
     <div class="form-group col-md-4">
       <label for="cEmail">Correo electronico</label>
-      <input type="text" class="form-control" id="cEmail" placeholder="Correo electronico"ng-model="$ctrl._data.email" required>
+      <input type="email" class="form-control" id="cEmail" placeholder="Correo electronico"ng-model="$ctrl._data.email">
     </div>
   </div>
 
   <div class="row">
     <div class="form-group col-md-4">
       <label for="uRfc">RFC</label>
-      <input type="text" class="form-control" id="uRfc" placeholder="RFC">
+      <input type="text" class="form-control" id="uRfc" placeholder="RFC" ng-model="$ctrl._data.rfc">
     </div>
-
   </div>
 
   <div class="row">
     <div class="form-group col-md-4">
-      <label for="uLineOfBusiness">Persona de tipo</label>
-      <input type="text" class="form-control" id="uLineOfBusiness" placeholder="Persona de tipo">
+      <label for="uLineOfBusiness">Giro de la empresa</label>
+      <input type="text" class="form-control" id="uLineOfBusiness" placeholder="Giro de la empresa" ng-model="$ctrl._data.lineOfBusiness">
     </div>
     <div class="form-group col-md-4">
       <label for="uLegalRepresentative">Representante legal</label>
-      <input type="text" class="form-control" id="uLegalRepresentative" placeholder="Representante legal">
+      <input type="text" class="form-control" id="uLegalRepresentative" placeholder="Representante legal" ng-model="$ctrl._data.legalRepresentative">
     </div>
     <div class="form-group col-md-4">
-      <label for="uLineOfBusiness">Giro de la empresa</label>
-      <input type="text" class="form-control" id="uLineOfBusiness" placeholder="Giro de la empresa">
+      <label for="uKindOfBusiness">Persona de tipo</label>
+      <input type="text" class="form-control" id="uKindOfBusiness" placeholder="Persona de tipo" ng-model="$ctrl._data.kindOfBusiness">
     </div>
   </div>
 </div>

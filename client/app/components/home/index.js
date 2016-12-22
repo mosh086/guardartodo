@@ -6,13 +6,16 @@ let homeModule = angular.module('app.components.home', [
   uiRouter
 ])
 .config(($stateProvider) => {
-    "ngInject";
-    $stateProvider
-      .state('home', {
-        url: '/',
-        component: 'home'
-      });
-  })
+  "ngInject";
+  $stateProvider
+    .state('home', {
+      url: '/',
+      component: 'home',
+      data: {
+        requiresAuth: false
+      }
+  });
+})
 .component('home', homeComponent)
 
 .name;

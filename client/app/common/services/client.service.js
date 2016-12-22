@@ -57,6 +57,28 @@ class Client {
     return this._$http(request);
   }
 
+  remove(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("client id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("client id is empty");
+      return deferred.promise;
+    }
+    console.log(id);
+    this._$http({
+      url: this._AppConstants.api + '/clients/' + id,
+      method: 'DELETE'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
 }
 
 Client.$inject = ['AppConstants', '$http', '$q'];

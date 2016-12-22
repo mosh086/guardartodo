@@ -59,6 +59,27 @@ class Storageloker {
     return this._$http(request);
   }
 
+  remove(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("storageloker id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("storageloker id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/storagelokers/' + id,
+      method: 'DELETE'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
 }
 
 Storageloker.$inject = ['AppConstants', '$http', '$q'];

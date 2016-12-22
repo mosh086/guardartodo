@@ -7,7 +7,17 @@ let signupModule = angular.module('app.components.signup', [
 ])
 
 .component('signup', signupComponent)
-
+.config(($stateProvider) => {
+  "ngInject";
+  $stateProvider
+    .state('signup', {
+      url: '/signup',
+      component: 'signup',
+      data: {
+        requiresAuth: false
+      }
+    });
+})
 .name;
 
 export default signupModule;

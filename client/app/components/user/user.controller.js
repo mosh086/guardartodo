@@ -50,6 +50,14 @@ class UserController {
       })
   }
 
+  remove(id) {
+    let self = this;
+    this._User.remove(id)
+      .then((res) => {
+        self.searchUsers();
+      })
+  }
+
   search() {
     console.log("query user by keyword" + this.q);
   }

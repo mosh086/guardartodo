@@ -1,20 +1,24 @@
 class SignupController {
-  constructor(SignupService) {
+  constructor(Auth, $state) {
+    this._Auth = Auth;
+    this._$state = $state;
     this.name = 'signup';
+    this.data = {
+      firstName: '',
+      lastName: '',
+      username: '',
+      password: ''
+    };
   }
 
-  $onInit() {
-    console.log("initializing Signup...");
-  }
-
-  $onDestroy() {
-    console.log("destroying Signup...");
-  }
-
-  search() {
-    console.log("query signup by keyword" + this.q);
+  signup() {
+    console.log('sign up with data @' + this.data);
+    this._Auth.attempAuth('signup', this.data)
+      .then((res) => {
+        this._$state.go('app.posts');
+      });
   }
 }
 
-SignupController.$inject = ['SignupService'];
+SignupController.$inject = ['Auth', '$state'];
 export default SignupController;

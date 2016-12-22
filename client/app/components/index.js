@@ -16,7 +16,9 @@ let componentsModule = angular.module('app.components', [
   Signup,
   Storageloker,
   Storagelokertype,
-  User
+  User,
+  Signin,
+  Signup
 //...
 ])
 .name;

@@ -45,8 +45,16 @@ class ClientController {
 
   save(data) {
     let self = this;
-    console.log(JSON.stringify(this.data));
+    console.log(JSON.stringify(data));
     this._Client.save(data)
+      .then((res) => {
+        self.searchClients();
+      })
+  }
+
+  remove(id) {
+    let self = this;
+    this._Client.remove(id)
       .then((res) => {
         self.searchClients();
       })

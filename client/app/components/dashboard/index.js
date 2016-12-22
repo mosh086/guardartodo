@@ -6,13 +6,16 @@ let dashboardModule = angular.module('app.component.dashboard', [
   uiRouter
 ])
 .config(($stateProvider) => {
-    "ngInject";
-    $stateProvider
-      .state('dashboard', {
-        url: '/dashboard',
-        component: 'dashboard'
-      });
-  })
+  "ngInject";
+  $stateProvider
+    .state('dashboard', {
+      url: '/dashboard',
+      component: 'dashboard',
+      data: {
+        requiresAuth: true
+      }
+    });
+})
 .component('dashboard', dashboardComponent)
 
 .name;

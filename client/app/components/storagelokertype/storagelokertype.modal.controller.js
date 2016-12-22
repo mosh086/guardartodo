@@ -17,7 +17,6 @@ export default class InstanceCtrl {
   }
 
   save() {
-    console.log('1');
     this._uibModalInstance.close(this._data);
   };
 

@@ -11,7 +11,10 @@ let clientModule = angular.module('app.components.client', [
   $stateProvider
     .state('client', {
       url: '/client',
-      component: 'client'
+      component: 'client',
+      data: {
+        requiresAuth: true
+      }
     });
 })
 .component('client', clientComponent)

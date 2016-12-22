@@ -7,7 +7,8 @@ var model = {};
 
 model.getAll = function(callback) {
   if (connection) {
-    connection.query(`SELECT CONCAT_WS(' ',firstName,lastName) as fullName, c.* FROM guardartodo.client c`, function(error, rows) {
+    connection.query(`SELECT  CONCAT_WS(' ',firstName,lastName) as fullName,
+        CONCAT_WS(' ',street,town,country,state,zipcode) as address, c.* FROM client c`, function(error, rows) {
       if(error)
         throw error;
       else
@@ -42,7 +43,6 @@ model.insert = function(data,callback) {
 }
 
 model.update = function(id, data, callback) {
-  console.log(JSON.stringify(data));
   if(connection) {
     connection.query('UPDATE client SET ? WHERE clientId = ?', [data, id], function(error, result) {
       if(error) {
