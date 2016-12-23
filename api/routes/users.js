@@ -2,11 +2,10 @@ var express = require('express'),
     _       = require('lodash'),
     config  = require('../config'),
     jwt     = require('jsonwebtoken'),
-    db      = require('../db'),
-    ejwt    = require('express-jwt');
+    db      = require('../db');
 
 var app = module.exports = express.Router();
-var secretKey = "don't share this key";
+var secretKey = "sdfg4reg653$#dsfdg";
 
 function createToken(user) {
   return jwt.sign(_.omit(user, 'password'), config.secretKey, { expiresIn: 60*60*5 });
@@ -89,7 +88,6 @@ console.log(JSON.stringify(req.body))
 
 
 app.get('/api/users/me', function(req, res) {
-
   var token;
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
     token = req.headers.authorization.split(' ')[1];
@@ -100,11 +98,12 @@ app.get('/api/users/me', function(req, res) {
   console.log(token);
   if (token) {
     try {
-      var decoded = ejwt.decode(token, config.secretKey);
-      if (decoded.exp <= Date.now()) {
-        res.end('Access token has expired', 400);
-      }
-      getByUsername(decoded.iss, function(result) {
+      var decoded = jwt.verify(token, config.secretKey);
+      console.log(decoded.username);
+      //if (decoded.exp <= Date.now()) {
+      //  res.end('Access token has expired', 400);
+      //}
+      getByUsername(decoded.username, function(result) {
         console.log('pass');
         res.status(200).send(result);
       });
@@ -150,6 +149,7 @@ function getById (id,done) {
 }
 
 function getByUsername (id,done) {
+  console.log(id);
   db.get().query('SELECT * FROM user WHERE username = ?', id, function(err, row) {
     if(err) throw err;
     done(row);
