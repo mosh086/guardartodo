@@ -64,18 +64,14 @@ app.post('/user/login', function(req, res) {
   });
 });
 app.post('/api/auth/login', function(req, res) {
-console.log(JSON.stringify(req.body))
   if (!req.body.username || !req.body.password) {
-    console.log('You must send the username and the password')
     return res.status(400).send("You must send the username and the password");
   }
   getUserDB(req.body.username, function(user){
     if (!user) {
-      console.log('The username is not existing')
       return res.status(401).send("The username is not existing");
     }
     if (user.password !== req.body.password) {
-      console.log('The username or password dont match')
       return res.status(401).send("The username or password don't match");
     }
     res.status(201).send({
@@ -95,16 +91,12 @@ app.get('/api/users/me', function(req, res) {
     token = req.query.token;
   }
 
-  console.log(token);
   if (token) {
     try {
       var decoded = jwt.verify(token, config.secretKey);
-      console.log(decoded.username);
       //if (decoded.exp <= Date.now()) {
       //  res.end('Access token has expired', 400);
-      //}
       getByUsername(decoded.username, function(result) {
-        console.log('pass');
         res.status(200).send(result);
       });
     } catch (err) {
@@ -113,11 +105,6 @@ app.get('/api/users/me', function(req, res) {
   } else {
     next();
   }
-
-  getUserDB(req.params.username, function(user){
-    if(!user) res.status(201).send({username: "OK"});
-    else res.status(400).send("A user with that username already exists");
-  });
 
 });
 
@@ -149,7 +136,6 @@ function getById (id,done) {
 }
 
 function getByUsername (id,done) {
-  console.log(id);
   db.get().query('SELECT * FROM user WHERE username = ?', id, function(err, row) {
     if(err) throw err;
     done(row);

@@ -1,8 +1,21 @@
 class AsidemenuController {
-  constructor(Auth) {
+  constructor(UserService) {
+    this._UserService = UserService;
     this.name = 'asidemenu';
-    this.username = Auth.current.username;
+    this.current = {};
+  }
+
+  $onInit() {
+    this.getMe();
+  }
+
+  getMe() {
+    let self = this;
+    this._UserService.me()
+      .then((res) => {
+        self.current = res.data[0];
+      });
   }
 }
-AsidemenuController.$inject = ['Auth'];
+AsidemenuController.$inject = ['UserService'];
 export default AsidemenuController;

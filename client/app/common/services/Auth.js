@@ -1,5 +1,5 @@
 class Auth {
-  constructor(JWT, AppConstants, $http, $state, $q) {
+  constructor(JWT, AppConstants, Current, $http, $state, $q) {
     'ngInject';
 
     this._JWT = JWT;
@@ -10,33 +10,28 @@ class Auth {
     this.current = null;
   }
 
-
   attempAuth(type, credentials) {
     let path = (type == 'signin') ? '/login' : '/signup';
-
+    let self = this;
     let request = {
       url: this._AppConstants.api + '/auth' + path,
       method: 'POST',
       data: credentials
     };
-    console.log(request.url)
     return this._$http(request)
       .then(
         (res) => {
-          console.log(JSON.stringify(res));
-          this._JWT.save(res.data.id_token);
-          this.current = res.data.user;
+          self._JWT.save(res.data.id_token);
+          self.current = res.data.user;
           return res;
         },
         (err) => {
-          console.log(JSON.stringify(err.data));
           return err;
         });
   }
 
   ensureAuthIs(b) {
     let deferred = this._$q.defer();
-    console.log('pass here!');
     this.verifyAuth().then((authValid) => {
       // if it's the opposite, redirect home
       if (authValid !== b) {
@@ -52,12 +47,11 @@ class Auth {
 
   verifyAuth() {
     let deferred = this._$q.defer();
-
+    let self = this;
     if (!this._JWT.get()) {
       deferred.resolve(false);
       return deferred.promise;
     }
-
     if (this.current) {
       deferred.resolve(true);
     } else {
@@ -67,7 +61,7 @@ class Auth {
       })
         .then(
         (res) => {
-          this.current = res.data;
+          self.current = res.data;
           deferred.resolve(true);
         },
         (err) => {
@@ -76,7 +70,6 @@ class Auth {
         }
         );
     }
-
     return deferred.promise;
   }
 
@@ -88,5 +81,5 @@ class Auth {
 
 }
 
-Auth.$inject = ['JWT', 'AppConstants', '$http', '$state', '$q'];
+Auth.$inject = ['JWT', 'AppConstants', 'Current', '$http', '$state', '$q'];
 export default Auth;

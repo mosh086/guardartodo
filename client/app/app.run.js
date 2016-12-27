@@ -1,7 +1,5 @@
 import * as vis from 'ui-router-visualizer';
 
-
-//Auth,
 function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions) {
   "ngInject";
 
@@ -10,7 +8,6 @@ function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions) {
 
   $transitions.onStart({
     to: (state) => {
-      console.log(state.data.requiresAuth);
       return !!state.data.requiresAuth;
     }
   }, function (trans) {
@@ -18,7 +15,6 @@ function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions) {
     var _Auth = trans.injector().get('Auth');
 
     _Auth.ensureAuthIs(true);
-
   });
 
   $rootScope.$on('$stateChangeStart', (e, newUrl, oldUrl) => {

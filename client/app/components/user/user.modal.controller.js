@@ -9,7 +9,6 @@ export default class InstanceCtrl {
   }
 
   $onInit() {
-    console.log(JSON.stringify(this._user))
     if (this._user) {
       this._data = this._user[0];
       delete this._data.enable;

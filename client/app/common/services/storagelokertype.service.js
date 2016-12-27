@@ -67,7 +67,6 @@ class Storagelokertype {
       deferred.reject("storagelokertype id is empty");
       return deferred.promise;
     }
-    console.log(id);
     this._$http({
       url: this._AppConstants.api + '/storagelokertypes/' + id,
       method: 'DELETE'

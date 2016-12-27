@@ -45,13 +45,11 @@ class Storageloker {
 
   save(storageloker) {
     let request = {};
-    console.log(storageloker.storagelokerId);
     if (storageloker.storagelokerId) {
       request.url = `${this._AppConstants.api}/storagelokers/${storageloker.storagelokerId}`;
       request.method = 'PUT';
       delete storageloker.storagelokerId;
     } else {
-      console.log('sdfsdf');
       request.url = `${this._AppConstants.api}/storagelokers`;
       request.method = 'POST';
     }

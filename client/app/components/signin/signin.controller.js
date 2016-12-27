@@ -13,7 +13,6 @@ class SigninController {
     console.log("signin with credentials:" + JSON.stringify(this.data));
     this._Auth.attempAuth('signin', this.data)
       .then((res) => {
-        console.log(JSON.stringify(res));
         if (res.status == '201'){
           this._toastr.success('Welcome back,' + this.data.username);
         }

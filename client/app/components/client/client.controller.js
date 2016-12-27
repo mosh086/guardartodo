@@ -45,7 +45,6 @@ class ClientController {
 
   save(data) {
     let self = this;
-    console.log(JSON.stringify(data));
     this._Client.save(data)
       .then((res) => {
         self.searchClients();

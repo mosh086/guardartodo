@@ -67,7 +67,6 @@ class Client {
       deferred.reject("client id is empty");
       return deferred.promise;
     }
-    console.log(id);
     this._$http({
       url: this._AppConstants.api + '/clients/' + id,
       method: 'DELETE'

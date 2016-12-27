@@ -42,7 +42,6 @@ model.insert = function(data,callback) {
 }
 
 model.update = function(id, data, callback) {
-  console.log(JSON.stringify(data));
   if(connection) {
     connection.query('UPDATE user SET ? WHERE userId = ?', [data, id], function(error, result) {
       if(error) {

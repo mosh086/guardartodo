@@ -67,7 +67,6 @@ class User {
       deferred.reject("user id is empty");
       return deferred.promise;
     }
-    console.log(id);
     this._$http({
       url: this._AppConstants.api + '/users/' + id,
       method: 'DELETE'
@@ -76,6 +75,22 @@ class User {
       (res) => deferred.resolve(res.data),
       (err) => deferred.reject(err)
       );
+    return deferred.promise;
+  }
+
+  me() {
+    let deferred = this._$q.defer();
+    this._$http({
+      url: this._AppConstants.api + '/users/me',
+      method: 'GET'
+    })
+      .then(
+      (res) => {
+        deferred.resolve(res);
+      },
+      (err) => {
+        deferred.resolve(false);
+      });
     return deferred.promise;
   }
 
