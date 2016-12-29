@@ -7,7 +7,9 @@ import Signup from './signup';
 import Storageloker from './storageloker';
 import Storagelokertype from './storagelokertype';
 import User from './user';
-import Rent from'./rent'
+import Rent from'./rent';
+import Rentlist from './rentlist';
+import Rentviewer from'./rentviewer';
 //...
 
 let componentsModule = angular.module('app.components', [
@@ -21,7 +23,9 @@ let componentsModule = angular.module('app.components', [
   User,
   Signin,
   Signup,
-  Rent
+  Rent,
+  Rentlist,
+  Rentviewer
 //...
 ])
 .name;
