@@ -1,11 +1,11 @@
-import 'jquery';
+import $ from 'jquery';
 
 import 'tether';
 import 'bootstrap';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import 'font-awesome/css/font-awesome.min.css';
 
-//import 'waypoints';
+import 'waypoints';
 import 'scrollTo';
 
 import angular from 'angular';
