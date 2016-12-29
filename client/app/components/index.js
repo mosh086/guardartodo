@@ -7,10 +7,12 @@ import Signup from './signup';
 import Storageloker from './storageloker';
 import Storagelokertype from './storagelokertype';
 import User from './user';
+import Rent from'./rent'
 //...
 
 let componentsModule = angular.module('app.components', [
   Home,
+  Dashboard,
   Client,
   Signin,
   Signup,
@@ -18,7 +20,8 @@ let componentsModule = angular.module('app.components', [
   Storagelokertype,
   User,
   Signin,
-  Signup
+  Signup,
+  Rent
 //...
 ])
 .name;

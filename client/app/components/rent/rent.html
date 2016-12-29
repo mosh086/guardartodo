@@ -1,0 +1,26 @@
+<div class="top-fix"></div>
+<div class="container">
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="slClient">Cliente</label>
+      <ui-select id="slClient" ng-model="$ctrl._selectClient" title="Cliente">
+        <ui-select-match placeholder="- Selecciona -">{{$ctrl._selectClient.fullName}}</ui-select-match>
+        <ui-select-choices repeat="item in $ctrl._clients">
+          <span ng-bind-html="item.fullName"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+  <div class="row">
+    <div class="form-group col-md-6">
+      <label for="slStorageloker">Bodega</label>
+      <ui-select id="slStorageloker" ng-model="$ctrl._selectStorageloker" title="Bodega">
+        <ui-select-match placeholder="- Selecciona -">{{$ctrl._selectStorageloker.number}}</ui-select-match>
+        <ui-select-choices repeat="item in $ctrl._storagelokers">
+          <span ng-bind-html="item.number"></span>
+        </ui-select-choices>
+      </ui-select>
+    </div>
+  </div>
+</div>
+

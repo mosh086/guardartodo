@@ -1,8 +1,17 @@
 .dash-info {
     width: 300px;
     height: 200px;
+    vertical-align: top;
     background-color: blue;
     text-align: left;
     margin: 5px;
     display: inline-block;
+
+    .info {
+        height:150px;
+    }
+
+    .bottom-button {
+        text-align:center;
+    }
 }
