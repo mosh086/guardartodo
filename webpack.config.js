@@ -42,6 +42,8 @@ module.exports = {
       jQuery: 'jquery',
       $: 'jquery',
       jquery: 'jquery',
+      "window.jQuery": 'jquery',
+      "windows.jQuery": 'jquery',
       "Tether": 'tether',
       "window.Tether": 'tether'
     }),

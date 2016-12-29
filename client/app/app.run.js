@@ -1,6 +1,8 @@
 import * as vis from 'ui-router-visualizer';
 
-function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions) {
+import 'waypoints';
+
+function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $timeout) {
   "ngInject";
 
   $trace.enable('TRANSITION');
@@ -40,8 +42,22 @@ function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions) {
     $state.go('signin');
   });
 
+  $timeout(function() {
+    $('#marketing').waypoint(function() {
+        $('.img-circle').addClass('animated zoomIn');
+    }, {
+        offset: '50%',
+        triggerOnce: false
+    });
+
+    $('.featurette').waypoint(function() {
+        $('#' + this.element.id + ' .featurette-image').addClass('animated pulse');
+    }, {
+        offset: '50%',
+        triggerOnce: false
+    });
+  }, 0);
+
 };
-
-
 
 export default AppRun;

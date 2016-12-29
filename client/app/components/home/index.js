@@ -1,9 +1,17 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
 import homeComponent from './home.component';
+import aboutus from './aboutus';
+import carousel from './carousel';
+import marketing from './marketing';
+import contactus from './contactus';
 
 let homeModule = angular.module('app.components.home', [
-  uiRouter
+  uiRouter,
+  aboutus,
+  carousel,
+  marketing,
+  contactus
 ])
 .config(($stateProvider) => {
   "ngInject";

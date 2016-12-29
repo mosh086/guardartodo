@@ -1,5 +1,5 @@
 class Auth {
-  constructor(JWT, AppConstants, Current, $http, $state, $q) {
+  constructor(JWT, AppConstants, $http, $state, $q) {
     'ngInject';
 
     this._JWT = JWT;
@@ -81,5 +81,5 @@ class Auth {
 
 }
 
-Auth.$inject = ['JWT', 'AppConstants', 'Current', '$http', '$state', '$q'];
+Auth.$inject = ['JWT', 'AppConstants', '$http', '$state', '$q'];
 export default Auth;
