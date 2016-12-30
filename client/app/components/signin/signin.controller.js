@@ -15,11 +15,15 @@ class SigninController {
       .then((res) => {
         if (res.status == '201') {
           this._toastr.success('Welcome back,' + this.data.username);
-          this._$state.go('dashboard');
+          if (this.data.reset === 0) {
+            this._$state.go('dashboard');
+          } else {
+            console.log('geeeee');
+            this._$state.go('resetpassword', { username: this.data.username });
+          }
         }
       });
   }
 }
 
-SigninController.$inject = ['Auth', '$state', 'toastr'];
 export default SigninController;

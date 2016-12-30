@@ -2,10 +2,14 @@ var express = require('express'),
     _       = require('lodash'),
     config  = require('../config'),
     jwt     = require('jsonwebtoken'),
+    ejwt     = require('express-jwt'),
     db      = require('../db');
 
 var app = module.exports = express.Router();
-var secretKey = "sdfg4reg653$#dsfdg";
+
+var jwtCheck = ejwt({
+  secret: config.secretKey
+});
 
 function createToken(user) {
   return jwt.sign(_.omit(user, 'password'), config.secretKey, { expiresIn: 60*60*5 });
@@ -165,7 +169,14 @@ function remove (id, done) {
   });
 }
 
-//app.use('/api/users', jwtCheck);
+function reset(id, data, done) {
+  db.get().query('DELETE FROM user WHERE userId = ?', id, function(err, result) {
+    if(err) throw err;
+    done(result);
+  });
+}
+
+app.use('/api/users', jwtCheck);
 app.get('/api/users', function(req, res) {
   getAll(function(result) {
     res.status(200).send(result);
@@ -192,6 +203,12 @@ app.put('/api/users/:id', function(req, res) {
 
 app.delete('/api/users/:id', function(req, res) {
   remove(req.params.id, function(result) {
+    res.status(200).send(result);
+  });
+});
+
+app.post('/api/users/reset/:username', function(req, res) {
+  reset(req.params.username, req.body, function(result) {
     res.status(200).send(result);
   });
 });
