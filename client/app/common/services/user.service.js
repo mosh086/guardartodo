@@ -78,6 +78,26 @@ class User {
     return deferred.promise;
   }
 
+  reset(data) {
+    let deferred = this._$q.defer();
+    if (!data) {
+      deferred.reject("data id is empty");
+      return deferred.promise;
+    }
+    //todo prevente errors
+    this._$http({
+      url: this._AppConstants.api + '/users/reset/' + data.username,
+      method: 'POST',
+      data: data
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+
+    return deferred.promise;
+  }
+
   me() {
     let deferred = this._$q.defer();
     this._$http({

@@ -7,6 +7,8 @@ import 'font-awesome/css/font-awesome.min.css';
 
 import 'waypoints';
 import 'scrollTo';
+import 'pdfMake';
+import 'vfs_fonts';
 
 import angular from 'angular';
 import toastr from 'angular-toastr';

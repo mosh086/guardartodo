@@ -73,6 +73,14 @@ module.exports = {
         __dirname,
         "node_modules/waypoints/lib/jquery.waypoints.min"
       ),
+      "pdfMake": path.resolve(
+        __dirname,
+        "node_modules/pdfmake/build/pdfmake.min"
+      ),
+      "vfs_fonts": path.resolve(
+        __dirname,
+        "node_modules/pdfmake/build/vfs_fonts"
+      )
     }
   }
 };
