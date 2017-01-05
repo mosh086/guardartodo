@@ -1,9 +1,16 @@
 class MenuController {
-  constructor($scope) {
+  constructor($scope, $timeout) {
     'ngInject';
 
     this._$scope = $scope;
     this.name = 'menu';
+
+    $timeout(function() {
+        $('[id^=scrollTo]').click(function() {
+            var id = $(this).attr('id').slice(9);
+            $(window).scrollTo($('#' + id), 1000, { offset: { top: -51, left: 0 } });
+        });
+    }, 0);
   }
 
   $onInit() {
@@ -24,6 +31,5 @@ class MenuController {
   }
 }
 
-MenuController.$inject = ['$scope'];
 export default MenuController;
 

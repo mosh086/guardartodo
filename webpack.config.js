@@ -1,6 +1,7 @@
 var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -19,6 +20,9 @@ module.exports = {
     }
   },
   entry: {},
+  node: {
+    fs: "empty"
+  },
   module: {
     loaders: [
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
@@ -60,7 +64,10 @@ module.exports = {
       minChunks: function (module, count) {
         return module.resource && module.resource.indexOf(path.resolve(__dirname, 'client')) === -1;
       }
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: 'client/app/app.config.json', to: 'app.config.json'}
+    ])
   ],
   resolve: {
     extensions: ['', '.js', '.css'],
@@ -80,6 +87,10 @@ module.exports = {
       "vfs_fonts": path.resolve(
         __dirname,
         "node_modules/pdfmake/build/vfs_fonts"
+      ),
+      "fs": path.resolve(
+        __dirname,
+        "node_modules/fs-extra/lib/index"
       )
     }
   }

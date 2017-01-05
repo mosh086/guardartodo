@@ -1,8 +1,7 @@
 import * as vis from 'ui-router-visualizer';
+//import config from'../config/app.config.json';
 
-import 'waypoints';
-
-function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $timeout) {
+function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $timeout, $http) {
   "ngInject";
 
   $trace.enable('TRANSITION');
@@ -43,19 +42,10 @@ function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $time
   });
 
   $timeout(function() {
-    $('#marketing').waypoint(function() {
-        $('.img-circle').addClass('animated zoomIn');
-    }, {
-        offset: '50%',
-        triggerOnce: false
+    $http.get('app.config.json').then(function(data) {
+      console.log(JSON.stringify(data.data));
     });
 
-    $('.featurette').waypoint(function() {
-        $('#' + this.element.id + ' .featurette-image').addClass('animated pulse');
-    }, {
-        offset: '50%',
-        triggerOnce: false
-    });
   }, 0);
 
 };
