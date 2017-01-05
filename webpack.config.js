@@ -20,9 +20,6 @@ module.exports = {
     }
   },
   entry: {},
-  node: {
-    fs: "empty"
-  },
   module: {
     loaders: [
        { test: /\.js$/, exclude: [/app\/lib/, /node_modules/], loader: 'ng-annotate!babel' },
@@ -87,10 +84,6 @@ module.exports = {
       "vfs_fonts": path.resolve(
         __dirname,
         "node_modules/pdfmake/build/vfs_fonts"
-      ),
-      "fs": path.resolve(
-        __dirname,
-        "node_modules/fs-extra/lib/index"
       )
     }
   }

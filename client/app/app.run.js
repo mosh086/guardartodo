@@ -1,5 +1,4 @@
 import * as vis from 'ui-router-visualizer';
-//import config from'../config/app.config.json';
 
 function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $timeout, $http) {
   "ngInject";

@@ -1,5 +1,21 @@
 {
     "initialModal" : {
         "enabled":true
-    }
+    },
+    "carousel":[{
+            "id":"slider1",
+            "imagen":"",
+            "alt":"",
+            "caption":""
+        }, {
+            "id":"slider2",
+            "imagen":"",
+            "alt":"",
+            "caption":""
+        }, {
+            "id":"slider3",
+            "imagen":"",
+            "alt":"",
+            "caption":""
+        }]
 }
