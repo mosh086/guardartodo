@@ -1,16 +1,22 @@
 class FeaturettesController {
-  constructor($timeout) {
+  constructor($http, $timeout) {
     "ngInject";
-    this.name = 'featurettes';
+
+    this._items = [];
+
+    $http.get('app.config.json').then((data) => {
+      this._items = data.data.featurettes;
+    }, (err) => {
+        console.log("rejected with", err);
+    });
 
     $timeout(function() {
-      $('#marketing').waypoint(function() {
-          $('.img-mark').addClass('animated zoomIn');
+      $('.featurette').waypoint(function(direction) {
+          $('#' + this.element.id + ' .featurette-image').addClass('animated pulse');
       }, {
           offset: '50%',
           triggerOnce: true
       });
-
     }, 0);
   }
 

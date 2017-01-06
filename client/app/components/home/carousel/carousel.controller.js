@@ -1,14 +1,14 @@
 class CarouselController {
-  constructor($http) {
+  constructor($http, $timeout) {
     "ngInject";
-    this.name = 'carousel';
     this._items = [];
 
     $http.get('app.config.json').then((data) => {
-      this._items = JSON.stringify(data.data.carousel);
+      this._items = data.data.carousel;
     }, (err) => {
         console.log("rejected with", err);
     });
+
   }
 }
 

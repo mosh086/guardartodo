@@ -63,7 +63,8 @@ module.exports = {
       }
     }),
     new CopyWebpackPlugin([
-      { from: 'client/app/app.config.json', to: 'app.config.json'}
+      { from: 'client/app/app.config.json', to: 'app.config.json' },
+      { from: 'client/images', to: 'images'}
     ])
   ],
   resolve: {

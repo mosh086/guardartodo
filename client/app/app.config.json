@@ -4,18 +4,68 @@
     },
     "carousel":[{
             "id":"slider1",
-            "imagen":"",
+            "imagen":"IMG-20161207-WA0006.jpg",
+            "caption": {
+                "title":"GuardarTodo no tiene limites, guarda lo que tú quieras.",
+                "description":"Nuestras bodegas están preparadas para almacenar todo tipo de cosas desde linea blanca, archivo muerto o cosas de temporada y estas estén cuidadas mediante un Monitoreo de Cámaras las 24hrs."
+            },
             "alt":"",
-            "caption":""
+            "class":"first-slide"
         }, {
             "id":"slider2",
-            "imagen":"",
+            "imagen":"IMG-20161207-WA0009.jpg",
             "alt":"",
-            "caption":""
+            "caption": {
+                "title":"GuardarTodo no tiene limites, guarda lo que tú quieras.",
+                "description":"Nuestras bodegas están preparadas para almacenar todo tipo de cosas desde linea blanca, archivo muerto o cosas de temporada y estas estén cuidadas mediante un Monitoreo de Cámaras las 24hrs."
+            },
+            "class":"second-slide"
         }, {
             "id":"slider3",
-            "imagen":"",
+            "imagen":"IMG-20161207-WA0012.jpg",
             "alt":"",
-            "caption":""
-        }]
+            "caption": {
+                "title":"GuardarTodo no tiene limites, guarda lo que tú quieras.",
+                "description":"Nuestras bodegas están preparadas para almacenar todo tipo de cosas desde linea blanca, archivo muerto o cosas de temporada y estas estén cuidadas mediante un Monitoreo de Cámaras las 24hrs."
+            },
+            "class":"third-slide"
+        }],
+    "marketing":[{
+            "imagen":"super-8.svg",
+            "title":"Seguridad",
+            "description":"Seguridad total,con camaras de monitoreo 24Hrs."
+        }, {
+            "imagen":"contract.svg",
+            "title":"Contratos",
+            "description":"No planes Forzosos, Disponibles desde  Un mes."
+        }, {
+            "imagen":"car.svg",
+            "title":"Acceso",
+            "description":"Tienes acceso con tu auto hasta tu bodega."
+        }, {
+            "imagen":"padlock.svg",
+            "title":"Privacidad",
+            "description":"Tu pones tu candado, solo TU tienes llave."
+        }, {
+            "imagen":"calendar.svg",
+            "title":"Sin plagas",
+            "description":"Contamos con control mensual de Fumigacion."
+        }, {
+            "imagen":"thermometer.svg",
+            "title":"Temperatura",
+            "description":"Somos subterraneos, No Sol!"
+    }],
+    "featurettes":[{
+            "imagen":"IMG-20161207-WA0013.jpg",
+            "title":"Mercancía de temporada.",
+            "description":"Ven y conoce nuestra bodega de 3mts² con medidas de 1x3  o 7mts² con medidas de 2.4x3 especial para guardar decoraciones navideñas y aún super precio!"
+        }, {
+            "imagen":"IMG-20161207-WA0007.jpg",
+            "title":"Equipo deportivo.",
+            "description":"Ven y guarda todo tipo de equipo deportivo, caminadoras, bicicletas etc. En nuestra bodega de 11mts² con medidas  2.95x3.71 la indicada para tener más espacio!."
+        }, {
+            "imagen":"IMG-20161207-WA0008.jpg",
+            "title":"Empresa o negocio.",
+            "description":"Tenemos espacio para todo ese archivo muerto y esos muebles por su remodelación ven y conoce la bodega indicada para ti, con un súper precio, comodidad y seguridad"
+    }]
 }

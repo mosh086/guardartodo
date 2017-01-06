@@ -40,12 +40,11 @@ function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $time
     $state.go('signin');
   });
 
-  $timeout(function() {
-    $http.get('app.config.json').then(function(data) {
-      console.log(JSON.stringify(data.data));
-    });
 
-  }, 0);
+  $http.get('app.config.json').then(function(data) {
+    //console.log(JSON.stringify(data.data));
+  });
+
 
 };
 

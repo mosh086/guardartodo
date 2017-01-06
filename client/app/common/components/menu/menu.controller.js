@@ -3,13 +3,12 @@ class MenuController {
     'ngInject';
 
     this._$scope = $scope;
-    this.name = 'menu';
 
     $timeout(function() {
-        $('[id^=scrollTo]').click(function() {
-            var id = $(this).attr('id').slice(9);
-            $(window).scrollTo($('#' + id), 1000, { offset: { top: -51, left: 0 } });
-        });
+      $('[id^=scrollTo]').click(function() {
+        var id = $(this).attr('id').slice(9);
+        $(window).scrollTo($('#' + id), 1000, { offset: { top: -51, left: 0 } });
+      });
     }, 0);
   }
 
