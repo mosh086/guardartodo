@@ -1,10 +1,10 @@
 import * as vis from 'ui-router-visualizer';
 
-function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $timeout, $http) {
+function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $timeout, $http, $uibModal) {
   "ngInject";
 
-  $trace.enable('TRANSITION');
-  vis.visualizer($uiRouter);
+  //$trace.enable('TRANSITION');
+  //vis.visualizer($uiRouter);
 
   $transitions.onStart({
     to: (state) => {
@@ -42,7 +42,27 @@ function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $time
 
 
   $http.get('app.config.json').then(function(data) {
-    //console.log(JSON.stringify(data.data));
+    $timeout(function() {
+      if (data.data.promotion.enable) {
+        $uibModal.open({
+          animation: true,
+          closeOnEscape: true,
+          ariaLabelledBy: 'modal-title',
+          ariaDescribedBy: 'modal-body',
+          template: `
+            <div class="initial modal-header">
+              <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+            </div>
+            <div>
+              <img class="initialModal" src="${data.data.promotion.image}" alt="First slide" />
+            </div>`,
+          size: 'lg'
+        })
+      }
+    }, 500);
+
+  }, function(err) {
+    console.log("rejected with", err);
   });
 
 

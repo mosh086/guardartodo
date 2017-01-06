@@ -5,7 +5,7 @@
   </ol>
   <div class="carousel-inner" role="listbox">
     <div ng-repeat="item in $ctrl._items" class="item" ng-class="{active:$first}">
-      <img class="{{item.class}}" ng-src="images/{{item.imagen}}" alt="First slide">
+      <img class="{{item.class}}" ng-src="{{item.image}}" alt="First slide">
       <div class="container">
         <div class="carousel-caption">
           <h1>{{item.caption.title}}</h1>

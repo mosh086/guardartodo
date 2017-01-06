@@ -50,6 +50,25 @@
     }
 }
 
+.initialModal {
+    width: 100%;
+    padding: 2px;
+}
+
+.initial.modal-header {
+    position: absolute;
+    right: 0;
+    color: white;
+    border: 0;
+
+    button {
+        color: white;
+        text-shadow: 0 1px 0 #fff;
+        filter: alpha(opacity=20);
+        opacity: 1;
+    }
+}
+
 .socials {
     text-align: center;
     a {

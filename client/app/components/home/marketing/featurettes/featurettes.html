@@ -7,7 +7,7 @@
         <p class="lead">{{item.description}}</p>
       </div>
       <div class="col-md-5">
-        <img class="featurette-image img-responsive center-block" alt="500x500" ng-src="images/{{item.imagen}}" style="height: 500px;width: 500px;" data-holder-rendered="true">
+        <img class="featurette-image img-responsive center-block" alt="500x500" ng-src="{{item.image}}" style="height: 500px;width: 500px;" data-holder-rendered="true">
       </div>
     </div>
     <div ng-if="$odd">
@@ -16,7 +16,7 @@
         <p class="lead">{{item.description}}</p>
       </div>
       <div class="col-md-5 col-md-pull-7">
-        <img class="featurette-image img-responsive center-block" alt="500x500" ng-src="images/{{item.imagen}}" style="height: 500px;width: 500px;" data-holder-rendered="true">
+        <img class="featurette-image img-responsive center-block" alt="500x500" ng-src="{{item.image}}" style="height: 500px;width: 500px;" data-holder-rendered="true">
       </div>
     </div>
   </div>
