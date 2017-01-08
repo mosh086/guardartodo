@@ -1,6 +1,5 @@
 class FooterController {
   constructor() {
-    this.name = 'footer';
   }
 }
 

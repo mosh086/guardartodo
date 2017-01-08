@@ -1,7 +1,7 @@
 class AsidemenuController {
   constructor(UserService) {
+  "ngInject";
     this._UserService = UserService;
-    this.name = 'asidemenu';
     this.current = {};
   }
 
@@ -17,5 +17,5 @@ class AsidemenuController {
       });
   }
 }
-AsidemenuController.$inject = ['UserService'];
+
 export default AsidemenuController;

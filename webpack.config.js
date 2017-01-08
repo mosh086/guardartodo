@@ -1,6 +1,7 @@
 var path    = require('path');
 var webpack = require('webpack');
 var HtmlWebpackPlugin = require('html-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
   devtool: 'source-map',
@@ -60,7 +61,11 @@ module.exports = {
       minChunks: function (module, count) {
         return module.resource && module.resource.indexOf(path.resolve(__dirname, 'client')) === -1;
       }
-    })
+    }),
+    new CopyWebpackPlugin([
+      { from: 'client/app/app.config.json', to: 'app.config.json' },
+      { from: 'client/images', to: 'images'}
+    ])
   ],
   resolve: {
     extensions: ['', '.js', '.css'],

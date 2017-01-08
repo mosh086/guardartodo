@@ -1,17 +1,9 @@
-//@import "common/common";
-//@import "../../node_modules/bootstrap/dist/css/bootstrap.min.css";
-//@import "../../node_modules/font-awesome/css/font-awesome.min.css";
-//@import "../../node_modules/animate.css/animate.min.css";
-//@import "color";
-//@import "carousel";
-
-
 .jumbotron {
     margin-bottom: 0;
 }
 
 .top-fix{
-    padding-top: 80px;
+    padding-top: 76px;
 }
 
 #marketing {
@@ -55,6 +47,25 @@
         &:not(:first-of-type) {
             font-size: 18px;
         }
+    }
+}
+
+.initialModal {
+    width: 100%;
+    padding: 2px;
+}
+
+.initial.modal-header {
+    position: absolute;
+    right: 0;
+    color: white;
+    border: 0;
+
+    button {
+        color: white;
+        text-shadow: 0 1px 0 #fff;
+        filter: alpha(opacity=20);
+        opacity: 1;
     }
 }
 
