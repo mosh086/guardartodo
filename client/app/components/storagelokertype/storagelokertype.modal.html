@@ -1,14 +1,14 @@
 <div class="modal-header">
   <h3 class="modal-title">{{$ctrl._title}}</h3>
 </div>
-<form name="styForm" id="styForm">
+<form name="styForm" id="styForm" novalidate>
   <div class="modal-body">
     <div class="row ">
       <div class="form-group col-md-6" ng-class="{ 'has-error': styForm.sltName.$dirty && styForm.sltName.$invalid }">
         <label for="sltName">Nombre *</label>
         <input type="text" class="form-control" id="sltName" name="sltName" placeholder="Nombre" ng-model="$ctrl._data.name" required>
-        <span ng-show="styForm.sltName.$dirty && styForm.sltName.$invalid">
-          <span style="color:#a94442" ng-show="styForm.sltName.$error.required">El nombre es requerido.</span>
+        <span class="span-validation" ng-show="styForm.sltName.$dirty && styForm.sltName.$invalid">
+          <span ng-show="styForm.sltName.$error.required">El nombre es requerido.</span>
         </span>
       </div>
     </div>

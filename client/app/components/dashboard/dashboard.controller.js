@@ -1,6 +1,7 @@
 class DashboardController {
   constructor(DashboardService) {
-    this.name = 'dashboard';
+    'ngInject';
+
   }
 
   $onInit() {
@@ -16,5 +17,4 @@ class DashboardController {
   }
 }
 
-DashboardController.$inject = ['DashboardService'];
 export default DashboardController;
