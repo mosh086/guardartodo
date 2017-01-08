@@ -1,5 +1,5 @@
 class ResetpasswordController {
-  constructor($stateParams) {
+  constructor($stateParams, $state, UserService) {
     'ngInject';
     this.name = 'resetpassword';
     this.data = {
@@ -9,18 +9,25 @@ class ResetpasswordController {
       confirmpassword:null
     }
     this.messageerror = "";
+
+    this._User = UserService;
   }
 
   reset(){
+    let self = this;
     if(this.data.newpassword !== this.data.confirmpassword) {
       this.messageerror = "confirmacion erronea"
       return false;
     }
-    if(this.data.password !== '' && this.data.newpassword !== '') {
+    if(this.data.password === '' || this.data.newpassword === '') {
       this.messageerror = "password es requerido"
       return false;
     }
 
+    this._User.reset(self.data)
+      .then((res) => {
+        $state.go('dashboard');
+      })
 
   }
 }

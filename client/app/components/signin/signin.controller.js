@@ -15,10 +15,9 @@ class SigninController {
       .then((res) => {
         if (res.status == '201') {
           this._toastr.success('Welcome back,' + this.data.username);
-          if (this.data.reset === 0) {
+          if (res.data.user.reset === 0) {
             this._$state.go('dashboard');
           } else {
-            console.log('geeeee');
             this._$state.go('resetpassword', { username: this.data.username });
           }
         }

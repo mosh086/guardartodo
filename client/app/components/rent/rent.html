@@ -43,19 +43,19 @@
     <div class="col-md-3">
       <div class="row">
         <label for="rCosto">Costo</label>
-        <input type="text" class="form-control" id="rCosto" placeholder="Costo" ng-model="$ctrl._data.cost" required>
+        <input type="text" currency class="form-control" id="rCosto" placeholder="Costo" ng-model="$ctrl._data.cost" required>
       </div>
       <div class="row">
         <label for="rExtr">Servicio Extra</label>
-        <input type="text" class="form-control" id="rExtr" placeholder="Servicio Extra" ng-model="$ctrl._data.extra" required>
+        <input type="number" step ="0.01" class="form-control" id="rExtr" placeholder="Servicio Extra" ng-model="$ctrl._data.extra" required>
       </div>
       <div class="row">
         <label for="rIva">IVA</label>
-        <input type="text" class="form-control" id="rIva" placeholder="IVA" ng-model="$ctrl._data.iva" required>
+        <input type="number" step ="0.01" class="form-control" id="rIva" placeholder="IVA" ng-model="$ctrl._data.iva" required>
       </div>
       <div class="row">
         <label for="rTotal">Total</label>
-        <input type="text" class="form-control" id="rTotal" placeholder="Total" ng-model="$ctrl._data.total" required>
+        <input type="number" step ="0.01" class="form-control" id="rTotal" placeholder="Total" ng-model="$ctrl._data.total" required>
       </div>
     </div>
   </div>

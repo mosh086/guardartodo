@@ -17,6 +17,7 @@ function createToken(user) {
 function getUserDB(username, done) {
   db.get().query('SELECT * FROM user WHERE username = ? LIMIT 1', [username], function(err, rows, fields) {
     if (err) throw err;
+    console.log(JSON.stringify(rows[0]));
     done(rows[0]);
   });
 }
@@ -79,7 +80,8 @@ app.post('/api/auth/login', function(req, res) {
       return res.status(401).send("The username or password don't match");
     }
     res.status(201).send({
-      id_token: createToken(user)
+      id_token: createToken(user),
+      user: user
     });
   });
 });
@@ -135,7 +137,7 @@ function getAll (done) {
 function getById (id,done) {
   db.get().query('SELECT * FROM user WHERE userId = ?', id, function(err, row) {
     if(err) throw err;
-    done(row);
+    done(row[0]);
   });
 }
 
@@ -170,7 +172,13 @@ function remove (id, done) {
 }
 
 function reset(id, data, done) {
-  db.get().query('DELETE FROM user WHERE userId = ?', id, function(err, result) {
+  console.log(id);
+  console.log(JSON.stringify(data))
+  var thisdata = {
+    reset:0,
+    password:data.newpassword
+  }
+  db.get().query('UPDATE user SET ? WHERE username = ?', [thisdata, id], function(err, result) {
     if(err) throw err;
     done(result);
   });

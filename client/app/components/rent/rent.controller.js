@@ -60,7 +60,10 @@ class RentController {
     let self = this;
     this._StoragelokertypeService
       .get(selected)
-      .then((res) => self._storagelokertype = res[0]);
+      .then((res) => {
+        self._storagelokertype = res[0];
+        self._data.total = self._storagelokertype.price;
+      });
   }
 
   print(){

@@ -10,7 +10,7 @@ export default class InstanceCtrl {
 
   $onInit() {
     if (this._user) {
-      this._data = this._user[0];
+      this._data = this._user;
       delete this._data.enable;
       delete this._data.createDatetime;
     }

@@ -29,5 +29,4 @@ function ShowAuthed(Auth) {
   };
 }
 
-ShowAuthed.$inject = ['Auth'];
 export default ShowAuthed;
