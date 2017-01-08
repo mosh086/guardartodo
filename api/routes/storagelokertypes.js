@@ -8,14 +8,14 @@ var jwtCheck = jwt({
 });
 
 function getAll (done) {
-  db.get().query('SELECT * FROM storagelokertype', function(err, rows) {
+  db.get().query('SELECT * FROM storagelokertype WHERE enable = 1', function(err, rows) {
     if(err) throw err;
     done(rows);
   });
 }
 
 function getById (id,done) {
-  db.get().query('SELECT * FROM storagelokertype WHERE storagelokertypeId = ?', id, function(err, row) {
+  db.get().query('SELECT * FROM storagelokertype WHERE storagelokertypeId = ? AND enable = 1', id, function(err, row) {
     if(err) throw err;
     done(row);
   });
@@ -29,20 +29,20 @@ function insert (data,done) {
 }
 
 function update (id, data, done) {
-  db.get().query('UPDATE storagelokertype SET ? WHERE storagelokertypeId = ?', [data, id], function(err, result) {
+  db.get().query('UPDATE storagelokertype SET ? WHERE storagelokertypeId = ? AND enable = 1', [data, id], function(err, result) {
     if(err) throw err;
     done(result);
   });
 }
 
 function remove (id, done) {
-  db.get().query('DELETE FROM storagelokertype WHERE storagelokertypeId = ?', id, function(err, result) {
+  db.get().query('UPDATE storagelokertype SET enable = 0 WHERE storagelokertypeId = ?', id, function(err, result) {
     if(err) throw err;
     done(result);
   });
 }
 
-//app.use('/api/storagelokertypes', jwtCheck);
+app.use('/api/storagelokertypes', jwtCheck);
 app.get('/api/storagelokertypes', function(req, res) {
   getAll(function(result) {
     res.status(200).send(result);

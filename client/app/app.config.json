@@ -1,6 +1,6 @@
 {
     "promotion" : {
-        "enable":false,
+        "enable":true,
         "image":"images/promotion/promo1.jpg"
     },
     "carousel":[{

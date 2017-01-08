@@ -11,14 +11,15 @@ function getAll (done) {
   db.get().query(`SELECT  CONCAT_WS(' ',firstName,lastName) as fullName,
                           CONCAT_WS(' ',street,town,country,state,zipcode) as address,
                           c.*
-                  FROM client c`, function(err, rows) {
+                  FROM client c
+                  WHERE enable = 1`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });
 }
 
 function getById (id,done) {
-  db.get().query('SELECT * FROM client WHERE clientId = ?', id, function(err, row) {
+  db.get().query('SELECT * FROM client WHERE clientId = ? AND enable = 1', id, function(err, row) {
     if(err) throw err;
     done(row);
   });
@@ -32,20 +33,20 @@ function insert (data,done) {
 }
 
 function update (id, data, done) {
-  db.get().query('UPDATE client SET ? WHERE clientId = ?', [data, id], function(err, result) {
+  db.get().query('UPDATE client SET ? WHERE clientId = ? AND enable = 1', [data, id], function(err, result) {
     if(err) throw err;
     done(result);
   });
 }
 
 function remove (id, done) {
-  db.get().query('DELETE FROM client WHERE clientId = ?', id, function(err, result) {
+  db.get().query('UPDATE client SET enable = 0 WHERE clientId = ?', id, function(err, result) {
     if(err) throw err;
     done(result);
   });
 }
 
-//app.use('/api/clients', jwtCheck);
+app.use('/api/clients', jwtCheck);
 app.get('/api/clients', function(req, res) {
   getAll(function(result) {
     res.status(200).send(result);

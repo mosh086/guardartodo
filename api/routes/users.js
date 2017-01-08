@@ -15,7 +15,7 @@ function createToken(user) {
   return jwt.sign(_.omit(user, 'password'), config.secretKey, { expiresIn: 60*60*5 });
 }
 function getUserDB(username, done) {
-  db.get().query('SELECT * FROM user WHERE username = ? LIMIT 1', [username], function(err, rows, fields) {
+  db.get().query('SELECT * FROM user WHERE username = ? AND enable = 1 LIMIT 1', [username], function(err, rows, fields) {
     if (err) throw err;
     console.log(JSON.stringify(rows[0]));
     done(rows[0]);
@@ -128,21 +128,21 @@ app.get('/user/check/:username', function(req, res) {
 
 
 function getAll (done) {
-  db.get().query(`SELECT CONCAT_WS(' ',firstName,lastName) as fullName, u.* FROM user u`, function(err, rows) {
+  db.get().query(`SELECT CONCAT_WS(' ',firstName,lastName) as fullName, u.* FROM user u WHERE enable = 1`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });
 }
 
 function getById (id,done) {
-  db.get().query('SELECT * FROM user WHERE userId = ?', id, function(err, row) {
+  db.get().query('SELECT * FROM user WHERE userId = ? AND enable = 1', id, function(err, row) {
     if(err) throw err;
     done(row[0]);
   });
 }
 
 function getByUsername (id,done) {
-  db.get().query('SELECT * FROM user WHERE username = ?', id, function(err, row) {
+  db.get().query('SELECT * FROM user WHERE username = ? AND enable = 1', id, function(err, row) {
     if(err) throw err;
     done(row);
   });
@@ -158,14 +158,14 @@ function insert (data,done) {
 }
 
 function update (id, data, done) {
-  db.get().query('UPDATE user SET ? WHERE userId = ?', [data, id], function(err, result) {
+  db.get().query('UPDATE user SET ? WHERE userId = ? AND enable = 1', [data, id], function(err, result) {
     if(err) throw err;
     done(result);
   });
 }
 
 function remove (id, done) {
-  db.get().query('DELETE FROM user WHERE userId = ?', id, function(err, result) {
+  db.get().query('UPDATE user SET enable = 0 WHERE userId = ?', id, function(err, result) {
     if(err) throw err;
     done(result);
   });
@@ -178,7 +178,7 @@ function reset(id, data, done) {
     reset:0,
     password:data.newpassword
   }
-  db.get().query('UPDATE user SET ? WHERE username = ?', [thisdata, id], function(err, result) {
+  db.get().query('UPDATE user SET ? WHERE username = ? AND enable = 1', [thisdata, id], function(err, result) {
     if(err) throw err;
     done(result);
   });

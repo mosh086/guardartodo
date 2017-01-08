@@ -1,31 +1,36 @@
 <div class="modal-header">
   <h3 class="modal-title">{{$ctrl._title}}</h3>
 </div>
-<div class="modal-body">
-  <div class="row ">
-    <div class="form-group col-md-6">
-      <label for="sltName">Nombre *</label>
-      <input type="text" class="form-control" id="sltName" placeholder="Nombre" ng-model="$ctrl._data.name" required>
+<form name="styForm" id="styForm">
+  <div class="modal-body">
+    <div class="row ">
+      <div class="form-group col-md-6" ng-class="{ 'has-error': styForm.sltName.$dirty && styForm.sltName.$invalid }">
+        <label for="sltName">Nombre *</label>
+        <input type="text" class="form-control" id="sltName" name="sltName" placeholder="Nombre" ng-model="$ctrl._data.name" required>
+        <span ng-show="styForm.sltName.$dirty && styForm.sltName.$invalid">
+          <span style="color:#a94442" ng-show="styForm.sltName.$error.required">El nombre es requerido.</span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="sltDescription">Descripción</label>
+        <input type="text" class="form-control" id="sltDescription" placeholder="Descripción" ng-model="$ctrl._data.description">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label for="sltPrice">Precio</label>
+        <input type="number" step="any" class="form-control" id="sltPrice" placeholder="Precio" ng-model="$ctrl._data.price">
+      </div>
+      <div class="form-group col-md-6">
+        <label for="sltSize">Medidas</label>
+        <input type="text" class="form-control" id="sltSize" placeholder="Medidas" ng-model="$ctrl._data.size">
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="form-group col-md-12">
-      <label for="sltDescription">Descripción</label>
-      <input type="text" class="form-control" id="sltDescription" placeholder="Descripción" ng-model="$ctrl._data.description">
-    </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-primary" ng-click="$ctrl.validate() && styForm.$valid && $ctrl.save()">Guardar</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
   </div>
-  <div class="row">
-    <div class="form-group col-md-6">
-      <label for="sltPrice">Precio</label>
-      <input type="number" step="any" class="form-control" id="sltPrice" placeholder="Precio" ng-model="$ctrl._data.price">
-    </div>
-    <div class="form-group col-md-6">
-      <label for="sltSize">Medidas</label>
-      <input type="text" class="form-control" id="sltSize" placeholder="Medidas" ng-model="$ctrl._data.size">
-    </div>
-  </div>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="$ctrl.save()">Guardar</button>
-  <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
-</div>
+</form>
