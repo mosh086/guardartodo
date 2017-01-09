@@ -1,7 +1,10 @@
 export default class InstanceCtrl {
   constructor($uibModalInstance, $log, $filter, client) {
+    "ngInject";
+
     this._uibModalInstance = $uibModalInstance;
     this._log = $log;
+
     this._client = client;
 
     this._title = (client)?'Editar cliente':'Nuevo cliente';
@@ -17,7 +20,7 @@ export default class InstanceCtrl {
 
   $onInit() {
     if (this._client) {
-      this._data = this._client[0];
+      this._data = this._client;
       delete this._data.enable;
       delete this._data.createDatetime;
     }
@@ -28,9 +31,7 @@ export default class InstanceCtrl {
   };
 
   cancel() {
-    this._uibModalInstance.dismiss(undefined,'cancel');
+    this._uibModalInstance.dismiss('cancel');
   };
 
 }
-
-InstanceCtrl.$inject = ['$uibModalInstance', '$log', '$filter', 'client'];

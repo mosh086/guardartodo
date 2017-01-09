@@ -5,23 +5,25 @@ class SigninController {
     this._Auth = Auth;
     this._$state = $state;
     this._toastr = toastr;
-    this.name = 'signin';
-    this.data = { username: '', password: '' };
+
+    this._data = {
+      username: '',
+      password: ''
+    };
   }
 
   signin() {
-    console.log("signin with credentials:" + JSON.stringify(this.data));
-    this._Auth.attempAuth('signin', this.data)
+    this._Auth.attempAuth('signin', this._data)
       .then((res) => {
         if (res.status == '201') {
-          this._toastr.success('Welcome back,' + this.data.username);
+          this._toastr.success('Welcome back,' + this._data.username);
           if (res.data.user.reset === 0) {
             this._$state.go('dashboard');
           } else {
-            this._$state.go('resetpassword', { username: this.data.username });
+            this._$state.go('resetpassword', { username: this._data.username });
           }
         }
-      });
+      }, (err) => console.log('error: ' + err));
   }
 }
 

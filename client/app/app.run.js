@@ -1,5 +1,4 @@
 import * as vis from 'ui-router-visualizer';
-
 function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $timeout, $http, $uibModal) {
   "ngInject";
 
@@ -40,31 +39,30 @@ function AppRun(Auth, $rootScope, $state, $trace, $uiRouter, $transitions, $time
     $state.go('signin');
   });
 
-
-  $http.get('app.config.json').then(function(data) {
-    $timeout(function() {
-      if (data.data.promotion.enable) {
-        $uibModal.open({
-          animation: true,
-          closeOnEscape: true,
-          ariaLabelledBy: 'modal-title',
-          ariaDescribedBy: 'modal-body',
-          template: `
-            <div class="initial modal-header">
-              <button type="button" class="close" ng-click="$dismiss()">&times;</button>
-            </div>
-            <div>
-              <img class="initialModal" src="${data.data.promotion.image}" alt="First slide" />
-            </div>`,
-          size: 'lg'
-        })
-      }
-    }, 500);
-
-  }, function(err) {
-    console.log("rejected with", err);
-  });
-
+  $http.get('app.config.json')
+    .then((data) => {
+      $timeout(function() {
+        if (data.data.promotion.enable && $state.is('home')) {
+          let modalInstance = $uibModal.open({
+            animation: true,
+            closeOnEscape: true,
+            ariaLabelledBy: 'modal-title',
+            ariaDescribedBy: 'modal-body',
+            template: `
+              <div class="initial modal-header">
+                <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+              </div>
+              <div>
+                <img class="initialModal" src="${data.data.promotion.image}" alt="First slide" />
+              </div>`,
+            size: 'lg'
+          });
+          modalInstance.result.then((res) => {}, (err) => {});
+        }
+      }, 500);
+    }, (err) => {
+      console.log("rejected with", err);
+    });
 
 };
 

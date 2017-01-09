@@ -3,10 +3,12 @@ import modalInstanceCtrl from './client.modal.controller'
 
 class ClientController {
   constructor($uibModal, ClientService) {
-    this.name = 'client';
-    this.client = [];
+    "ngInject";
+
     this._uibModal = $uibModal;
     this._Client = ClientService;
+
+    this._clients = [];
   }
 
   $onInit() {
@@ -17,7 +19,6 @@ class ClientController {
   $onDestroy() {
     console.log("destroying Client...");
   }
-
 
   openDialog(id){
     let self = this;
@@ -30,33 +31,35 @@ class ClientController {
       controllerAs: '$ctrl',
       size: 'lg',
       resolve: {
-        client: function () {
+        client: () => {
           return (id)?self._Client.get(id):undefined;
         }
       }
     });
 
-    modalInstance.result.then(function (data) {
-      self.save(data);
-    }, function () {
-
-    });
+    modalInstance.result
+      .then((data) => self.save(data),
+        (err) => {
+          if (err !== 'cancel')
+            console.log('error: ' + err);
+        }
+      );
   }
 
   save(data) {
     let self = this;
     this._Client.save(data)
-      .then((res) => {
-        self.searchClients();
-      })
+      .then((res) => self.searchClients(),
+        (err) => console.log('error: ' + err)
+      )
   }
 
   remove(id) {
     let self = this;
     this._Client.remove(id)
-      .then((res) => {
-        self.searchClients();
-      })
+      .then((res) => self.searchClients(),
+        (err) => console.log('error: ' + err)
+      )
   }
 
   search() {
@@ -67,11 +70,10 @@ class ClientController {
     let self = this;
     this._Client
       .query(this.q)
-      .then(
-      (res) => self.client = res
+      .then((res) => self._clients = res,
+        (err) => console.log('error: ' + err)
       );
   }
 }
 
-ClientController.$inject = ['$uibModal', 'ClientService'];
 export default ClientController;

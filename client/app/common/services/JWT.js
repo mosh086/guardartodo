@@ -20,5 +20,4 @@ class JWT {
 
 }
 
-JWT.$inject = ['AppConstants', '$window'];
 export default JWT;

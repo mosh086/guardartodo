@@ -3,11 +3,12 @@ import modalInstanceCtrl from './storagelokertype.modal.controller'
 
 class StoragelokertypeController {
   constructor($uibModal, StoragelokertypeService) {
-    this._name = 'storagelokertype';
-    this._storagelokertype = [];
+    "ngInject";
+
     this._uibModal = $uibModal;
     this._Storagelokertype = StoragelokertypeService;
 
+    this._storagelokertype = [];
   }
 
   $onInit() {
@@ -36,27 +37,29 @@ class StoragelokertypeController {
       }
     });
 
-    modalInstance.result.then(function (data) {
-      self.save(data);
-    }, function () {
-
-    });
+    modalInstance.result
+    .then((data) => self.save(data),
+      (err) => {
+        if (err !== 'cancel')
+          console.log('error: ' + err);
+      }
+    );
   }
 
   save(data) {
     let self = this;
     this._Storagelokertype.save(data)
-      .then((res) => {
-        self.searchStoragelokertypes();
-      })
+      .then((res) => self.searchStoragelokertypes(),
+        (err) => console.log('error: ' + err)
+    );
   }
 
   remove(id) {
     let self = this;
     this._Storagelokertype.remove(id)
-      .then((res) => {
-        self.searchStoragelokertypes();
-      })
+      .then((res) => self.searchStoragelokertypes(),
+        (err) => console.log('error: ' + err)
+    );
   }
 
   search() {
@@ -72,5 +75,4 @@ class StoragelokertypeController {
 
 }
 
-StoragelokertypeController.$inject = ['$uibModal', 'StoragelokertypeService'];
 export default StoragelokertypeController;

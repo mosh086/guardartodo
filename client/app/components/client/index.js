@@ -13,7 +13,7 @@ let clientModule = angular.module('app.components.client', [
       url: '/client',
       component: 'client',
       data: {
-        requiresAuth: false
+        requiresAuth: true
       }
     });
 })

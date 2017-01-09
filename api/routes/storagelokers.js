@@ -8,7 +8,10 @@ var jwtCheck = jwt({
 });
 
 function getAll (done) {
-  db.get().query('SELECT * FROM storageloker WHERE enable = 1', function(err, rows) {
+  db.get().query(`SELECT sl.*, slt.name as typename
+      FROM storageloker sl
+      INNER JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId AND slt.enable = 1
+    WHERE sl.enable = 1`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });
@@ -17,7 +20,7 @@ function getAll (done) {
 function getById (id,done) {
   db.get().query('SELECT * FROM storageloker WHERE storagelokerId = ? AND enable = 1', id, function(err, row) {
     if(err) throw err;
-    done(row);
+    done(row[0]);
   });
 }
 

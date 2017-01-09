@@ -27,5 +27,4 @@ class Signup {
 
 }
 
-Signup.$inject = ['AppConstants', '$http', '$q'];
 export default Signup;

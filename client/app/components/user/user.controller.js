@@ -3,10 +3,12 @@ import modalInstanceCtrl from './user.modal.controller'
 
 class UserController {
   constructor($uibModal, UserService) {
-    this.name = 'user';
-    this.user = [];
+    "ngInject";
+
     this._uibModal = $uibModal;
     this._User = UserService;
+
+    this._users = [];
   }
 
   $onInit() {
@@ -35,27 +37,28 @@ class UserController {
       }
     });
 
-    modalInstance.result.then(function (data) {
-      self.save(data);
-    }, function () {
-
-    });
+    modalInstance.result.then((data) => self.save(data),
+      (err) => {
+        if (err !== 'cancel')
+          console.log('error: ' + err);
+      }
+    );
   }
 
   save(data) {
     let self = this;
     this._User.save(data)
-      .then((res) => {
-        self.searchUsers();
-      })
+      .then((res) => self.searchUsers(),
+        (err) => console.log('error: ' + err)
+      )
   }
 
   remove(id) {
     let self = this;
     this._User.remove(id)
-      .then((res) => {
-        self.searchUsers();
-      })
+      .then((res) => self.searchUsers(),
+        (err) => console.log('error: ' + err)
+      )
   }
 
   search() {
@@ -67,10 +70,10 @@ class UserController {
     this._User
       .query(this.q)
       .then(
-      (res) => self.user = res
+        (res) => self._users = res,
+        (err) => console.log('error: ' + err)
       );
   }
 }
 
-UserController.$inject = ['$uibModal', 'UserService'];
 export default UserController;

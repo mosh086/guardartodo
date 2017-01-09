@@ -27,5 +27,4 @@ class Signin {
 
 }
 
-Signin.$inject = ['AppConstants', '$http', '$q'];
 export default Signin;

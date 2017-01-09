@@ -15,8 +15,7 @@ class Storageloker {
       params: !!keyword ? { 'q': keyword } : null
     };
     this._$http(request)
-      .then(
-        (res) => deferred.resolve(res.data),
+      .then((res) => deferred.resolve(res.data),
         (err) => deferred.reject(err)
       );
     return deferred.promise;
@@ -35,10 +34,8 @@ class Storageloker {
     this._$http({
       url: this._AppConstants.api + '/storagelokers/' + id,
       method: 'GET'
-    })
-      .then(
-      (res) => deferred.resolve(res.data),
-      (err) => deferred.reject(err)
+    }).then((res) => deferred.resolve(res.data),
+        (err) => deferred.reject(err)
       );
     return deferred.promise;
   }
@@ -71,14 +68,12 @@ class Storageloker {
       url: this._AppConstants.api + '/storagelokers/' + id,
       method: 'DELETE'
     })
-      .then(
-      (res) => deferred.resolve(res.data),
-      (err) => deferred.reject(err)
+      .then((res) => deferred.resolve(res.data),
+        (err) => deferred.reject(err)
       );
     return deferred.promise;
   }
 
 }
 
-Storageloker.$inject = ['AppConstants', '$http', '$q'];
 export default Storageloker;

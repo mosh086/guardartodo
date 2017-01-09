@@ -17,7 +17,7 @@ function getAll (done) {
 function getById (id,done) {
   db.get().query('SELECT * FROM storagelokertype WHERE storagelokertypeId = ? AND enable = 1', id, function(err, row) {
     if(err) throw err;
-    done(row);
+    done(row[0]);
   });
 }
 

@@ -13,7 +13,7 @@ let storagelokerModule = angular.module('app.components.storageloker', [
       url: '/storageloker',
       component: 'storageloker',
       data: {
-        requiresAuth: false
+        requiresAuth: true
       }
     });
 })

@@ -3,12 +3,14 @@ import modalInstanceCtrl from './storageloker.modal.controller'
 
 class StoragelokerController {
   constructor($uibModal, StoragelokerService, StoragelokertypeService) {
-    this.name = 'storageloker';
-    this.storageloker = [];
-    this.storagelokertype = [];
+    "ngInject";
+
     this._uibModal = $uibModal;
     this._Storageloker = StoragelokerService;
     this._Storagelokertypes = StoragelokertypeService;
+
+    this.storageloker = [];
+    this.storagelokertype = [];
   }
 
   $onInit() {
@@ -32,36 +34,38 @@ class StoragelokerController {
       controllerAs: '$ctrl',
       size: 'lg',
       resolve: {
-        storageloker: function () {
+        storageloker: () => {
           return (id)?self._Storageloker.get(id):undefined;
         },
-        storagelokertypes: function () {
+        storagelokertypes: () => {
           return self.storagelokertype;
         }
       }
     });
 
-    modalInstance.result.then(function (data) {
-      self.save(data);
-    }, function () {
-
-    });
+    modalInstance.result
+      .then((data) => self.save(data),
+        (err) => {
+          if (err !== 'cancel')
+            console.log('error: ' + err);
+        }
+      );
   }
 
   save(data) {
     let self = this;
     this._Storageloker.save(data)
-      .then((res) => {
-        self.searchStoragelokers();
-      })
+      .then((res) => self.searchStoragelokers(),
+        (err) => console.log('error: ' + err)
+      )
   }
 
   remove(id) {
     let self = this;
     this._Storageloker.remove(id)
-      .then((res) => {
-        self.searchStoragelokers();
-      })
+      .then((res) => self.searchStoragelokers(),
+        (err) => console.log('error: ' + err)
+      )
   }
 
   search() {
@@ -72,17 +76,20 @@ class StoragelokerController {
     let self = this;
     this._Storageloker
       .query(this.q)
-      .then((res) => self.storageloker = res);
+      .then((res) => self.storageloker = res,
+        (err) => console.log('error: ' + err)
+      );
   }
 
   searchStoragelokertypes() {
     let self = this;
     this._Storagelokertypes
       .query(this.q)
-      .then((res) => self.storagelokertype = res);
+      .then((res) => self.storagelokertype = res,
+        (err) => console.log('error: ' + err)
+      );
   }
 
 }
 
-StoragelokerController.$inject = ['$uibModal', 'StoragelokerService', 'StoragelokertypeService'];
 export default StoragelokerController;

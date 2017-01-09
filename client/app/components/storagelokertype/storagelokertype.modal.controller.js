@@ -1,5 +1,5 @@
 export default class InstanceCtrl {
-  constructor($uibModalInstance, $log, $filter, $scope, storagelokertype) {
+  constructor($uibModalInstance, $log, $scope, storagelokertype) {
     "ngInject";
 
     this._uibModalInstance = $uibModalInstance;
@@ -8,12 +8,18 @@ export default class InstanceCtrl {
     this._storagelokertype = storagelokertype;
 
     this._title = (storagelokertype)?'Editar tipo de bodega':'Nuevo tipo de bodega';
-    this._data = { storagelokertypeId:null, name:'', description: '', price: 0.00, size: '' };
+    this._data = {
+      storagelokertypeId:null,
+      name:null,
+      description:null,
+      price:null,
+      size:null
+    };
   }
 
   $onInit() {
     if (this._storagelokertype) {
-      this._data = this._storagelokertype[0];
+      this._data = this._storagelokertype;
       delete this._data.enable;
       delete this._data.createDatetime;
     }
@@ -24,7 +30,7 @@ export default class InstanceCtrl {
   };
 
   cancel() {
-    this._uibModalInstance.dismiss(undefined, 'Cancel');
+    this._uibModalInstance.dismiss('cancel');
   };
 
   validate() {

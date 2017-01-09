@@ -49,5 +49,4 @@ class Dashboard {
 
 }
 
-Dashboard.$inject = ['AppConstants', '$http', '$q'];
 export default Dashboard;

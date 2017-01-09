@@ -102,6 +102,7 @@ app.get('/api/users/me', function(req, res) {
       var decoded = jwt.verify(token, config.secretKey);
       //if (decoded.exp <= Date.now()) {
       //  res.end('Access token has expired', 400);
+      console.log(decoded.username);
       getByUsername(decoded.username, function(result) {
         res.status(200).send(result);
       });
@@ -150,7 +151,6 @@ function getByUsername (id,done) {
 
 function insert (data,done) {
   data.password = '12345';
-  data.email = 'admin@guardartodo.com';
   db.get().query('INSERT INTO user SET ?', data, function(err, result) {
     if(err) throw err;
     done(result)

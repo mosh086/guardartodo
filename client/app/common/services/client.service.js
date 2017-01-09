@@ -80,5 +80,4 @@ class Client {
 
 }
 
-Client.$inject = ['AppConstants', '$http', '$q'];
 export default Client;

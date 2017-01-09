@@ -101,7 +101,7 @@ class User {
   me() {
     let deferred = this._$q.defer();
     this._$http({
-      url: this._AppConstants.api + '/users/me',
+      url: this._AppConstants.api + '/user/me',
       method: 'GET'
     })
       .then(
@@ -116,5 +116,4 @@ class User {
 
 }
 
-User.$inject = ['AppConstants', '$http', '$q'];
 export default User;

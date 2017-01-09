@@ -81,5 +81,4 @@ class Auth {
 
 }
 
-Auth.$inject = ['JWT', 'AppConstants', '$http', '$state', '$q'];
 export default Auth;
