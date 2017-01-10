@@ -1,9 +1,10 @@
 export default class InstanceCtrl {
-  constructor($uibModalInstance, $log, $filter, client) {
+  constructor($uibModalInstance, $log, $scope, $filter, client) {
     "ngInject";
 
     this._uibModalInstance = $uibModalInstance;
     this._log = $log;
+    this._scope =$scope;
 
     this._client = client;
 
@@ -33,5 +34,13 @@ export default class InstanceCtrl {
   cancel() {
     this._uibModalInstance.dismiss('cancel');
   };
+
+  validate() {
+    angular.forEach(this._scope.cForm, function(value, key) {
+         if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
+             value.$setDirty();
+     });
+    return true;
+  }
 
 }

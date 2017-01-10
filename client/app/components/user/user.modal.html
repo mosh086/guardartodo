@@ -1,25 +1,36 @@
 <div class="modal-header">
   <h3 class="modal-title">{{$ctrl._title}}</h3>
 </div>
-<div class="modal-body">
-  <div class="row">
-    <div class="form-group col-md-6">
-      <label for="utFirstName">Nombre *</label>
-      <input type="text" class="form-control" id="utFirstName" placeholder="Nombre" ng-model="$ctrl._data.firstName" required>
+<form name="uForm" id="uForm" novalidate>
+  <div class="modal-body">
+    <div class="row">
+      <div class="form-group col-md-6" ng-class="{ 'has-error': uForm.utFirstName.$dirty && uForm.utFirstName.$invalid }">
+        <label for="utFirstName">Nombre *</label>
+        <input type="text" class="form-control" id="utFirstName" name="utFirstName" placeholder="Nombre" ng-model="$ctrl._data.firstName" maxlength="200" required>
+        <span class="span-validation" ng-show="uForm.utFirstName.$dirty && uForm.utFirstName.$invalid">
+          <span ng-show="uForm.utFirstName.$error.required">El Nombre es requerido.</span>
+        </span>
+      </div>
+      <div class="form-group col-md-6" ng-class="{ 'has-error': uForm.utLastName.$dirty && uForm.utLastName.$invalid }">
+        <label for="utLastName">Apellidos *</label>
+        <input type="text" class="form-control" id="utLastName" name="utLastName" placeholder="Apellidos" ng-model="$ctrl._data.lastName" maxlength="200" required>
+        <span class="span-validation" ng-show="uForm.utLastName.$dirty && uForm.utLastName.$invalid">
+          <span ng-show="uForm.utLastName.$error.required">Los apellidos son requeridos.</span>
+        </span>
+      </div>
     </div>
-    <div class="form-group col-md-6">
-      <label for="utLastName">Apellidos *</label>
-      <input type="text" class="form-control" id="utLastName" placeholder="Apellidos" ng-model="$ctrl._data.lastName" required>
+    <div class="row">
+      <div class="form-group col-md-6" ng-class="{ 'has-error': uForm.uUsername.$dirty && uForm.uUsername.$invalid }">
+        <label for="uUsername">Username *</label>
+        <input type="text" class="form-control" id="uUsername" name="uUsername" placeholder="Username" ng-model="$ctrl._data.username" maxlength="20" required>
+        <span class="span-validation" ng-show="uForm.uUsername.$dirty && uForm.uUsername.$invalid">
+          <span ng-show="uForm.uUsername.$error.required">El Username es requerido.</span>
+        </span>
+      </div>
     </div>
   </div>
-  <div class="row">
-    <div class="form-group col-md-6">
-      <label for="uUsername">Username *</label>
-      <input type="text" class="form-control" id="uUsername" placeholder="Username" ng-model="$ctrl._data.username" required>
-    </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.validate() && uForm.$valid && $ctrl.save()">Guardar</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
   </div>
-</div>
-<div class="modal-footer">
-  <button class="btn btn-primary" type="button" ng-click="$ctrl.save()">Guardar</button>
-  <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
-</div>
+</form>

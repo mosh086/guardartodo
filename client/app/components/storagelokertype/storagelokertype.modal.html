@@ -6,7 +6,7 @@
     <div class="row ">
       <div class="form-group col-md-6" ng-class="{ 'has-error': styForm.sltName.$dirty && styForm.sltName.$invalid }">
         <label for="sltName">Nombre *</label>
-        <input type="text" class="form-control" id="sltName" name="sltName" placeholder="Nombre" ng-model="$ctrl._data.name" required autofocus>
+        <input type="text" class="form-control" id="sltName" name="sltName" placeholder="Nombre" ng-model="$ctrl._data.name" maxlength="45" required autofocus>
         <span class="span-validation" ng-show="styForm.sltName.$dirty && styForm.sltName.$invalid">
           <span ng-show="styForm.sltName.$error.required">El nombre es requerido.</span>
         </span>
@@ -15,20 +15,21 @@
     <div class="row">
       <div class="form-group col-md-12">
         <label for="sltDescription">Descripción</label>
-        <input type="text" class="form-control" id="sltDescription" placeholder="Descripción" ng-model="$ctrl._data.description">
+        <input type="text" class="form-control" id="sltDescription" placeholder="Descripción" ng-model="$ctrl._data.description" maxlength="45">
       </div>
     </div>
     <div class="row">
       <div class="form-group col-md-6" ng-class="{ 'has-error': styForm.sltPrice.$dirty && styForm.sltPrice.$invalid }">
         <label for="sltPrice">Precio *</label>
-        <input type="number" step="any" class="form-control" id="sltPrice" name="sltPrice" placeholder="Precio" ng-model="$ctrl._data.price" required>
+        <input type="number" step="any" class="form-control" id="sltPrice" name="sltPrice" placeholder="Precio" ng-model="$ctrl._data.price" min="0" max="1000000" required>
         <span class="span-validation" ng-show="styForm.sltPrice.$dirty && styForm.sltPrice.$invalid">
           <span ng-show="styForm.sltPrice.$error.required">El precio es requerido.</span>
+          <span ng-show="styForm.sltPrice.$error.max">El precio debe de ser menor.</span>
         </span>
       </div>
       <div class="form-group col-md-6">
         <label for="sltSize">Medidas</label>
-        <input type="text" class="form-control" id="sltSize" placeholder="Medidas" ng-model="$ctrl._data.size">
+        <input type="text" class="form-control" id="sltSize" placeholder="Medidas" ng-model="$ctrl._data.size" maxlength="20">
       </div>
     </div>
   </div>

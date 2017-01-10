@@ -6,14 +6,14 @@
     <div class="row">
       <div class="form-group col-md-6" ng-class="{ 'has-error': stForm.slNumber.$dirty && stForm.slNumber.$invalid }">
         <label for="slNumber">Numero de bodega *</label>
-        <input type="text" class="form-control" id="slNumber" name="slNumber" placeholder="Numero de bodega" ng-model="$ctrl._data.number" required autofocus>
+        <input type="text" class="form-control" id="slNumber" name="slNumber" placeholder="Numero de bodega" ng-model="$ctrl._data.number" maxlength="45" required autofocus>
         <span class="span-validation" ng-show="stForm.slNumber.$dirty && stForm.slNumber.$invalid">
           <span ng-show="stForm.slNumber.$error.required">El nombre es requerido.</span>
         </span>
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-6" ng-class="{ 'has-error': stForm.slStoragelokertype.$dirty && stForm.slStoragelokertype.$invalid }">
+      <div class="form-group col-md-6">
         <label for="slStoragelokertype">Tipo de bodega *</label>
         <ui-select id="slStoragelokertype" name="slStoragelokertype" ng-model="$ctrl._selectSlt" title="Tipo de bodega" ng-required="true">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._selectSlt.name}}</ui-select-match>
