@@ -19,6 +19,7 @@ import 'angular-messages';
 import 'angular-animate';
 import 'angular-touch';
 import 'angular-sanitize';
+import moment from 'moment';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 import uiSelect from 'ui-select';

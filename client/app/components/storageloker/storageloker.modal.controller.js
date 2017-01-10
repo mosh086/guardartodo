@@ -38,8 +38,8 @@ export default class InstanceCtrl {
 
   validate() {
     angular.forEach(this._scope.stForm, function(value, key) {
-         if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
-             value.$setDirty();
+      if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
+        value.$setDirty();
      });
     return true;
   };

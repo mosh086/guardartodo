@@ -17,6 +17,8 @@ export default class InstanceCtrl {
       rfc: '',
       kindOfBusiness: '', legalRepresentative: '', lineOfBusiness: '',
     };
+    this._lineOfBusiness = ['Persona Fisica', 'Persona Moral'];
+    this._kindOfBusiness = ['HOGAR', 'EMPRESA'];
   }
 
   $onInit() {

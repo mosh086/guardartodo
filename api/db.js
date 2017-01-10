@@ -5,7 +5,8 @@ exports.connect = function() {
     host     : 'localhost',
     user     : 'root',
     password : 'Toolmosh_86',
-    database : 'guardartododb'
+    database : 'guardartododb',
+    dateStrings:true
   });
 }
 exports.get = function() {

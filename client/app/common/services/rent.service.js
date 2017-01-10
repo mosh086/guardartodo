@@ -1,4 +1,4 @@
-class User {
+class Rent {
   constructor(AppConstants, $http, $q) {
     'ngInject';
 
@@ -10,7 +10,7 @@ class User {
   query(keyword) {
     let deferred = this._$q.defer();
     let request = {
-      url: this._AppConstants.api + '/users',
+      url: this._AppConstants.api + '/rents',
       method: 'GET',
       params: !!keyword ? { 'q': keyword } : null
     };
@@ -25,15 +25,15 @@ class User {
   get(id) {
     let deferred = this._$q.defer();
     if (!id) {
-      deferred.reject("user id is empty");
+      deferred.reject("rent id is empty");
       return deferred.promise;
     }
     if (!id.toString().replace(" ", "")) {
-      deferred.reject("user id is empty");
+      deferred.reject("rent id is empty");
       return deferred.promise;
     }
     this._$http({
-      url: this._AppConstants.api + '/users/' + id,
+      url: this._AppConstants.api + '/rents/' + id,
       method: 'GET'
     })
       .then(
@@ -43,32 +43,32 @@ class User {
     return deferred.promise;
   }
 
-  save(user) {
+  save(rent) {
     let request = {};
-    if (user.userId) {
-      request.url = `${this._AppConstants.api}/users/${user.userId}`;
+    if (rent.rentId) {
+      request.url = `${this._AppConstants.api}/rents/${rent.rentId}`;
       request.method = 'PUT';
-      delete user.userId;
+      delete rent.rentId;
     } else {
-      request.url = `${this._AppConstants.api}/users`;
+      request.url = `${this._AppConstants.api}/rents`;
       request.method = 'POST';
     }
-    request.data = user;
+    request.data = rent;
     return this._$http(request);
   }
 
   remove(id) {
     let deferred = this._$q.defer();
     if (!id) {
-      deferred.reject("user id is empty");
+      deferred.reject("rent id is empty");
       return deferred.promise;
     }
     if (!id.toString().replace(" ", "")) {
-      deferred.reject("user id is empty");
+      deferred.reject("rent id is empty");
       return deferred.promise;
     }
     this._$http({
-      url: this._AppConstants.api + '/users/' + id,
+      url: this._AppConstants.api + '/rents/' + id,
       method: 'DELETE'
     })
       .then(
@@ -78,42 +78,6 @@ class User {
     return deferred.promise;
   }
 
-  reset(data) {
-    let deferred = this._$q.defer();
-    if (!data) {
-      deferred.reject("data id is empty");
-      return deferred.promise;
-    }
-    //todo prevente errors
-    this._$http({
-      url: this._AppConstants.api + '/users/reset/' + data.username,
-      method: 'POST',
-      data: data
-    })
-      .then(
-      (res) => deferred.resolve(res.data),
-      (err) => deferred.reject(err)
-      );
-
-    return deferred.promise;
-  }
-
-  me() {
-    let deferred = this._$q.defer();
-    this._$http({
-      url: this._AppConstants.api + '/users/me',
-      method: 'GET'
-    })
-      .then(
-      (res) => {
-        deferred.resolve(res);
-      },
-      (err) => {
-        deferred.resolve(false);
-      });
-    return deferred.promise;
-  }
-
 }
 
-export default User;
+export default Rent;

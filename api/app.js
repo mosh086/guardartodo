@@ -12,6 +12,7 @@ var quotes = require('./routes/quotes');
 var clients = require('./routes/clients');
 var storagelokers = require('./routes/storagelokers');
 var storagelokertypes = require('./routes/storagelokertypes');
+var rents = require('./routes/rents');
 
 var app = express();
 
@@ -34,6 +35,7 @@ app.use(quotes);
 app.use(clients);
 app.use(storagelokers);
 app.use(storagelokertypes);
+app.use(rents);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
