@@ -1,4 +1,5 @@
-var moment = require('moment');
+var moment = require('moment'),
+    _ = require("lodash");
 
 var express = require('express'),
     jwt     = require('express-jwt'),
@@ -10,9 +11,12 @@ var jwtCheck = jwt({
 });
 
 function getAll (done) {
-  db.get().query(`SELECT  *
-                  FROM rent
-                  WHERE enable = 1`, function(err, rows) {
+  db.get().query(`SELECT r.*, CONCAT_WS(' ',c.firstName,c.lastName) as fullName, sl.number, slt.name
+                    FROM rent r
+                    INNER JOIN client c ON r.clientId = c.clientId
+                    INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
+                    INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
+                    ORDER BY r.active DESC, r.startDate DESC`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });
@@ -31,7 +35,6 @@ function insert (data,done) {
   data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:MM");
   delete data.client;
   delete data.storageloker;
-  console.log(JSON.stringify(data));
 
   db.get().query('INSERT INTO rent SET ?', data, function(err, result) {
     if(err) throw err;
@@ -55,7 +58,12 @@ function remove (id, done) {
 
 app.use('/api/rents', jwtCheck);
 app.get('/api/rents', function(req, res) {
+  moment.locale('es');
   getAll(function(result) {
+    _.forEach(result, function(value) {
+      value.startDateToString = moment(value.startDate).fromNow();
+      value.endDateToString = moment(value.endDate).fromNow();
+    });
     res.status(200).send(result);
   });
 });
