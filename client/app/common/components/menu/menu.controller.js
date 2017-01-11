@@ -9,6 +9,11 @@ class MenuController {
         var id = $(this).attr('id').slice(9);
         $(window).scrollTo($('#' + id), 1000, { offset: { top: -51, left: 0 } });
       });
+
+      $('.nav a').click(function () {
+        $('.navbar-collapse').collapse('hide');
+      });
+
     }, 0);
   }
 

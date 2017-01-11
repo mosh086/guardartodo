@@ -5,7 +5,6 @@
     },
     "carousel":[{
             "id":"slider1",
-            "image":"images/carousel/slide1_1280x500.jpg",
             "caption": {
                 "title":"GuardarTodo no tiene limites, guarda lo que tú quieras.",
                 "description":"Nuestras bodegas están preparadas para almacenar todo tipo de cosas desde linea blanca, archivo muerto o cosas de temporada y estas estén cuidadas mediante un Monitoreo de Cámaras las 24hrs."
@@ -14,7 +13,6 @@
             "class":"first-slide"
         }, {
             "id":"slider2",
-            "image":"images/carousel/slide2_1280x500.jpg",
             "alt":"",
             "caption": {
                 "title":"Contamos con instalaciones totalmente nuevas.",
@@ -23,7 +21,6 @@
             "class":"second-slide"
         }, {
             "id":"slider3",
-            "image":"images/carousel/slide3_1280x500.jpg",
             "alt":"",
             "caption": {
                 "title":"Promocion de temporada.",

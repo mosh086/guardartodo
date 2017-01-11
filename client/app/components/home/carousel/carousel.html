@@ -1,11 +1,12 @@
 <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
+  <div class="skipmenu"></div>
   <ol class="carousel-indicators"  >
     <li ng-repeat="item in $ctrl._items" data-target="#myCarousel" data-slide-to="{{$index}}" ng-class="{active:$first}"></li>
   </ol>
   <div class="carousel-inner" role="listbox">
-    <div ng-repeat="item in $ctrl._items" class="item" ng-class="{active:$first}">
-      <img class="{{item.class}}" ng-src="{{item.image}}" alt="First slide">
+    <div ng-repeat="item in $ctrl._items" class="item {{item.class}}" ng-class="{active:$first}">
+      <!-- <img class="{{item.class}}" ng-src="{{item.image}}" alt="First slide"> -->
       <div class="container">
         <div class="carousel-caption">
           <h1>{{item.caption.title}}</h1>

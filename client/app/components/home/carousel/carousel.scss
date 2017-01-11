@@ -1,6 +1,12 @@
+
+
 .carousel {
   height: 500px;
   /*margin-top: 51px;*/
+  .carousel-control {
+    top: 75px;
+    height: 100%;
+  }
 }
 
 .carousel-caption {
@@ -9,7 +15,12 @@
 
 .carousel .item {
   height: 500px;
-  background-color: #777;
+  width: 100%;
+  -webkit-transition: opacity 1s;
+  -moz-transition: opacity 1s;
+  -ms-transition: opacity 1s;
+  -o-transition: opacity 1s;
+  transition: opacity 1s;
 }
 
 .carousel-inner > .item > img {
@@ -20,10 +31,112 @@
   height: 500px;
 }
 
+
+.carousel .first-slide {
+  background: url('/images/carousel/slide1_640x340.jpg');
+  background-size: cover;
+  -moz-background-size: cover;
+}
+.carousel .second-slide {
+  background: url('/images/carousel/slide2_640x340.jpg');
+  background-size: cover;
+  -moz-background-size: cover;
+}
+.carousel .third-slide {
+  background: url('/images/carousel/slide3_640x340.jpg');
+  background-size: cover;
+  -moz-background-size: cover;
+}
+
+.carousel .active.left {
+    left:0;
+    opacity:0;
+    z-index:2;
+}
+
+.carousel-caption {
+  z-index: 10;
+}
+
 @media (min-width: 768px) {
   .carousel-caption p {
     margin-bottom: 20px;
     font-size: 21px;
     line-height: 1.4;
+  }
+}
+
+
+/* Extra Small Devices, Phones */
+@media (min-width : 80px) {
+  .carousel {
+    height: 340px;
+  }
+  .carousel .item {
+    height: 340px;
+  }
+  .carousel .first-slide {
+    background: url('/images/carousel/slide1_640x340.png');
+    background-size: cover;
+    -moz-background-size: cover;
+  }
+  .carousel .second-slide {
+    background: url('/images/carousel/slide2_640x340.png');
+    background-size: cover;
+    -moz-background-size: cover;
+  }
+  .carousel .third-slide {
+    background: url('/images/carousel/slide3_640x340.png');
+    background-size: cover;
+    -moz-background-size: cover;
+  }
+}
+
+/* Small Devices, Tablets
+@media (min-width : 768px) {
+
+}*/
+
+/* Medium Devices, Desktops */
+@media (min-width : 992px) {
+  .carousel {
+    height: 500px;
+  }
+  .carousel .item {
+    height: 500px;
+  }
+  .carousel .first-slide {
+    background: url('/images/carousel/slide1_1280x500.png');
+    background-size: cover;
+    -moz-background-size: cover;
+  }
+  .carousel .second-slide {
+    background: url('/images/carousel/slide2_1280x500.png');
+    background-size: cover;
+    -moz-background-size: cover;
+  }
+  .carousel .third-slide {
+    background: url('/images/carousel/slide3_1280x500.png');
+    background-size: cover;
+    -moz-background-size: cover;
+  }
+}
+
+/* Large Devices, Wide Screens */
+@media (min-width : 1200px) {
+  .carousel .first-slide {
+    background: url('/images/carousel/slide1_2240x1200.png');
+    background-size: cover;
+    -moz-background-size: cover;
+  }
+  .carousel .second-slide {
+    background: url('/images/carousel/slide2_2240x1200.png');
+    background-size: cover;
+    -moz-background-size: cover;
+  }
+  .carousel .third-slide {
+    background: url('/images/carousel/slide3_2240x1200.png');
+    background-size: cover;
+    -moz-background-size: cover;
   }
 }
