@@ -11,7 +11,7 @@ var jwtCheck = jwt({
 });
 
 function getAll (done) {
-  db.get().query(`SELECT r.*, CONCAT_WS(' ',c.firstName,c.lastName) as fullName, sl.number, slt.name
+  db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename
                     FROM rent r
                     INNER JOIN client c ON r.clientId = c.clientId
                     INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
@@ -22,10 +22,27 @@ function getAll (done) {
   });
 }
 
-function getById (id,done) {
-  db.get().query('SELECT * FROM rent WHERE rentId = ? AND enable = 1', id, function(err, row) {
+function getById (id) {
+  db.get().query('SELECT * FROM rent WHERE rentId = ?', id, function(err, row) {
     if(err) throw err;
-    done(row[0]);
+    req = row[0];
+    return next();
+  });
+}
+
+function getClientByRentId (id) {
+  db.get().query('SELECT * FROM rent WHERE rentId = ?', id, function(err, row) {
+    if(err) throw err;
+    req.client = row[0];
+    return next();
+  });
+}
+
+function getStoragelokerByRentId (id) {
+  db.get().query('SELECT * FROM rent WHERE rentId = ?', id, function(err, row) {
+    if(err) throw err;
+    req.storageloker = row[0];
+    return next();
   });
 }
 
@@ -43,7 +60,7 @@ function insert (data,done) {
 }
 
 function update (id, data, done) {
-  db.get().query('UPDATE rent SET ? WHERE rentId = ? AND enable = 1', [data, id], function(err, result) {
+  db.get().query('UPDATE rent SET ? WHERE rentId = ?', [data, id], function(err, result) {
     if(err) throw err;
     done(result);
   });
@@ -68,10 +85,8 @@ app.get('/api/rents', function(req, res) {
   });
 });
 
-app.get('/api/rents/:id', function(req, res) {
-  getById(req.params.id, function(result) {
-    res.status(200).send(result);
-  });
+app.get('/api/rents/:id', getById, getClientByRentId, getStoragelokerByRentId, function(req, res) {
+  res.status(200).send(res);
 });
 
 app.post('/api/rents', function(req, res) {

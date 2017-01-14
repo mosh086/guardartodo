@@ -10,7 +10,7 @@ export default class InstanceCtrl {
 
     this._title = (client)?'Editar cliente':'Nuevo cliente';
     this._data = {
-      clientId:null, firstName: '', lastName: '',
+      clientId:null, name: '',
       street: '', town: '',
       country: '', state: '', zipcode: '',
       phone: '', cellPhone: '', email: '',

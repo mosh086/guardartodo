@@ -9,7 +9,7 @@
         <div class="col-md-4">
           <div class="input-group">
             <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-            <input class="form-control"  placeholder="busca por numero">
+            <input class="form-control" placeholder="buscar" ng-model="search">
           </div>
         </div>
       </div>
@@ -20,10 +20,10 @@
             </div>
             <div class="col-md-3">
               <h3>{{rent.number}}</h3>
-              <p>{{rent.name}}</p>
+              <p>{{rent.storagelokertypename}}</p>
             </div>
             <div class="col-md-3">
-              <h4>{{rent.fullName}}</h4>
+              <h4>{{rent.name}}</h4>
               <p>{{rent.active?'En renta':'finalizado'}}</p>
               <p>{{rent.startDateToString}}</p>
             </div>
@@ -36,15 +36,17 @@
                 <span class="glyphicon-label">Terminar contrato</span>
               </div>
             </div>
-            <div class="col-md-1 buttons">
+            <div class="col-md-1 buttons" ng-click="$ctrl.print(rent.rentId)">
               <span class="glyphicon glyphicon-print"></span>
               <span class="glyphicon-label">Imprimir</span>
             </div>
             <div class="col-md-1 buttons">
-              <span class="glyphicon glyphicon-pencil"></span>
-              <span class="glyphicon-label">Cambiar</span>
+              <a ng-href='rentedit/{{rent.rentId}}'>
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="glyphicon-label">Cambiar</span>
+              </a>
             </div>
-            <div class="col-md-1 buttons">
+            <div class="col-md-1 buttons" ng-click="$ctrl.delete(rent.rentId)">
               <span class="glyphicon glyphicon-trash"></span>
               <span class="glyphicon-label">Borrar</span>
             </div>

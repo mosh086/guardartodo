@@ -4,18 +4,11 @@
 <form name="cForm" id="cForm" novalidate>
   <div class="modal-body">
     <div class="row">
-      <div class="form-group col-md-6" ng-class="{ 'has-error': cForm.cFirstName.$dirty && cForm.cFirstName.$invalid }">
-        <label for="cFirstName">Nombre *</label>
-        <input type="text" class="form-control" id="cFirstName" name="cFirstName" placeholder="Nombre" ng-model="$ctrl._data.firstName" maxlength="200" required>
-        <span class="span-validation" ng-show="cForm.cFirstName.$dirty && cForm.cFirstName.$invalid">
-          <span ng-show="cForm.cFirstName.$error.required">El nombre es requerido.</span>
-        </span>
-      </div>
-      <div class="form-group col-md-6" ng-class="{ 'has-error': cForm.cLastName.$dirty && cForm.cLastName.$invalid }">
-        <label for="cLastName">Apellidos *</label>
-        <input type="text" class="form-control" id="cLastName" name="cLastName" placeholder="Apellidos" ng-model="$ctrl._data.lastName" maxlength="200" required>
-        <span class="span-validation" ng-show="cForm.cLastName.$dirty && cForm.cLastName.$invalid">
-          <span ng-show="cForm.cLastName.$error.required">Los apellidos son requerido.</span>
+      <div class="form-group col-md-6" ng-class="{ 'has-error': cForm.cName.$dirty && cForm.cName.$invalid }">
+        <label for="cName">Nombre o Razon Social*</label>
+        <input type="text" class="form-control" id="cName" name="cName" placeholder="Nombre" ng-model="$ctrl._data.name" maxlength="200" required>
+        <span class="span-validation" ng-show="cForm.cName.$dirty && cForm.cName.$invalid">
+          <span ng-show="cForm.cName.$error.required">El nombre es requerido.</span>
         </span>
       </div>
     </div>

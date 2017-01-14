@@ -1,39 +1,39 @@
 <div class="top-fix"></div>
-  <div class="fixed-sidebar">
-    <gt-asidemenu active="storagelokertype"></gt-asidemenu>
-    <div class="wrapper">
-      <div class="form-group filters">
-        <div class="col-md-8">
-          <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nueva bodega</button>
-        </div>
-        <div class="col-md-4">
-          <div class="input-group">
-            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-            <input class="form-control"  placeholder="busca por numero">
-          </div>
+<div class="fixed-sidebar">
+  <gt-asidemenu active="storagelokertype"></gt-asidemenu>
+  <div class="wrapper">
+    <div class="form-group filters">
+      <div class="col-md-8">
+        <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nueva bodega</button>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+          <input class="form-control"  placeholder="buscar" ng-model="search">
         </div>
       </div>
-      <ul>
-        <li ng-repeat="sl in $ctrl.storageloker track by sl.storagelokerId">
-          <div class="well row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-6">
-              <h3>{{sl.number}}</h3>
-              <p>{{sl.typename}}</p>
-            </div>
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(sl.storagelokerId)">
-              <span class="glyphicon glyphicon-pencil" ></span>
-              <span class="glyphicon-label">Cambiar</span>
-            </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.remove(sl.storagelokerId)">
-              <span class="glyphicon glyphicon-trash" ></span>
-              <span class="glyphicon-label">Borrar</span>
-            </div>
-          </div>
-        </li>
-      </ul>
     </div>
+    <ul>
+      <li ng-repeat="sl in $ctrl.storageloker track by sl.storagelokerId">
+        <div class="well row">
+          <div class="col-md-1">
+          </div>
+          <div class="col-md-6">
+            <h3>{{sl.number}}</h3>
+            <p>{{sl.typename}}</p>
+          </div>
+          <div class="col-md-3">
+          </div>
+          <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(sl.storagelokerId)">
+            <span class="glyphicon glyphicon-pencil" ></span>
+            <span class="glyphicon-label">Cambiar</span>
+          </div>
+          <div class="col-md-1 buttons" ng-click="$ctrl.remove(sl.storagelokerId)">
+            <span class="glyphicon glyphicon-trash" ></span>
+            <span class="glyphicon-label">Borrar</span>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
+</div>

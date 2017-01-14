@@ -2,13 +2,18 @@ import modalTemplate from './client.modal.html'
 import modalInstanceCtrl from './client.modal.controller'
 
 class ClientController {
-  constructor($uibModal, ClientService) {
+  constructor($uibModal, $scope, $filter, ClientService) {
     "ngInject";
 
     this._uibModal = $uibModal;
     this._Client = ClientService;
 
     this._clients = [];
+    this._clientsTemp = [];
+    let self = this;
+    $scope.$watch('search', function (val) {
+      self._clients = $filter('filter')(self._clientsTemp, val);
+    });
   }
 
   $onInit() {
@@ -70,7 +75,10 @@ class ClientController {
     let self = this;
     this._Client
       .query(this.q)
-      .then((res) => self._clients = res,
+      .then((res) => {
+        self._clients = res;
+        self._clientsTemp = res;
+      },
         (err) => console.log('error: ' + err)
       );
   }

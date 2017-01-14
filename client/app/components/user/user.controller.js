@@ -2,13 +2,18 @@ import modalTemplate from './user.modal.html'
 import modalInstanceCtrl from './user.modal.controller'
 
 class UserController {
-  constructor($uibModal, UserService) {
+  constructor($uibModal, $scope, $filter, UserService) {
     "ngInject";
 
     this._uibModal = $uibModal;
     this._User = UserService;
 
     this._users = [];
+    this._usersTemp = [];
+    let self = this;
+    $scope.$watch('search', function (val) {
+      self._users = $filter('filter')(self._usersTemp, val);
+    });
   }
 
   $onInit() {
@@ -70,7 +75,10 @@ class UserController {
     this._User
       .query(this.q)
       .then(
-        (res) => self._users = res,
+        (res) => {
+          self._users = res;
+          self._usersTemp = res;
+        },
         (err) => console.log('error: ' + err)
       );
   }

@@ -8,10 +8,14 @@ import UserService from './user.service';
 import RentService from './rent.service';
 import Auth from './Auth';
 import JWT from './JWT';
+import Print from './Print';
+import Company from './Company';
 //...
 let commonServicesModule = angular.module('app.common.services', [])
   .service('JWT', JWT)
   .service('Auth', Auth)
+  .service('Print', Print)
+  .service('Company', Company)
   .service('ClientService', ClientService)
   .service('DashboardService', DashboardService)
   .service('SigninService', SigninService)

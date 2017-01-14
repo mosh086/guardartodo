@@ -1,5 +1,6 @@
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
+import controller from './rentedit.controller';
 import renteditComponent from './rentedit.component';
 
 let renteditModule = angular.module('app.component.rentedit', [
@@ -8,6 +9,13 @@ let renteditModule = angular.module('app.component.rentedit', [
 .config(($stateProvider) => {
   "ngInject";
   $stateProvider
+    .state('renteditparams', {
+      url: '/rentedit/:id',
+      component: 'rentedit',
+      data: {
+        requiresAuth: true
+      }
+    })
     .state('rentedit', {
       url: '/rentedit',
       component: 'rentedit',

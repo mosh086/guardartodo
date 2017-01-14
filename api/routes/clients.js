@@ -8,8 +8,7 @@ var jwtCheck = jwt({
 });
 
 function getAll (done) {
-  db.get().query(`SELECT  CONCAT_WS(' ',firstName,lastName) as fullName,
-                          CONCAT_WS(' ',street,town,country,state,zipcode) as address,
+  db.get().query(`SELECT  CONCAT_WS(' ',street,town,country,state,zipcode) as address,
                           c.*
                   FROM client c
                   WHERE enable = 1`, function(err, rows) {

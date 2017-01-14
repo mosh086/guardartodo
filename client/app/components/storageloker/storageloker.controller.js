@@ -2,7 +2,7 @@ import modalTemplate from './storageloker.modal.html'
 import modalInstanceCtrl from './storageloker.modal.controller'
 
 class StoragelokerController {
-  constructor($uibModal, StoragelokerService, StoragelokertypeService) {
+  constructor($uibModal, $scope, $filter, StoragelokerService, StoragelokertypeService) {
     "ngInject";
 
     this._uibModal = $uibModal;
@@ -11,6 +11,11 @@ class StoragelokerController {
 
     this.storageloker = [];
     this.storagelokertype = [];
+    this.storagelokerTemp = [];
+    let self = this;
+    $scope.$watch('search', function (val) {
+      self.storageloker = $filter('filter')(self.storagelokerTemp, val);
+    });
   }
 
   $onInit() {
@@ -76,7 +81,10 @@ class StoragelokerController {
     let self = this;
     this._Storageloker
       .query(this.q)
-      .then((res) => self.storageloker = res,
+      .then((res) => {
+        self.storageloker = res;
+        self.storagelokerTemp = res;
+      },
         (err) => console.log('error: ' + err)
       );
   }

@@ -2,13 +2,18 @@ import modalTemplate from './storagelokertype.modal.html'
 import modalInstanceCtrl from './storagelokertype.modal.controller'
 
 class StoragelokertypeController {
-  constructor($uibModal, StoragelokertypeService) {
+  constructor($uibModal, $scope, $filter, StoragelokertypeService) {
     "ngInject";
 
     this._uibModal = $uibModal;
     this._Storagelokertype = StoragelokertypeService;
 
     this._storagelokertype = [];
+    this._storagelokertypeTemp = [];
+    let self = this;
+    $scope.$watch('search', function (val) {
+      self._storagelokertype = $filter('filter')(self._storagelokertypeTemp, val);
+    });
   }
 
   $onInit() {
@@ -70,7 +75,10 @@ class StoragelokertypeController {
     let self = this;
     this._Storagelokertype
       .query(this.q)
-      .then((res) => self._storagelokertype = res);
+      .then((res) => {
+        self._storagelokertype = res;
+        self._storagelokertypeTemp = res;
+      });
   }
 
 }
