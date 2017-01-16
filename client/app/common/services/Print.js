@@ -68,24 +68,25 @@ class makeDocDefinition {
       },
       {
         style: 'table',
+        pageBreak: 'after',
         table: {
           headerRows: 1,
           widths: [ '*', '*', '*', '*' ],
           body: [
             [{ colSpan: 4, style:'header', text: 'DATOS DE CONTRATACION' }, {}, {}, {}],
             [
-              { colSpan: 2, style: 'title', text: ['F) EMPRESA:', { style: 'info', text : `${company.name}`}] }, {},
-              { colSpan: 2, style: 'title', text: ['G) DIRECCION:', { style: 'info', text : `${company.address}`}] }, {}
+              { colSpan: 2, style: 'title', text: ['F) EMPRESA:   ', { style: 'info', text : `${company.name}`}] }, {},
+              { colSpan: 2, style: 'title', text: ['G) DIRECCION:   ', { style: 'info', text : `${company.address}`}] }, {}
             ],
             [
               { colSpan: 2, style: 'title', text: ['H) FECHA:\n', {style: 'info', alignment: 'center',  text: `${moment().format('LL')}`} ] }, {},
               { colSpan: 2, style: 'title', text: ['I) PERIODO INICIAL DE VIGENCIA DE CONTRATO:\n', {style: 'info', alignment: 'center', text: `${moment(data.startDate).format('LL')}` }] } , {}
             ],
-            [{ colSpan: 4, style: 'title', margin: [0, 0, 0, 20], text: 'SERVICIOS CONTRATADOS:' }, {}, {}, {}],
+            [{ colSpan: 4, style: 'title', margin: [0, 0, 0, 20], text: 'SERVICIOS CONTRATADOS:   ' }, {}, {}, {}],
             [{ colSpan: 2, text: ''}, {}, {text: 'PRECIO', style: 'title' }, {text: 'PRECIO CON DESCUENTO', style: 'title' }],
             [{ colSpan: 2, style: 'title', text: ['BODEGA DE TAMAÑO:   ', {style: 'info', alignment: 'center', text: `${data.storagelokertype.name}` }] }, {}, { text: `${data.storagelokertype.price}` }, { text: '' }],
-            [{ colSpan: 4, style: 'title',text: 'TIEMPO DE RENTA DE BODEGA:' }, {}, {}, {}],
-            [{ colSpan: 2, style: 'title', text: 'SERVICIOS ADICIONALES:' }, {}, { colSpan: 2, text: `${data.extra}` }, {}],
+            [{ colSpan: 4, style: 'title',text: 'TIEMPO DE RENTA DE BODEGA:   ' }, {}, {}, {}],
+            [{ colSpan: 2, style: 'title', text: 'SERVICIOS ADICIONALES:   ' }, {}, { colSpan: 2, text: `${data.extra}` }, {}],
             [{ colSpan: 2, style: 'title', alignment: 'center', margin: [0, 20, 0, 0], text: 'TOTAL', style: '' }, {}, { margin: [0, 20, 0, 0], text: `${data.total}` }, { text: '' }],
             [{ colSpan: 4, style: 'title', text: 'M) SERVICIO MENSUAL TOTAL:   ' }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: 'N) DEPOSITO:   ' }, {}, {}, {}],
@@ -109,7 +110,30 @@ class makeDocDefinition {
             return ((temp <= 8 && temp >= 4) && (i === 2 || i === 3)) ? 'white':'black';
           }
         }
-			}],
+			},
+
+            {
+              alignment: 'justify',
+              columns: [
+                {
+                  text: [
+                    { text : 'CONTRATO DE PRESTACIÓN DE SERVICIOS DE ALMACENAMIENTO QUE CELEBRAN POR UNA PARTE inciso A) ., A QUIEN EN LO SUCESIVO SE LE DENOMINARA EL “CLIENTE”, Y POR OTRA CARLOS R. LLAMAS GARCIA, A QUIEN EN LO SUCESIVO SE LE DENOMINARA COMO “GuardarTodo”, CONFORME A LAS SIGUIENTES CLAUSULAS:\n' },
+                    { text : '1. LA BODEGA. EL CLIENTE obtiene permiso de utilizar la(s) bodega(s) descrita(s) en el inciso J) de este contrato. Es responsabilidad de EL CLIENTE utilizar su propio candado de seguridad para su acceso. EL CLIENTE es el (la) único(a) que tiene acceso al interior. La Bodega se entrega limpia, vacía, fumigada y en perfectas condiciones. EL CLIENTE le está prohibido hacer construcciones, modificaciones o alterar la estructura y forma de la Bodega.\n'},
+                    { text: '2. SERVICIOS. “GuardarTodo” proveerá servicios de almacenaje, seguridad, limpieza, mantenimiento, fumigación durante los horarios descritos en la Cláusula 13 de este contrato. Así mismo, “GuardarTodo” prestará a EL CLIENTE los Servicios Adicionales descritos en el inciso L) de este contrato. “GuardarTodo” también ofrece a EL CLIENTE otros servicios con cargos adicionales, cuyas tarifas están disponibles a solicitud de EL CLIENTE. En caso de que EL CLIENTE no cumpla con sus obligaciones, “GuardarTodo” puede dejar de proveerle dicho servicios.\n'},
+                    { text : '3. PAGOS. El pago de honorarios por los servicios señalados en el inciso M) de este documento (en su caso, actualizados en términos de la Cláusula 8 de este contrato) lo hará EL CLIENTE por adelantado dentro de los primeros cinco (5) días naturales de cada mes en el domicilio establecido en el inciso G) de este documento. En caso de que EL CLIENTE no cumpla con su obligación de pago en los términos de esta Cláusula, todos los servicios y acceso a la Bodega le serán suspendidos, y serán reanudados dentro de las 24 horas hábiles siguientes al momento en que “GuardarTodo” reciba el pago total del adeudo correspondiente. En caso de efectuarse el pago por medio de una transferencia bancaria, orden de pago, tarjeta de crédito, u otra forma similar, EL CLIENTE acepta pagar el 100% de las comisiones y cargos derivados de dicha transacción, de tal forma que “GuardarTodo” reciba en forma íntegra el pago total del saldo de EL CLIENTE.\n'} ,
+                    { text : '4. MORA. Las partes convienen que en caso de mora en el pago de los honorarios pactados en el inciso M) de este documento. La suma adeudada, deberá pagar un interés moratorio equivalentes al 5% mensual del saldo que no haya sido cubierto.\n'} ,
+                    { text : '5. DEPÓSITO EN GARANTÍA. Al firmar este contrato, EL CLIENTE entrega a “GuardarTodo” la cantidad de depósito establecida en el inciso N) de este documento, misma que “GuardarTodo” conservará quedando autorizada de forma expresa para aplicarla al pago de los saldos insolutos que le adeude EL CLIENTE en relación con este contrato. “GuardarTodo” devolverá a EL CLIENTE el dinero depositado dentro de los 10 días naturales siguientes a la fecha en que EL CLIENTE desocupe la Bodega, siempre y cuando EL CLIENTE no le adeude cantidad alguna.\n'} ,
+                    { text : '6. SEGURIDAD. “GuardarTodo” no proporciona ni hace arreglos de seguridad adicionales a los proporcionados. “GuardarTodo” no será responsable, en ningún momento, por la pérdida de dinero en efectivo, cheques, joyas y objetos que EL CLIENTE guarde o conserve en la Bodega. “GuardarTodo” no será responsable en caso de ocurrir algún incendio, corrientes de electricidad imprevistas u otro accidente fuera del control de “GuardarTodo”, El uso del estacionamiento que da servicio es bajo la responsabilidad de EL CLIENTE. “GuardarTodo” no se hace responsable por incendio, ni por el robo total o parcial o la pérdida de objetos en el interior de su vehículo o cualquier otro daño y/o perjuicio provocados por EL CLIENTE y/o terceros.\n'},
+                    { text : '7. FALTAS AL PRESENTE CONTRATO. Durante la vigencia de este contrato, EL CLIENTE se obliga a observar el Reglamento de “GuardarTodo”. EL CLIENTE ha leído y está conforme con dicho Reglamento, y acepta que éste puede ser modificado sin previo aviso, “GuardarTodo” proporcionará el Reglamento modificado para conocimiento del CLIENTE. EL CLIENTE estará incumpliendo este contrato si: 1) Incumple cualquier disposición del Reglamento de “GuardarTodo”, 2) No liquida sus adeudos en los términos de este contrato; 3) Incumple con alguna de las cláusulas contenidas en este documento.' } ,
+                    { text : '8. TÉRMINO DEL CONTRATO. Este contrato estará vigente durante el período inicial de vigencia que se establece en el inciso I) de este documento. El contrato quedará automáticamente renovado por periodos sucesivos adicionales de igual plazo al período inicial, salvo que cualquiera de las partes dé aviso por escrito a la otra parte notificando su deseo de terminar el contrato en la fecha de vencimiento que corresponda. Lo anterior, en el entendido de que dicho aviso deberá realizarse por lo menos 10 días naturales antes de la fecha de vencimiento respectiva. En este caso, EL CLIENTE deberá desocupar la Bodega precisamente en la fecha de vencimiento respectiva. EL CLIENTE podrá dar por terminado el presente Contrato antes del vencimiento de su vigencia (inicial o adicional) siempre y cuando se encuentre al corriente de sus pagos frente a “GuardarTodo”. Para tales efectos, deberá notificar a “GuardarTodo” por escrito su intención de dar por terminado el contrato anticipadamente y pagar a “GuardarTodo” el 100% del servicio mensual total señalado en el inciso M) de este documento (en su caso, actualizada en términos de esta Cláusula) multiplicada por el número de meses restantes del término de vigencia correspondiente, además de aquellos cargos que en ese tiempo adeude a “GuardarTodo”, y deberá desocupar la Bodega al día siguiente a la fecha en que realice dicha notificación. En cada renovación, el servicio mensual total se incrementará en un porcentaje igual al por ciento acumulado de aumento que registre el “Índice Nacional de Precios al Consumidor” (INPC) que determine y publique el Banco de México para los meses comprendidos en el período de vigencia que termina. En caso de que el período inicial de vigencia del presente contrato sea mayor a seis meses, el servicio mensual total se incrementará además semestralmente en porcentaje igual al por ciento acumulado de aumento que registre el “Índice Nacional de Precios al Consumidor” (INPC) que determine y publique el Banco de México para el período de seis meses naturales anteriores al ajuste, en el entendido de que en caso de que haya existido algún incremento por renovación durante dicho período de seis meses, el incremento semestral será en proporción a los meses que hayan transcurrido entre el mes en que se aplicó dicho incremento por renovación y el mes en el que corresponda el ajuste semestral respectivo. 9. RESESIÓN. En caso de que EL CLIENTE incumpla con cualquiera de sus obligaciones previstas en este contrato, incluyendo la falta de pago, “GuardarTodo” podrá exigir a EL CLIENTE el cumplimiento forzoso del contrato, o bien, optar por la rescisión del mismo sin necesidad de declaración judicial ni proceso legal alguno. “GuardarTodo” podrá también rescindir el presente contrato sin necesidad de declaración judicial ni proceso legal alguno en caso de que EL CLIENTE sea o se tenga la presunción de que será embargado, declarado en quiebra, en suspensión de pagos o en concurso de acreedores. En caso de que “GuardarTodo” decida dar por rescindido el presente contrato en los términos de esta cláusula, lo notificará a EL CLIENTE y éste deberá desocupar la Bodega dentro de los cinco días naturales siguientes a la fecha en que reciba dicha notificación. “GuardarTodo” tiene el derecho de ofrecer los servicios de almacenaje a otro cliente a partir de la fecha en que EL CLIENTE debe desocuparla de conformidad con esta Cláusula. EL CLIENTE expresamente autoriza a “GuardarTodo” a transferir sus enseres personales así como cualquier otra pertenencia que se encuentre dentro de la Bodega a un almacén de depósito y a almacenarlos por un plazo no mayor a 60 días naturales contados a partir de la fecha en que EL CLIENTE debe desocupar la Bodega de conformidad con esta Cláusula. EL CLIENTE pagará en tal caso el importe correspondiente al almacenaje. En caso de que “GuardarTodo” dé por rescindido el presente contrato de conformidad con esta Cláusula y EL CLIENTE no permita a “GuardarTodo” obtener la posesión de la Bodega, EL CLIENTE se obliga a pagar mensualmente, como pena convencional por su incumplimiento, el equivalente al cien por ciento (100%) del monto del servicio mensual total (en su caso, actualizado en los términos de esta Cláusula), por cada mes o fracción de mes que continúe ocupando la Bodega, contado a partir del día siguiente al día en que EL CLIENTE debió desocupar y entregar la Bodega en términos de esta cláusula y hasta que haga entrega de la Bodega a “GuardarTodo”. El pago de la pena convencional establecida en la presente cláusula es en adición al servicio mensual total (en su caso, actualizado en los términos de esta Cláusula) que EL CLIENTE deberá seguir cubriendo por el uso, control o almacenamiento de la Bodega. Dichos pagos de penas y servicios contratados que EL CLIENTE deberá realizar no significan, en forma alguna, prórroga, renovación del contrato o consentimiento por parte de “GuardarTodo” de la no devolución de la Bodega. En todo caso, EL CLIENTE deberá devolver a “GuardarTodo” la Bodega en el mismo estado y condiciones en que la recibió.' }
+                  ]
+                },
+                {
+                  text: 'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Malit profecta versatur nomine ocurreret multavit, officiis viveremus aeternum superstitio suspicor alia nostram, quando nostros congressus susceperant concederetur leguntur iam, vigiliae democritea tantopere causae, atilii plerumque ipsas potitur pertineant multis rem quaeri pro, legendum didicisse credere ex maluisset per videtis. Cur discordans praetereat aliae ruinae dirigentur orestem eodem, praetermittenda divinum. Collegisti, deteriora malint loquuntur officii cotidie finitas referri doleamus ambigua acute. Adhaesiones ratione beate arbitraretur detractis perdiscere, constituant hostis polyaeno. Diu concederetur.'
+                }
+              ]
+            }
+      ],
       styles: {
         header: {
           alignment: 'center',
@@ -135,6 +159,9 @@ class makeDocDefinition {
           fontSize: 8
         },
         obsbold: { bold: true }
+      },
+      defaultStyle: {
+        columnGap: 20,
       }
     }
   }

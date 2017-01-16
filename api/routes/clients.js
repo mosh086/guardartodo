@@ -18,7 +18,9 @@ function getAll (done) {
 }
 
 function getById (id,done) {
-  db.get().query('SELECT * FROM client WHERE clientId = ? AND enable = 1', id, function(err, row) {
+  db.get().query(`SELECT CONCAT_WS(' ',street,town,country,state,zipcode) as address, c.*
+                  FROM client c
+                  WHERE c.clientId = ? AND c.enable = 1`, id, function(err, row) {
     if(err) throw err;
     done(row[0]);
   });

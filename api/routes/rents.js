@@ -22,27 +22,10 @@ function getAll (done) {
   });
 }
 
-function getById (id) {
+function getById (id, done) {
   db.get().query('SELECT * FROM rent WHERE rentId = ?', id, function(err, row) {
     if(err) throw err;
-    req = row[0];
-    return next();
-  });
-}
-
-function getClientByRentId (id) {
-  db.get().query('SELECT * FROM rent WHERE rentId = ?', id, function(err, row) {
-    if(err) throw err;
-    req.client = row[0];
-    return next();
-  });
-}
-
-function getStoragelokerByRentId (id) {
-  db.get().query('SELECT * FROM rent WHERE rentId = ?', id, function(err, row) {
-    if(err) throw err;
-    req.storageloker = row[0];
-    return next();
+    done(row[0]);
   });
 }
 
@@ -85,8 +68,10 @@ app.get('/api/rents', function(req, res) {
   });
 });
 
-app.get('/api/rents/:id', getById, getClientByRentId, getStoragelokerByRentId, function(req, res) {
-  res.status(200).send(res);
+app.get('/api/rents/:id', function(req, res) {
+  getById(req.params.id, function(result) {
+    res.status(200).send(result);
+  });
 });
 
 app.post('/api/rents', function(req, res) {

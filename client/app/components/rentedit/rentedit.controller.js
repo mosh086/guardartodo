@@ -119,10 +119,44 @@ class RenteditController {
       .then((res) => {
             self._data = res
             self._data.startDate = new Date(self._data.startDate)
+            self.searchClient(res.clientId);
+            self.searchStorageloker(res.storagelokerId);
           },
-        (err) => console.log('error: ' + JSON.stringify(err))
+        (err) => console.log('error: ' + err)
       )
   };
+
+  searchClient(id) {
+    let self = this;
+    this._Client.get(id)
+      .then((res) => {
+            self._data.client = res;
+          },
+        (err) => console.log('error: ' + err)
+      )
+  }
+
+  searchStorageloker(id) {
+    let self = this;
+    this._Storageloker.get(id)
+      .then((res) => {
+            self._data.storageloker = res;
+            self.searchStoragelokertype(res.storagelokertypeId);
+          },
+        (err) => console.log('error: ' + err)
+      )
+  }
+
+  searchStoragelokertype(id) {
+    let self = this;
+    this._Storagelokertype.get(id)
+      .then((res) => {
+            console.log(JSON.stringify(res))
+            self._data.storagelokertype = res;
+          },
+        (err) => console.log('error: ' + err)
+      )
+  }
 }
 
 export default RenteditController;
