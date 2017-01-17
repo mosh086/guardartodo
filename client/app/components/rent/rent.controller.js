@@ -45,6 +45,20 @@ class RentController {
     this.searchRent(id);
   }
 
+  remove(id) {
+    let self = this;
+    this._Rent.remove(id)
+      .then((res) => {
+        self._toastr.success(`Renta fue eliminada correctamente`);
+        self.searchRents();
+      },
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
+      )
+  }
+
   searchRent(id){
     let self = this;
     this._Rent.get(id)

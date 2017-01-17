@@ -35,9 +35,12 @@
               <span class="glyphicon glyphicon-pencil" ></span>
               <span class="glyphicon-label">Cambiar</span>
             </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.remove(c.clientId, c.name)">
-              <span class="glyphicon glyphicon-trash" ></span>
-              <span class="glyphicon-label">Borrar</span>
+
+            <div class="col-md-1 buttons">
+              <a ng-confirm-message="¿Estás seguro de querer eliminar el cliente {{c.name}}?" ng-confirm="$ctrl.remove(c.clientId, c.name)">
+                <span class="glyphicon glyphicon-trash" ></span>
+                <span class="glyphicon-label">Borrar</span>
+              </a>
             </div>
           </div>
         </li>

@@ -33,9 +33,11 @@
             <span class="glyphicon glyphicon-pencil" ></span>
             <span class="glyphicon-label">Cambiar</span>
           </div>
-          <div class="col-md-1 buttons" ng-click="$ctrl.remove(slt.storagelokertypeId, slt.name)">
-            <span class="glyphicon glyphicon-trash" ></span>
-            <span class="glyphicon-label">Borrar</span>
+          <div class="col-md-1 buttons">
+            <a ng-confirm-message="¿Estás seguro de querer eliminar el tipo de bodega {{slt.name}}?" ng-confirm="$ctrl.remove(slt.storagelokertypeId, slt.name)">
+              <span class="glyphicon glyphicon-trash" ></span>
+              <span class="glyphicon-label">Borrar</span>
+            </a>
           </div>
         </div>
       </li>
