@@ -1,4 +1,4 @@
-<div class="top-fix"></div>
+<div id="top" class="top-fix"></div>
   <div class="fixed-sidebar">
     <gt-asidemenu active="client"></gt-asidemenu>
     <div class="wrapper">
@@ -14,25 +14,28 @@
         </div>
       </div>
       <ul>
-        <li ng-repeat="type in $ctrl._clients track by type.clientId">
+        <li ng-if="$ctrl._clients.length === 0">
+          <h4>No existen clientes</h4>
+        </li>
+        <li ng-repeat="c in $ctrl._clients track by c.clientId">
           <div class="well row">
             <div class="col-md-1">
             </div>
             <div class="col-md-6">
-              <h3>{{type.name}}</h3>
-              <p>{{type.address}}</p>
+              <h3>{{c.name}}</h3>
+              <p>{{c.address}}</p>
 
             </div>
             <div class="col-md-3">
-              <p>Email: {{type.email}}</p>
-              <p>Celular: {{type.cellPhone}}</p>
-              <p>Telefono: {{type.phone}}</p>
+              <p>Email: {{c.email}}</p>
+              <p>Celular: {{c.cellPhone}}</p>
+              <p>Telefono: {{c.phone}}</p>
             </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.clientId)">
+            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(c.clientId)">
               <span class="glyphicon glyphicon-pencil" ></span>
               <span class="glyphicon-label">Cambiar</span>
             </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.remove(type.clientId)">
+            <div class="col-md-1 buttons" ng-click="$ctrl.remove(c.clientId, c.name)">
               <span class="glyphicon glyphicon-trash" ></span>
               <span class="glyphicon-label">Borrar</span>
             </div>

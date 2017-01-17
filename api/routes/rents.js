@@ -13,9 +13,10 @@ var jwtCheck = jwt({
 function getAll (done) {
   db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename
                     FROM rent r
-                    INNER JOIN client c ON r.clientId = c.clientId
-                    INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
-                    INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
+                      INNER JOIN client c ON r.clientId = c.clientId
+                      INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
+                      INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
+                    WHERE r.enable = 1
                     ORDER BY r.active DESC, r.startDate DESC`, function(err, rows) {
     if(err) throw err;
     done(rows);
@@ -23,7 +24,7 @@ function getAll (done) {
 }
 
 function getById (id, done) {
-  db.get().query('SELECT * FROM rent WHERE rentId = ?', id, function(err, row) {
+  db.get().query('SELECT * FROM rent WHERE rentId = ? AND enable = 1', id, function(err, row) {
     if(err) throw err;
     done(row[0]);
   });
@@ -35,6 +36,7 @@ function insert (data,done) {
   data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:MM");
   delete data.client;
   delete data.storageloker;
+  delete data.storagelokertype;
 
   db.get().query('INSERT INTO rent SET ?', data, function(err, result) {
     if(err) throw err;
@@ -43,7 +45,13 @@ function insert (data,done) {
 }
 
 function update (id, data, done) {
-  db.get().query('UPDATE rent SET ? WHERE rentId = ?', [data, id], function(err, result) {
+  data.clientId = data.client.clientId;
+  data.storagelokerId = data.storageloker.storagelokerId;
+  data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:MM");
+  delete data.client;
+  delete data.storageloker;
+  delete data.storagelokertype;
+  db.get().query('UPDATE rent SET ? WHERE rentId = ? AND enable = 1', [data, id], function(err, result) {
     if(err) throw err;
     done(result);
   });

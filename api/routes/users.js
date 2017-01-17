@@ -17,7 +17,6 @@ function createToken(user) {
 function getUserDB(username, done) {
   db.get().query('SELECT * FROM user WHERE username = ? AND enable = 1 LIMIT 1', [username], function(err, rows, fields) {
     if (err) throw err;
-    console.log(JSON.stringify(rows[0]));
     done(rows[0]);
   });
 }
@@ -58,10 +57,10 @@ app.post('/user/login', function(req, res) {
   }
   getUserDB(req.body.username, function(user){
     if (!user) {
-      return res.status(401).send("The username is not existing");
+      return res.status(401).send("El usuario no existe");
     }
     if (user.password !== req.body.password) {
-      return res.status(401).send("The username or password don't match");
+      return res.status(401).send("El usuario o password no coinciden");
     }
     res.status(201).send({
       id_token: createToken(user)
@@ -74,10 +73,10 @@ app.post('/api/auth/login', function(req, res) {
   }
   getUserDB(req.body.username, function(user){
     if (!user) {
-      return res.status(401).send("The username is not existing");
+      return res.status(401).send("El usuario no existe");
     }
     if (user.password !== req.body.password) {
-      return res.status(401).send("The username or password don't match");
+      return res.status(401).send("El usuario o password no coinciden");
     }
     res.status(201).send({
       id_token: createToken(user),
@@ -102,7 +101,6 @@ app.get('/api/users/me', function(req, res) {
       var decoded = jwt.verify(token, config.secretKey);
       //if (decoded.exp <= Date.now()) {
       //  res.end('Access token has expired', 400);
-      console.log(decoded.username);
       getByUsername(decoded.username, function(result) {
         res.status(200).send(result);
       });
@@ -172,8 +170,6 @@ function remove (id, done) {
 }
 
 function reset(id, data, done) {
-  console.log(id);
-  console.log(JSON.stringify(data))
   var thisdata = {
     reset:0,
     password:data.newpassword

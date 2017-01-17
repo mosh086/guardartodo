@@ -61,12 +61,14 @@ app.get('/api/clients/:id', function(req, res) {
 });
 
 app.post('/api/clients', function(req, res) {
+  delete req.body.storagelokertypename;
   insert(req.body, function(result) {
     res.status(200).send(result);
   });
 });
 
 app.put('/api/clients/:id', function(req, res) {
+  delete req.body.address;
   update(req.params.id,req.body,function(result) {
     res.status(200).send(result);
   });

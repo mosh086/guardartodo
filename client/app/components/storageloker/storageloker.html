@@ -1,4 +1,4 @@
-<div class="top-fix"></div>
+<div id="top" class="top-fix"></div>
 <div class="fixed-sidebar">
   <gt-asidemenu active="storagelokertype"></gt-asidemenu>
   <div class="wrapper">
@@ -14,6 +14,9 @@
       </div>
     </div>
     <ul>
+      <li ng-if="$ctrl.storageloker.length === 0">
+        <h4>No existen tipos de bodegas</h4>
+      </li>
       <li ng-repeat="sl in $ctrl.storageloker track by sl.storagelokerId">
         <div class="well row">
           <div class="col-md-1">
@@ -28,7 +31,7 @@
             <span class="glyphicon glyphicon-pencil" ></span>
             <span class="glyphicon-label">Cambiar</span>
           </div>
-          <div class="col-md-1 buttons" ng-click="$ctrl.remove(sl.storagelokerId)">
+          <div class="col-md-1 buttons" ng-click="$ctrl.remove(sl.storagelokerId, sl.number)">
             <span class="glyphicon glyphicon-trash" ></span>
             <span class="glyphicon-label">Borrar</span>
           </div>

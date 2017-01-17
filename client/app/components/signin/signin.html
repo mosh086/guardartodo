@@ -1,22 +1,25 @@
 <div class="top-fix "></div>
 <div class="container signin-form">
-  <form id="form" name="form" class="form"  novalidate>
-    <div class="form-group" ng-class="{'has-danger':form.username.$invalid && !form.username.$pristine}">
+  <form id="sForm" name="sForm" class="form"  novalidate>
+    <div class="form-group" ng-class="{'has-error':sForm.username.$dirty && sForm.username.$invalid}">
       <label class="form-control-label" for="username">Usuario</label>
       <input class="form-control" id="username" name="username" ng-model="$ctrl._data.username" required/>
-      <div class="form-control-feedback" ng-messages="form.username.$error" ng-if="form.username.$invalid && !form.username.$pristine">
-        <p ng-message="required">Username is required</p>
-      </div>
+      <span class="span-validation" ng-show="sForm.username.$dirty && sForm.username.$invalid">
+        <span ng-show="sForm.username.$error.required">El usuario es requerido</span>
+      </span>
     </div>
-    <div class="form-group" ng-class="{'has-danger':form.password.$invalid && !form.password.$pristine}">
+    <div class="form-group" ng-class="{'has-error':sForm.password.$dirty && sForm.password.$invalid}">
       <label class="form-control-label" for="password">Contraseña</label>
       <input class="form-control" type="password" name="password" id="password" ng-model="$ctrl._data.password" required/>
-      <div class="form-control-feedback" ng-messages="form.password.$error" ng-if="form.password.$invalid && !form.password.$pristine">
-        <p ng-message="required">Password is required</p>
-      </div>
+      <span class="span-validation" ng-show="sForm.password.$dirty && sForm.password.$invalid">
+        <span ng-show="sForm.password.$error.required">el password es requerido</span>
+      </span>
+    </div>
+    <div class="form-group span-validation">
+      <span class="error">{{$ctrl._errormessage}}</span>
     </div>
     <div class="form-group">
-      <button  ng-click="$ctrl.signin()" class="btn btn-default" ng-disabled="form.$invalid || form.$pending">Entrar</button>
+      <button  ng-click="$ctrl.validation() && sForm.$valid && $ctrl.signin()" class="btn btn-default">Entrar</button>
     </div>
   </form>
 </div>

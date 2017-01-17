@@ -2,10 +2,11 @@ import modalTemplate from './user.modal.html'
 import modalInstanceCtrl from './user.modal.controller'
 
 class UserController {
-  constructor($uibModal, $scope, $filter, UserService) {
+  constructor($uibModal, $scope, $filter, toastr, UserService) {
     "ngInject";
 
     this._uibModal = $uibModal;
+    this._toastr = toastr;
     this._User = UserService;
 
     this._users = [];
@@ -44,8 +45,10 @@ class UserController {
 
     modalInstance.result.then((data) => self.save(data),
       (err) => {
-        if (err !== 'cancel')
+        if (err !== 'cancel') {
           console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
       }
     );
   }
@@ -53,16 +56,32 @@ class UserController {
   save(data) {
     let self = this;
     this._User.save(data)
-      .then((res) => self.searchUsers(),
-        (err) => console.log('error: ' + err)
+      .then((res) => {
+        if (res.data.insertId == 0)
+          self._toastr.success(`Usuario ${data.username} se actualizado correctamente`);
+        else
+          self._toastr.success(`Usuario ${data.username} fue creado correctamente`);
+
+        self.searchUsers();
+      },
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
       )
   }
 
-  remove(id) {
+  remove(id, name) {
     let self = this;
     this._User.remove(id)
-      .then((res) => self.searchUsers(),
-        (err) => console.log('error: ' + err)
+      .then((res) => {
+        self._toastr.success(`Usuario ${name} fue eliminado correctamente`);
+        self.searchUsers();
+      },
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
       )
   }
 
@@ -79,7 +98,10 @@ class UserController {
           self._users = res;
           self._usersTemp = res;
         },
-        (err) => console.log('error: ' + err)
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
       );
   }
 }

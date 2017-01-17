@@ -2,10 +2,11 @@ import modalTemplate from './storagelokertype.modal.html'
 import modalInstanceCtrl from './storagelokertype.modal.controller'
 
 class StoragelokertypeController {
-  constructor($uibModal, $scope, $filter, StoragelokertypeService) {
+  constructor($uibModal, $scope, $filter, toastr, StoragelokertypeService) {
     "ngInject";
 
     this._uibModal = $uibModal;
+    this._toastr = toastr;
     this._Storagelokertype = StoragelokertypeService;
 
     this._storagelokertype = [];
@@ -46,7 +47,7 @@ class StoragelokertypeController {
     .then((data) => self.save(data),
       (err) => {
         if (err !== 'cancel')
-          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
       }
     );
   }
@@ -54,16 +55,31 @@ class StoragelokertypeController {
   save(data) {
     let self = this;
     this._Storagelokertype.save(data)
-      .then((res) => self.searchStoragelokertypes(),
-        (err) => console.log('error: ' + err)
+      .then((res) => {
+        if (res.data.insertId == 0)
+          self._toastr.success(`Tipo de bodega ${data.name} se actualizado correctamente`);
+        else
+          self._toastr.success(`Tipo de bodega ${data.name} fue creado correctamente`);
+        self.searchStoragelokertypes();
+      },
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
     );
   }
 
-  remove(id) {
+  remove(id, name) {
     let self = this;
     this._Storagelokertype.remove(id)
-      .then((res) => self.searchStoragelokertypes(),
-        (err) => console.log('error: ' + err)
+      .then((res) => {
+        self._toastr.success(`Tipo de bodega ${name} fue eliminado correctamente`);
+        self.searchStoragelokertypes();
+      },
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
     );
   }
 
@@ -78,7 +94,11 @@ class StoragelokertypeController {
       .then((res) => {
         self._storagelokertype = res;
         self._storagelokertypeTemp = res;
-      });
+      },
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        });
   }
 
 }

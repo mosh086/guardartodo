@@ -30,7 +30,8 @@ export default class InstanceCtrl {
   }
 
   save() {
-    this._uibModalInstance.close(this._data);
+    let self = this;
+    this._uibModalInstance.close(self._data);
   };
 
   cancel() {

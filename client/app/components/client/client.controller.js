@@ -2,10 +2,11 @@ import modalTemplate from './client.modal.html'
 import modalInstanceCtrl from './client.modal.controller'
 
 class ClientController {
-  constructor($uibModal, $scope, $filter, ClientService) {
+  constructor($uibModal, $scope, $filter, toastr, ClientService) {
     "ngInject";
 
     this._uibModal = $uibModal;
+    this._toastr = toastr;
     this._Client = ClientService;
 
     this._clients = [];
@@ -45,8 +46,10 @@ class ClientController {
     modalInstance.result
       .then((data) => self.save(data),
         (err) => {
-          if (err !== 'cancel')
+          if (err !== 'cancel') {
             console.log('error: ' + err);
+            self._toastr.error(`Error ${err.message}`);
+          }
         }
       );
   }
@@ -54,17 +57,32 @@ class ClientController {
   save(data) {
     let self = this;
     this._Client.save(data)
-      .then((res) => self.searchClients(),
-        (err) => console.log('error: ' + err)
+      .then((res) => {
+        if (res.data.insertId == 0)
+          self._toastr.success(`Cliente ${data.name} se actualizado correctamente`);
+        else
+          self._toastr.success(`Cliente ${data.name} fue creado correctamente`);
+        self.searchClients();
+      },
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
       )
   }
 
-  remove(id) {
+  remove(id, name) {
     let self = this;
     this._Client.remove(id)
-      .then((res) => self.searchClients(),
-        (err) => console.log('error: ' + err)
-      )
+      .then((res) => {
+        self._toastr.success(`Cliente ${name} fue eliminado correctamente`);
+        self.searchClients();
+      },
+        (err) =>  {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
+      );
   }
 
   search() {
@@ -79,7 +97,10 @@ class ClientController {
         self._clients = res;
         self._clientsTemp = res;
       },
-        (err) => console.log('error: ' + err)
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
       );
   }
 }

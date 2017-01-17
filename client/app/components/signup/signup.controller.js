@@ -12,7 +12,7 @@ class SignupController {
   }
 
   signup() {
-    console.log('sign up with data @' + this.data);
+    //console.log('sign up with data @' + this.data);
     this._Auth.attempAuth('signup', this.data)
       .then((res) => {
         this._$state.go('app.posts');

@@ -1,39 +1,42 @@
-<div class="top-fix"></div>
-  <div class="fixed-sidebar">
-    <gt-asidemenu active="user"></gt-asidemenu>
-    <div class="wrapper">
-      <div class="form-group filters">
-        <div class="col-md-8">
-          <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nuevo usuario</button>
-        </div>
-        <div class="col-md-4">
-          <div class="input-group">
-            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
-            <input class="form-control"  placeholder="buscar" ng-model="search">
-          </div>
+<div id="top" class="top-fix"></div>
+<div class="fixed-sidebar">
+  <gt-asidemenu active="user"></gt-asidemenu>
+  <div class="wrapper">
+    <div class="form-group filters">
+      <div class="col-md-8">
+        <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nuevo usuario</button>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+          <input class="form-control"  placeholder="buscar" ng-model="search">
         </div>
       </div>
-      <ul>
-        <li ng-repeat="type in $ctrl._users track by type.userId">
-          <div class="well row">
-            <div class="col-md-1">
-            </div>
-            <div class="col-md-6">
-              <h3>{{type.fullName}}</h3>
-              <p>{{type.username}}</p>
-            </div>
-            <div class="col-md-3">
-            </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(type.userId)">
-              <span class="glyphicon glyphicon-pencil" ></span>
-              <span class="glyphicon-label">Cambiar</span>
-            </div>
-            <div class="col-md-1 buttons" ng-click="$ctrl.remove(type.userId)">
-              <span class="glyphicon glyphicon-trash" ></span>
-              <span class="glyphicon-label">Borrar</span>
-            </div>
-          </div>
-        </li>
-      </ul>
     </div>
+    <ul>
+      <li ng-if="$ctrl.storageloker.length === 0">
+        <h4>No existen bodegas</h4>
+      </li>
+      <li ng-repeat="u in $ctrl._users track by u.userId">
+        <div class="well row">
+          <div class="col-md-1">
+          </div>
+          <div class="col-md-6">
+            <h3>{{u.fullName}}</h3>
+            <p>{{u.username}}</p>
+          </div>
+          <div class="col-md-3">
+          </div>
+          <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(u.userId)">
+            <span class="glyphicon glyphicon-pencil" ></span>
+            <span class="glyphicon-label">Cambiar</span>
+          </div>
+          <div class="col-md-1 buttons" ng-click="$ctrl.remove(u.userId, u.username)">
+            <span class="glyphicon glyphicon-trash" ></span>
+            <span class="glyphicon-label">Borrar</span>
+          </div>
+        </div>
+      </li>
+    </ul>
   </div>
+</div>

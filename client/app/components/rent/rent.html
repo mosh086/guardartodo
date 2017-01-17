@@ -1,4 +1,4 @@
-<div class="top-fix"></div>
+<div id="top" class="top-fix"></div>
   <div class="fixed-sidebar">
     <gt-asidemenu active="rent"></gt-asidemenu>
     <div class="wrapper">
@@ -14,6 +14,9 @@
         </div>
       </div>
       <ul>
+        <li ng-if="$ctrl._rents.length === 0">
+          <h4>No existen rentas</h4>
+        </li>
         <li ng-repeat="rent in $ctrl._rents track by rent.rentId">
           <div class="well row">
             <div class="col-md-1">

@@ -47,7 +47,6 @@ function remove (id, done) {
 
 app.use('/api/storagelokers', jwtCheck);
 app.get('/api/storagelokers', function(req, res) {
-  console.log(JSON.stringify(req.query));
   getAll(function(result) {
     res.status(200).send(result);
   });
