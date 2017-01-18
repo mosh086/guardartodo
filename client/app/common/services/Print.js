@@ -1,11 +1,12 @@
 import moment from 'moment';
 
 class Print {
-  constructor(Company) {
+  constructor(Company, UserService) {
     'ngInject';
 
     this._docDefinition = null;
     this._Company = Company.getInfo();
+    this._User = UserService;
   }
 
   print() {
@@ -18,8 +19,12 @@ class Print {
 
   open(data) {
     //if (this._docDefinition === null) {
-      this._docDefinition = new makeDocDefinition(data, this._Company).getObject();
-      pdfMake.createPdf(this._docDefinition).open();
+      let self = this;
+      self._User.me().then((user) => {
+        this._docDefinition = new makeDocDefinition(data, self._Company, user.data[0]).getObject();
+        pdfMake.createPdf(this._docDefinition).open();
+      }, (err)=> {})
+
     //} else {
       //pdfMake.createPdf(this._docDefinition).open();
     //}
@@ -29,18 +34,21 @@ class Print {
 
 
 class makeDocDefinition {
-  constructor(data, company) {
+  constructor(data, company, user) {
     moment.locale('es');
     data = this.noNulls(data);
     let temp;
+    let zeroString = "000";
+    let paddedNum = zeroString.substring((data.clientId + "").length,3) + data.clientId;
+    let folioText = `B-${moment(data.startDate).format('YYMM')}${paddedNum}`;
     this.doc = {
       content: [{
         style: 'table',
         table: {
           widths: [ 120, '*' ],
           body: [
-            [ { rowSpan: 2, image : img, width: 100 }, { text: 'Contrato', style: 'right'  }],
-            [ { }, { text: 'folio', style: 'right' }],
+            [ { rowSpan: 2, image : img, width: 100 }, { text: 'Contrato', alignment: 'center'  }],
+            [ { }, { text: `folio : ${folioText}`, alignment: 'center' }],
           ]
         },
         layout: 'noBorders'
@@ -90,7 +98,7 @@ class makeDocDefinition {
             [{ colSpan: 4, style: 'title', text: 'N) DEPOSITO:   ' }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: 'O) USUARIOS AUTORIZADOS:   ' }, {}, {}, {}],
             [{ colSpan: 4, style: 'obs', text: [`OBSERVACIONES: “GuardarTodo” prestará sus servicios de `, { style:'obsbold', text: `Lunes a Viernes de 8:00 a 18:00 horas y Sábados :00-13:00 horas` }, `, salvo los siguientes días de conformidad con el artículo 74 de la Ley Federal del Trabajo: Enero 1, primer lunes de Febrero en conmemoración del 05 de Febrero, el tercer lunes de Marzo en conmemoración del 21 de Marzo, Mayo 1, Septiembre 16, tercer lunes de Noviembre en conmemoración del 20 de Noviembre, Diciembre 25, y cuando tome posesión de su cargo el Presidente de la República. “GuardarTodo” podrá suspender la prestación de los servicios por razones de inestabilidad política, u otros eventos fuera del control de “GuardarTodo”.`] }, {}, {}, {}],
-            [{ colSpan: 4, style: 'title', text: 'ELABORO:' }, {}, {}, {}]
+            [{ colSpan: 4, style: 'title', text: ['ELABORO:   ', { style: 'info', text : `${user.firstName} ${user.lastName}`}]}, {}, {}, {}]
           ]
         },
         layout:{

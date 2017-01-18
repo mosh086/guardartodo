@@ -54,10 +54,10 @@ class StoragelokerController {
     modalInstance.result
       .then((data) => self.save(data),
         (err) => {
-          if (err !== 'cancel') {
-            console.log('error: ' + err);
-            self._toastr.error(`Error ${err.message}`);
-          }
+          //if (err !== 'cancel') {
+          //  console.log('error: ' + err);
+          //  self._toastr.error(`Error ${err.message}`);
+          //}
         }
       );
   }

@@ -12,8 +12,11 @@ export default class InstanceCtrl {
       userId:null,
       firstName:'',
       lastName: '',
-      username:''
+      username:'',
+      imgUrl:''
     };
+
+    this._max = 16;
   }
 
   $onInit() {
@@ -21,7 +24,11 @@ export default class InstanceCtrl {
       this._data = this._user;
       delete this._data.enable;
       delete this._data.createDatetime;
+    } else {
+      let num = Math.floor(Math.random()*this._max)+1;
+      this._data.imgUrl = `users-${num}.svg`;
     }
+
   }
 
   save() {
@@ -38,5 +45,19 @@ export default class InstanceCtrl {
              value.$setDirty();
      });
     return true;
+  }
+
+  up() {
+    let num = parseInt(this._data.imgUrl.replace('users-', '').replace('.svg', ''));
+    num += 1;
+    if (num > this._max) num = 1;
+    this._data.imgUrl = `users-${num}.svg`
+  }
+
+  down() {
+    let num = parseInt(this._data.imgUrl.replace('users-', '').replace('.svg', ''));
+    num -= 1;
+    if (num < 1) num = this._max;
+    this._data.imgUrl = `users-${num}.svg`
   }
 }

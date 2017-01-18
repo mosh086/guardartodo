@@ -11,14 +11,13 @@ function ConfirmDialog($uibModal) {
     },
     link: function (scope, element) {
       element.bind('click', function () {
-        console.log('resf');
         var modalInstance = $uibModal.open({
           template: `<div class="modal-header">
                         <h3 class="modal-title">{{$ctrl._confirmMessage}}</h3>
                       </div>
                       <div class="modal-footer">
-                        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
                         <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
+                        <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">OK</button>
                       </div>`,
           controller: ModalConfirmCtrl,
           controllerAs: '$ctrl',

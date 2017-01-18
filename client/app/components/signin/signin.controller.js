@@ -20,7 +20,6 @@ class SigninController {
 
     this._Auth.attempAuth('signin', this._data)
       .then((res) => {
-        console.log(res);
         if (res.status == '201') {
           this._toastr.success('Bienvenido, ' + res.data.user.firstName);
           if (res.data.user.reset === 0) {

@@ -85,6 +85,10 @@ module.exports = {
       "vfs_fonts": path.resolve(
         __dirname,
         "node_modules/pdfmake/build/vfs_fonts"
+      ),
+      "chart": path.resolve(
+        __dirname,
+        "node_modules/chart.js/src/chart.js"
       )
     }
   }
