@@ -63,8 +63,8 @@
 
     <div class="row">
       <div class="form-group col-md-4">
-        <label for="cLineOfBusiness">Giro</label>
-        <ui-select id="cLineOfBusiness" name="cLineOfBusiness" ng-model="$ctrl._data.lineOfBusiness" title="Giro">
+        <label for="cLineOfBusiness">Persona de tipo</label>
+        <ui-select id="cLineOfBusiness" name="cLineOfBusiness" ng-model="$ctrl._data.lineOfBusiness" title="Persona de tipo">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.lineOfBusiness}}</ui-select-match>
           <ui-select-choices repeat="item in $ctrl._lineOfBusiness">
             <span ng-bind-html="item"></span>
@@ -76,8 +76,8 @@
         <input type="text" class="form-control" id="cLegalRepresentative" placeholder="Representante legal" ng-model="$ctrl._data.legalRepresentative" maxlength="400">
       </div>
       <div class="form-group col-md-4">
-        <label for="cKindOfBusiness">Persona de tipo</label>
-        <ui-select id="cKindOfBusiness" name="cKindOfBusiness" ng-model="$ctrl._data.kindOfBusiness" title="Persona de tipo">
+        <label for="cKindOfBusiness">Giro</label>
+        <ui-select id="cKindOfBusiness" name="cKindOfBusiness" ng-model="$ctrl._data.kindOfBusiness" title="Giro">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.kindOfBusiness}}</ui-select-match>
           <ui-select-choices repeat="item in $ctrl._kindOfBusiness">
             <span ng-bind-html="item"></span>

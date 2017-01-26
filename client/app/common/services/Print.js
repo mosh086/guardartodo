@@ -45,10 +45,10 @@ class makeDocDefinition {
       content: [{
         style: 'table',
         table: {
-          widths: [ 120, '*' ],
+          widths: ['*', '*' ],
           body: [
-            [ { rowSpan: 2, image : img, width: 100 }, { text: 'Contrato', alignment: 'center'  }],
-            [ { }, { text: `folio : ${folioText}`, alignment: 'center' }],
+            [ { image : img, width: 150, alignment: 'center' }, {text: `Contrato\n${data.client.lineOfBusiness}\nfolio : ${folioText}`, alignment: 'center'  }],
+            [ { text:''}, { text: ``, alignment: 'center' }],
           ]
         },
         layout: 'noBorders'
@@ -64,7 +64,7 @@ class makeDocDefinition {
               { style: 'title', text: ['C) R.F.C.:   ', { style: 'info', text: `${data.client.rfc}` } ]},
               { rowSpan: 3, style: 'title', text: ['E) DOMICILIO FISCAL:   ', {  style: 'info', text: `${data.client.address}` }] }
             ],
-            [{ style: 'title', text: ['D) GIRO:   ', { style: 'info', text: `${data.client.lineOfBusiness}` } ] } ],
+            [{ style: 'title', text: ['D) GIRO:   ', { style: 'info', text: `${data.client.kindOfBusiness}` } ] } ],
             [{ style: 'title', text: ['TELEFONO:   ', { style: 'info', text: `${data.client.phone}` } ] }, {}],
             [
               { style: 'title', text: ['CELULAR:   ', { style: 'info', text: `${data.client.cellPhone}` } ] },
@@ -90,10 +90,9 @@ class makeDocDefinition {
             ],
             [{ colSpan: 4, style: 'title', margin: [0, 0, 0, 20], text: 'SERVICIOS CONTRATADOS:   ' }, {}, {}, {}],
             [{ colSpan: 2, text: ''}, {}, {text: 'PRECIO', style: 'title' }, {text: 'PRECIO CON DESCUENTO', style: 'title' }],
-            [{ colSpan: 2, style: 'title', text: ['BODEGA DE TAMAÑO:   ', {style: 'info', alignment: 'center', text: `${data.storagelokertype.name}` }] }, {}, { text: `${data.storagelokertype.price}` }, { text: '' }],
-            [{ colSpan: 4, style: 'title',text: 'TIEMPO DE RENTA DE BODEGA:   ' }, {}, {}, {}],
-            [{ colSpan: 2, style: 'title', text: 'SERVICIOS ADICIONALES:   ' }, {}, { colSpan: 2, text: `${data.extra}` }, {}],
-            [{ colSpan: 2, style: 'title', alignment: 'center', margin: [0, 20, 0, 0], text: 'TOTAL', style: '' }, {}, { margin: [0, 20, 0, 0], text: `${data.total}` }, { text: '' }],
+            [{ colSpan: 2, style: 'title', text: ['BODEGA DE TAMAÑO:   ', {style: 'info', alignment: 'center', text: `${data.storagelokertype.name}  ${data.storageloker.number}` }] }, {}, { text: `$${data.storagelokertype.price}` }, { text: '' }],
+            [{ colSpan: 2, style: 'title', text: 'SERVICIOS ADICIONALES:   ' }, {}, { colSpan: 2, text: `$${data.extra}` }, {}],
+            [{ colSpan: 2, style: 'title', alignment: 'center', margin: [0, 20, 0, 0], text: 'TOTAL', style: '' }, {}, { margin: [0, 20, 0, 0], text: `$${data.total}` }, { text: '' }],
             [{ colSpan: 4, style: 'title', text: 'M) SERVICIO MENSUAL TOTAL:   ' }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: 'N) DEPOSITO:   ' }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: 'O) USUARIOS AUTORIZADOS:   ' }, {}, {}, {}],
@@ -105,7 +104,7 @@ class makeDocDefinition {
           hLineColor: function(i, node){
             let resolve;
             temp = i;
-            if (i <= 8 && i >= 4) {
+            if (i <= 7 && i >= 4) {
               resolve = 'white'
             } else {
               resolve = 'black';
@@ -113,7 +112,7 @@ class makeDocDefinition {
             return resolve;
           },
           vLineColor: function(i, node) {
-            return ((temp <= 8 && temp >= 4) && (i === 2 || i === 3)) ? 'white':'black';
+            return ((temp <= 7 && temp >= 4) && (i === 2 || i === 3)) ? 'white':'black';
           }
         }
 			}, {
@@ -171,6 +170,10 @@ class makeDocDefinition {
         obs: {
           alignment: 'center',
           fontSize: 8
+        },
+        rightme:
+        {
+            alignment: 'right'
         },
         obsbold: { bold: true },
         columnbold: { bold: true, fontSize: 7 },
