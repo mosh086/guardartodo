@@ -52,6 +52,22 @@
             "image":"images/marketing/thermometer.svg",
             "title":"Temperatura",
             "description":"Somos subterraneos, No Sol!"
+        }, {
+            "image":"images/marketing/pantone.svg",
+            "title":"Opciones",
+            "description":"Nos adaptamos a tus necesidades"
+        }, {
+            "image":"images/marketing/user.svg",
+            "title":"Personal",
+            "description":"Contamos con personal sumamente calificado"
+        }, {
+            "image":"images/marketing/shield.svg",
+            "title":"Vigilancia 24h",
+            "description":"Tus pertenencias nunca estarán solas"
+        }, {
+            "image":"images/marketing/umbrella.svg",
+            "title":"Comodidad",
+            "description":"Área de carga y descarga techada"
     }],
     "featurettes":[{
             "image":"images/featurette/feat1.jpg",

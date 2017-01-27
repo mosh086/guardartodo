@@ -4,6 +4,7 @@ import homeComponent from './home.component';
 import aboutus from './aboutus';
 import carousel from './carousel';
 import marketing from './marketing';
+import sizes from './sizes';
 import contactus from './contactus';
 
 let homeModule = angular.module('app.components.home', [
@@ -11,6 +12,7 @@ let homeModule = angular.module('app.components.home', [
   aboutus,
   carousel,
   marketing,
+  sizes,
   contactus
 ])
 .config(($stateProvider) => {
