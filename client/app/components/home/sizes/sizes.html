@@ -1,62 +1,16 @@
-<div id="sizes">
+<div class="container">
+  <div id="sizes">
+    <h2>Nuestros espacios</h2>
+  </div>
   <div class="wrapper-sizes">
-    <div class="package">
-      <div class="name">Limited</div>
-      <div class="price">€2</div>
+    <div class="package" ng-repeat="item in $ctrl._items">
+      <div class="name">{{item.title}}</div>
+      <div class="img">
+        <img ng-src="{{item.image}}" alt="size">
+      </div>
       <ul>
         <li>
-          <strong>8</strong>
-        </li>
-        <li>
-          <strong>5</strong> team playlists
-        </li>
-        <li>
-          <strong>Unlimited</strong> public playlists
-        </li>
-      </ul>
-    </div>
-    <div class="package">
-      <div class="name">Limited</div>
-      <div class="price">€2</div>
-      <ul>
-        <li>
-          <strong>8</strong>
-        </li>
-        <li>
-          <strong>5</strong> team playlists
-        </li>
-        <li>
-          <strong>Unlimited</strong> public playlists
-        </li>
-      </ul>
-    </div>
-    <div class="package">
-      <div class="name">Limited</div>
-      <div class="price">€2</div>
-      <ul>
-        <li>
-          <strong>8</strong>
-        </li>
-        <li>
-          <strong>5</strong> team playlists
-        </li>
-        <li>
-          <strong>Unlimited</strong> public playlists
-        </li>
-      </ul>
-    </div>
-    <div class="package">
-      <div class="name">Limited</div>
-      <div class="price">€2</div>
-      <ul>
-        <li>
-          <strong>8</strong>
-        </li>
-        <li>
-          <strong>5</strong> team playlists
-        </li>
-        <li>
-          <strong>Unlimited</strong> public playlists
+          <strong>{{item.size}}</strong>
         </li>
       </ul>
     </div>

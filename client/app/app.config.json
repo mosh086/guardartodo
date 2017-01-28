@@ -70,16 +70,29 @@
             "description":"Área de carga y descarga techada"
     }],
     "featurettes":[{
-            "image":"images/featurette/feat1.jpg",
-            "title":"Mercancía de temporada.",
-            "description":"Ven y conoce nuestra bodega de 3mts² con medidas de 1x3 o 7mts² con medidas de 2.4x3 especial para guardar decoraciones navideñas y aún super precio!"
+            "image":"images/featurette/feat1.png",
+            "title":"¿Qué puedo Guardar?",
+            "description":"Prácticamente TODO! Mobiliario de oficina-domestico, línea blanca, artículos deportivos, artículos de temporada, autos, motociletas, etc…"
         }, {
-            "image":"images/featurette/feat2.jpg",
-            "title":"Equipo deportivo.",
-            "description":"Ven y guarda todo tipo de equipo deportivo, caminadoras, bicicletas etc. En nuestra bodega de 11mts² con medidas  2.95x3.71 la indicada para tener más espacio!."
-        }, {
-            "image":"images/featurette/feat3.jpg",
-            "title":"Empresa o negocio.",
-            "description":"Tenemos espacio para todo ese archivo muerto y esos muebles por su remodelación ven y conoce la bodega indicada para ti, con un súper precio, comodidad y seguridad"
+            "image":"images/featurette/feat2.png",
+            "title":"Empresa o negocio",
+            "description":"Guarda inventarios, muebles de oficina, archivo viejo, herramientas, materiales de construcción, etc..."
+    }],
+    "sizes": [{
+            "image":"images/size/size1.png",
+            "title":"3m²",
+            "size":"1m x 3m"
+        },{
+            "image":"images/size/size2.png",
+            "title":"7m²",
+            "size":"2.4m x 3m"
+        },{
+            "image":"images/size/size3.png",
+            "title":"11m²",
+            "size":"3.7m x 3m"
+        },{
+            "image":"images/size/size4.png",
+            "title":"16m²",
+            "size":"4m x 4m"
     }]
 }

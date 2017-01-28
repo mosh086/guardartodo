@@ -1,3 +1,20 @@
 .skipmenu {
   height: 75px;
 }
+
+.tips {
+  ul li {
+    text-align:left;
+    list-style-type: circle;
+  }
+
+  margin-bottom: 50px;
+}
+
+.confirm {
+  text-align: center;
+  margin-bottom: 50px;
+  p {
+    font-size: 16px;
+  }
+}

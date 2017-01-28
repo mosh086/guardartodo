@@ -1,5 +1,5 @@
 class CarouselController {
-  constructor($http, $timeout) {
+  constructor($http) {
     "ngInject";
     this._items = [];
 
