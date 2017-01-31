@@ -1,5 +1,6 @@
 class RenteditController {
-  constructor($scope, toastr, ClientService, StoragelokerService, StoragelokertypeService, RentService, Print, $stateParams) {
+  constructor($scope, $stateParams, toastr, Print,
+    ClientService, StoragelokerService, StoragelokertypeService, RentService, UserService) {
     "ngInject";
 
     this._scope = $scope;
@@ -8,12 +9,14 @@ class RenteditController {
     this._Client = ClientService;
     this._Storageloker = StoragelokerService;
     this._Storagelokertype = StoragelokertypeService;
-    this._Rent = RentService
+    this._Rent = RentService;
+    this._User = UserService;
     this._Print = Print;
 
     this._storagelokertype = {};
     this._storagelokers = [];
     this._clients = [];
+    this._users = [];
 
     this._saved = false;
 
@@ -21,6 +24,7 @@ class RenteditController {
       client: null,
       storageloker: null,
       storagelokertype: null,
+      user: null,
       startDate: null,
       cost: 0.00,
       extra: 0.00,
@@ -58,6 +62,7 @@ class RenteditController {
     console.log("initializing Rent...");
     this.getClients();
     this.getStorageloker();
+    this.getUsers();
     this._data.startDate = new Date();
   }
 
@@ -78,6 +83,18 @@ class RenteditController {
     this._Storageloker
       .query('available')
       .then((res) => self._storagelokers = res,
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
+      );
+  }
+
+  getUsers() {
+    let self = this;
+    this._User
+      .query(this.q)
+      .then((res) => { console.log(res); self._users = res},
         (err) => {
           console.log('error: ' + err);
           self._toastr.error(`Error ${err.message}`);
@@ -169,7 +186,6 @@ class RenteditController {
     let self = this;
     this._Storagelokertype.get(id)
       .then((res) => {
-            console.log(JSON.stringify(res))
             self._data.storagelokertype = res;
           }, (err) => {
             console.log('error: ' + err);
