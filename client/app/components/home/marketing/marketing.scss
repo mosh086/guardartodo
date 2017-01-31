@@ -1,0 +1,23 @@
+#marketing {
+    .row{
+        text-align: center;
+    }
+    h2 {
+        font-weight: normal;
+    }
+    h4 {
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+    .col-marketing {
+        display: inline-block;
+        width: 275px;
+        margin-bottom: 20px;
+        text-align: center;
+        vertical-align: top;
+    }
+    .col-marketing p {
+        margin-right: 10px;
+        margin-left: 10px;
+    }
+}

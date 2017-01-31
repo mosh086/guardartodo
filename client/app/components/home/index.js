@@ -6,6 +6,8 @@ import carousel from './carousel';
 import marketing from './marketing';
 import sizes from './sizes';
 import contactus from './contactus';
+import tips from './tips';
+import confirm from './confirm';
 
 let homeModule = angular.module('app.components.home', [
   uiRouter,
@@ -13,7 +15,9 @@ let homeModule = angular.module('app.components.home', [
   carousel,
   marketing,
   sizes,
-  contactus
+  contactus,
+  tips,
+  confirm
 ])
 .config(($stateProvider) => {
   "ngInject";

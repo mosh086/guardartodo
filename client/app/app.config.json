@@ -6,8 +6,8 @@
     "carousel":[{
             "id":"slider1",
             "caption": {
-                "title":"GuardarTodo no tiene limites, guarda lo que tú quieras.",
-                "description":"Nuestras bodegas están preparadas para almacenar todo tipo de cosas desde linea blanca, archivo muerto o cosas de temporada y estas estén cuidadas mediante un Monitoreo de Cámaras las 24hrs."
+                "title":"",
+                "description":""
             },
             "alt":"",
             "class":"first-slide"
@@ -15,16 +15,16 @@
             "id":"slider2",
             "alt":"",
             "caption": {
-                "title":"Contamos con instalaciones totalmente nuevas.",
-                "description":"Nuestra Sucursal Barragán cuenta con bodegas de almacenaje con áreas de 3M hasta 42M todas estas nuevas, para brindarle  el mejor servicio!"
+                "title":"",
+                "description":""
             },
             "class":"second-slide"
         }, {
             "id":"slider3",
             "alt":"",
             "caption": {
-                "title":"Promocion de temporada.",
-                "description":"Diciembre de Promoción, ven y aprovecha! Bodega de 3M en $550(más iva), ponte en contacto y conoce las demás!"
+                "title":"",
+                "description":""
             },
             "class":"third-slide"
         }],
@@ -35,7 +35,7 @@
         }, {
             "image":"images/marketing/contract.svg",
             "title":"Contratos",
-            "description":"No planes Forzosos, Disponibles desde  Un mes."
+            "description":"No planes Forzosos, Disponibles desde un mes."
         }, {
             "image":"images/marketing/car.svg",
             "title":"Acceso",
@@ -46,12 +46,12 @@
             "description":"Tu pones tu candado, solo TU tienes llave."
         }, {
             "image":"images/marketing/calendar.svg",
-            "title":"Sin plagas",
-            "description":"Contamos con control mensual de Fumigacion."
+            "title":"Fumigación",
+            "description":"Contamos con control mensual de fumigación."
         }, {
             "image":"images/marketing/thermometer.svg",
-            "title":"Temperatura",
-            "description":"Somos subterraneos, No Sol!"
+            "title":"Subterráneo",
+            "description":"No Sol!"
         }, {
             "image":"images/marketing/pantone.svg",
             "title":"Opciones",
@@ -70,11 +70,11 @@
             "description":"Área de carga y descarga techada"
     }],
     "featurettes":[{
-            "image":"images/featurette/feat1.png",
-            "title":"¿Qué puedo Guardar?",
-            "description":"Prácticamente TODO! Mobiliario de oficina-domestico, línea blanca, artículos deportivos, artículos de temporada, autos, motociletas, etc…"
-        }, {
             "image":"images/featurette/feat2.png",
+            "title":"¿Qué puedo Guardar?",
+            "description":"Prácticamente TODO!!! Mobiliario de oficina-doméstico, línea blanca, artículos deportivos, artículos de temporada, autos, motocicletas, etc…"
+        }, {
+            "image":"images/featurette/feat1.png",
             "title":"Empresa o negocio",
             "description":"Guarda inventarios, muebles de oficina, archivo viejo, herramientas, materiales de construcción, etc..."
     }],

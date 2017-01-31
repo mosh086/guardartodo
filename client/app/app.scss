@@ -14,49 +14,6 @@
     min-height: calc(100vh - 131px);
 }
 
-#marketing {
-    padding-top: 60px;
-    .row{
-        text-align: center;
-    }
-    h2 {
-        font-weight: normal;
-    }
-    h4 {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    .col-marketing {
-        display: inline-block;
-        width: 275px;
-        margin-bottom: 20px;
-        text-align: center;
-        vertical-align: top;
-    }
-    .col-marketing p {
-        margin-right: 10px;
-        margin-left: 10px;
-    }
-}
-
-.featurette-divider {
-    margin: 80px 0;
-}
-
-.featurette-heading {
-    font-weight: 300;
-    line-height: 1;
-    letter-spacing: -1px;
-}
-
-#contact-us .jumbotron {
-    background-color: #ffffff;
-    p {
-        &:not(:first-of-type) {
-            font-size: 18px;
-        }
-    }
-}
 
 .initialModal {
     width: 100%;
