@@ -43,6 +43,7 @@ function insert (data,done) {
 
   db.get().query('INSERT INTO rent SET ?', data, function(err, result) {
     if(err) throw err;
+    insertAuthorizedUsers(userAuthorization, result);
     done(result)
   });
 }
@@ -67,12 +68,12 @@ function remove (id, done) {
   });
 }
 
-function insertAuthorizedUsers(req, res, next) {
+function insertAuthorizedUsers(users, result) {
 
-  let mapped = _.map(req.body, user => ({ 'userId' : user.userId }));
+  let mapped = _.map(users, item => _.extend(_.pick(item, 'userId'), {"rentId": result.insertId}));
   console.log(JSON.stringify(mapped));
   //db.get().query('INSERT INTO rentauthorization SET ?', id, function(err, result) {
-    next();
+
   //});
     //if(err) throw err;
 
@@ -97,7 +98,7 @@ app.get('/api/rents/:id', function(req, res) {
   });
 });
 
-app.post('/api/rents', insertAuthorizedUsers, function(req, res) {
+app.post('/api/rents', function(req, res) {
   insert(req.body, function(result) {
     res.status(200).send(result);
   });
