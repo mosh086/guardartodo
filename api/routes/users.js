@@ -140,6 +140,17 @@ function getById (id,done) {
   });
 }
 
+function getByRentId (id,done) {
+  db.get().query(`SELECT CONCAT_WS(' ', u.firstName, u.lastName) as fullName, u.* FROM user u
+                    INNER JOIN rentauthorization ra ON u.userId = ra.userId AND ra.enable = 1
+                    INNER JOIN rent r ON ra.rentId = r.rentId AND r.enable = 1 AND r.rentId = ?
+                  WHERE u.enable = 1`, id, function(err, row) {
+    if(err) throw err;
+    done(row);
+  });
+}
+
+
 function getByUsername (id,done) {
   db.get().query('SELECT * FROM user WHERE username = ? AND enable = 1', id, function(err, row) {
     if(err) throw err;
@@ -213,6 +224,12 @@ app.delete('/api/users/:id', function(req, res) {
 
 app.post('/api/users/reset/:username', function(req, res) {
   reset(req.params.username, req.body, function(result) {
+    res.status(200).send(result);
+  });
+});
+
+app.get('/api/users/rent/:id', function(req, res) {
+  getByRentId(req.params.id, function(result) {
     res.status(200).send(result);
   });
 });

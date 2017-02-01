@@ -151,6 +151,7 @@ class RenteditController {
             self._data.startDate = new Date(self._data.startDate)
             self.searchClient(res.clientId);
             self.searchStorageloker(res.storagelokerId);
+            self.searchUser(id);
           }, (err) => {
             console.log('error: ' + err);
             self._toastr.error(`Error ${err.message}`);
@@ -188,6 +189,18 @@ class RenteditController {
     this._Storagelokertype.get(id)
       .then((res) => {
             self._data.storagelokertype = res;
+          }, (err) => {
+            console.log('error: ' + err);
+            self._toastr.error(`Error ${err.message}`);
+          }
+      )
+  }
+
+  searchUser(id) {
+    let self = this;
+    this._User.getByRentId(id)
+      .then((res) => {
+            self._data.user = res;
           }, (err) => {
             console.log('error: ' + err);
             self._toastr.error(`Error ${err.message}`);

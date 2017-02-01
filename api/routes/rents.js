@@ -17,7 +17,7 @@ function getAll (done) {
                       INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
                       INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
                     WHERE r.enable = 1
-                    ORDER BY r.active DESC, r.startDate DESC`, function(err, rows) {
+                    ORDER BY r.active DESC, r.startDate DESC, r.rentId DESC`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });
@@ -40,23 +40,26 @@ function insert (data,done) {
   delete data.storageloker;
   delete data.storagelokertype;
   delete data.user;
-
   db.get().query('INSERT INTO rent SET ?', data, function(err, result) {
     if(err) throw err;
-    insertAuthorizedUsers(userAuthorization, result);
+    authorizedUsers(userAuthorization, result.insertId);
     done(result)
   });
 }
 
 function update (id, data, done) {
+  let userAuthorization;
   data.clientId = data.client.clientId;
   data.storagelokerId = data.storageloker.storagelokerId;
   data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:MM");
+  userAuthorization = data.user;
   delete data.client;
   delete data.storageloker;
   delete data.storagelokertype;
+  delete data.user;
   db.get().query('UPDATE rent SET ? WHERE rentId = ? AND enable = 1', [data, id], function(err, result) {
     if(err) throw err;
+    authorizedUsers(userAuthorization, id)
     done(result);
   });
 }
@@ -68,16 +71,16 @@ function remove (id, done) {
   });
 }
 
-function insertAuthorizedUsers(users, result) {
-
-  let mapped = _.map(users, item => _.extend(_.pick(item, 'userId'), {"rentId": result.insertId}));
-  console.log(JSON.stringify(mapped));
-  //db.get().query('INSERT INTO rentauthorization SET ?', id, function(err, result) {
-
-  //});
-    //if(err) throw err;
-
-  //});
+function authorizedUsers(users, id) {
+  let mapped = ObjToArray(
+      _.map(users, item => _.extend(
+                              _.pick(item, 'userId'),
+                              {"rentId": id}
+                            )));
+  db.get().query('DELETE FROM rentauthorization WHERE rentId = ?', id, function(err, result) {
+  });
+  db.get().query('INSERT INTO rentauthorization (userId, rentId) VALUES ?', [mapped], function(err, result) {
+  });
 }
 
 app.use('/api/rents', jwtCheck);
@@ -115,3 +118,15 @@ app.delete('/api/rents/:id', function(req, res) {
     res.status(200).send(result);
   });
 });
+
+
+function ObjToArray(obj) {
+  var arr = obj instanceof Array;
+  return (arr ? obj : Object.keys(obj)).map(function(i) {
+    var val = arr ? i : obj[i];
+    if(typeof val === 'object')
+      return ObjToArray(val);
+    else
+      return val;
+  });
+}

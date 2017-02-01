@@ -98,6 +98,31 @@ class User {
     return deferred.promise;
   }
 
+  getByRentId(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("user id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("user id is empty");
+      return deferred.promise;
+    }
+    //todo prevente errors
+    this._$http({
+      url: this._AppConstants.api + '/users/rent/' + id,
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+
+    return deferred.promise;
+  }
+
+
+
   me() {
     let deferred = this._$q.defer();
     this._$http({

@@ -1,4 +1,5 @@
 import moment from 'moment';
+import _ from 'lodash';
 
 class Print {
   constructor(Company, UserService) {
@@ -21,10 +22,11 @@ class Print {
     //if (this._docDefinition === null) {
       let self = this;
       self._User.me().then((user) => {
-        this._docDefinition = new makeDocDefinition(data, self._Company, user.data[0]).getObject();
-        pdfMake.createPdf(this._docDefinition).open();
+        self._User.getByRentId(data.rentId).then((authorization) => {
+          this._docDefinition = new makeDocDefinition(data, self._Company, user.data[0], authorization).getObject();
+          pdfMake.createPdf(this._docDefinition).open();
+        }, (err)=> {})
       }, (err)=> {})
-
     //} else {
       //pdfMake.createPdf(this._docDefinition).open();
     //}
@@ -34,7 +36,7 @@ class Print {
 
 
 class makeDocDefinition {
-  constructor(data, company, user) {
+  constructor(data, company, user, authorization) {
     moment.locale('es');
     data = this.noNulls(data);
     let temp;
@@ -94,8 +96,8 @@ class makeDocDefinition {
             [{ colSpan: 2, style: 'title', text: 'L) SERVICIOS ADICIONALES:   ' }, {}, { colSpan: 2, text: `$${data.extra}` }, {}],
             [{ colSpan: 2, style: 'title', alignment: 'center', margin: [0, 20, 0, 0], text: 'TOTAL', style: '' }, {}, { margin: [0, 20, 0, 0], text: `$${data.total}` }, { text: '' }],
             [{ colSpan: 4, style: 'title', text: 'M) SERVICIO MENSUAL TOTAL:   ' }, {}, {}, {}],
-            [{ colSpan: 4, style: 'title', text: 'N) DEPOSITO:   $0.00 (00/100 M. N.)' }, {}, {}, {}],
-            [{ colSpan: 4, style: 'title', text: 'O) USUARIOS AUTORIZADOS:   ' }, {}, {}, {}],
+            [{ colSpan: 4, style: 'title', text: ['N) DEPOSITO:   ', {style: 'info2',text: '$0.00 (00/100 M. N.)'} ]}, {}, {}, {}],
+            [{ colSpan: 4, style: 'title', text: ['O) USUARIOS AUTORIZADOS:   ', {style: 'info2', text: `${_.map(authorization, function(a) { return a.fullName; }).join(', ')}`}]}, {}, {}, {}],
             [{ colSpan: 4, style: 'obs', text: [`OBSERVACIONES: “GuardarTodo” prestará sus servicios de `, { style:'obsbold', text: `Lunes a Viernes de 8:00 a 18:00 horas y Sábados :00-13:00 horas` }, `, salvo los siguientes días de conformidad con el artículo 74 de la Ley Federal del Trabajo: Enero 1, primer lunes de Febrero en conmemoración del 05 de Febrero, el tercer lunes de Marzo en conmemoración del 21 de Marzo, Mayo 1, Septiembre 16, tercer lunes de Noviembre en conmemoración del 20 de Noviembre, Diciembre 25, y cuando tome posesión de su cargo el Presidente de la República. “GuardarTodo” podrá suspender la prestación de los servicios por razones de inestabilidad política, u otros eventos fuera del control de “GuardarTodo”.`] }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['ELABORO:   ', { style: 'info', text : `${user.firstName} ${user.lastName}`}]}, {}, {}, {}]
           ]
@@ -164,6 +166,10 @@ class makeDocDefinition {
         info: {
           bold: true,
           fontSize: 13
+        },
+        info2: {
+          bold: true,
+          fontSize: 11
         },
         table: {
           margin: [0, 20, 0, 20]
