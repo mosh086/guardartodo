@@ -4,7 +4,9 @@ import './asidemenu.scss';
 
 let asidemenuComponent = {
   restrict: 'E',
-  bindings: {},
+  bindings: {
+    active: '@'
+  },
   template,
   controller,
   controllerAs:'$ctrl'

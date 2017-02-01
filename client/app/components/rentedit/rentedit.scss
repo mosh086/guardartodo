@@ -5,6 +5,7 @@
 
 .ui-select-multiple.ui-select-bootstrap {
     height: 34px;
+    cursor: pointer;
     .ui-select-search {
       margin-left: 8px;
     }
@@ -14,6 +15,9 @@
     }
     .ui-select-match {
       vertical-align: middle;
+    }
+    input {
+      cursor: pointer;
     }
 }
 

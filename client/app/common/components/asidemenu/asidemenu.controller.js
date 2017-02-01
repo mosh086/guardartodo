@@ -2,7 +2,6 @@ class AsidemenuController {
   constructor(UserService) {
   "ngInject";
     this._UserService = UserService;
-    this.current = {};
   }
 
   $onInit() {

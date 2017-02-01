@@ -31,12 +31,15 @@ function getById (id, done) {
 }
 
 function insert (data,done) {
+  let userAuthorization;
   data.clientId = data.client.clientId;
   data.storagelokerId = data.storageloker.storagelokerId;
   data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:MM");
+  userAuthorization = data.user;
   delete data.client;
   delete data.storageloker;
   delete data.storagelokertype;
+  delete data.user;
 
   db.get().query('INSERT INTO rent SET ?', data, function(err, result) {
     if(err) throw err;
@@ -64,6 +67,18 @@ function remove (id, done) {
   });
 }
 
+function insertAuthorizedUsers(req, res, next) {
+
+  let mapped = _.map(req.body, user => ({ 'userId' : user.userId }));
+  console.log(JSON.stringify(mapped));
+  //db.get().query('INSERT INTO rentauthorization SET ?', id, function(err, result) {
+    next();
+  //});
+    //if(err) throw err;
+
+  //});
+}
+
 app.use('/api/rents', jwtCheck);
 app.get('/api/rents', function(req, res) {
   moment.locale('es');
@@ -82,7 +97,7 @@ app.get('/api/rents/:id', function(req, res) {
   });
 });
 
-app.post('/api/rents', function(req, res) {
+app.post('/api/rents', insertAuthorizedUsers, function(req, res) {
   insert(req.body, function(result) {
     res.status(200).send(result);
   });

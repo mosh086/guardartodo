@@ -20,9 +20,9 @@
           <div class="form-group col-md-5" ng-class="{ 'has-error': rForm.rUser.$dirty && rForm.rUser.$invalid }">
             <label for="rUserAuthorization">Usuarios autorizados</label>
             <ui-select id="rUser" name="rUser" ng-model="$ctrl._data.user" multiple title="Usuarios autorizados">
-              <ui-select-match placeholder="- Selecciona -">{{$item.firstName}}</ui-select-match>
+              <ui-select-match placeholder="- Selecciona -">{{$item.fullName}}</ui-select-match>
               <ui-select-choices repeat="item in $ctrl._users | filter: $select.search">
-                <span ng-bind-html="item.firstName"></span>
+                <span ng-bind-html="item.fullName"></span>
               </ui-select-choices>
             </ui-select>
             <span class="span-validation" ng-show="rForm.rClient.$dirty && rForm.rClient.$invalid">

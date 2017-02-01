@@ -127,6 +127,7 @@ class RenteditController {
 
   save() {
     let self = this;
+    console.log(self._data);
     this._Rent.save(self._data)
       .then((res) => {
             self._saved = true;
