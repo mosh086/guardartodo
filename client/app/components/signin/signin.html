@@ -3,7 +3,7 @@
   <form id="sForm" name="sForm" class="form"  novalidate>
     <div class="form-group" ng-class="{'has-error':sForm.username.$dirty && sForm.username.$invalid}">
       <label class="form-control-label" for="username">Usuario</label>
-      <input class="form-control" id="username" name="username" ng-model="$ctrl._data.username" required/>
+      <input class="form-control" id="username" name="username" ng-model="$ctrl._data.username" required autofocus/>
       <span class="span-validation" ng-show="sForm.username.$dirty && sForm.username.$invalid">
         <span ng-show="sForm.username.$error.required">El usuario es requerido</span>
       </span>
