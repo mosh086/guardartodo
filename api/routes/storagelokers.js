@@ -7,11 +7,21 @@ var jwtCheck = jwt({
   secret: config.secretKey
 });
 
-function getAll (done) {
-  db.get().query(`SELECT sl.*, slt.name as typename
-      FROM storageloker sl
-      INNER JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId AND slt.enable = 1
-    WHERE sl.enable = 1`, function(err, rows) {
+function getAll (q, done) {
+  let query =   `SELECT sl.*, slt.name as typename
+                  FROM storageloker sl
+                  INNER JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId AND slt.enable = 1
+                WHERE sl.enable = 1`;
+  if (q=='active')
+    query =   `SELECT DISTINCT sl.*, slt.name as typename
+                FROM storageloker sl
+                INNER JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId AND slt.enable = 1
+                LEFT JOIN rent r ON sl.storagelokerId = r.storagelokerId
+              WHERE sl.enable = 1 AND (r.rentId IS NULL OR r.active = 0)
+              ORDER BY sl.storagelokerId asc`;
+    console.log(q)
+    console.log(query);
+  db.get().query(query, function(err, rows) {
     if(err) throw err;
     done(rows);
   });
@@ -47,7 +57,7 @@ function remove (id, done) {
 
 app.use('/api/storagelokers', jwtCheck);
 app.get('/api/storagelokers', function(req, res) {
-  getAll(function(result) {
+  getAll(req.query.q, function(result) {
     res.status(200).send(result);
   });
 });

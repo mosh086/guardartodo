@@ -78,6 +78,27 @@ class Rent {
     return deferred.promise;
   }
 
+  endDateRent(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("rent id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("rent id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/rents/enddate/' + id,
+      method: 'PUT'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
 }
 
 export default Rent;

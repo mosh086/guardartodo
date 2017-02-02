@@ -10,14 +10,17 @@ var jwtCheck = jwt({
   secret: config.secretKey
 });
 
-function getAll (done) {
+function getAll (q, done) {
+  let activeCondition = '';
+  if (q) { activeCondition = (q=='active')?' AND r.active=1 ':' AND r.active=0 '; }
+
   db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename
                     FROM rent r
                       INNER JOIN client c ON r.clientId = c.clientId
                       INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
                       INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
-                    WHERE r.enable = 1
-                    ORDER BY r.active DESC, r.startDate DESC, r.rentId DESC`, function(err, rows) {
+                    WHERE r.enable = 1 ${activeCondition}
+                    ORDER BY r.startDate DESC, r.rentId DESC`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });
@@ -83,10 +86,17 @@ function authorizedUsers(users, id) {
   });
 }
 
+function enddate(id, done) {
+  db.get().query('UPDATE rent SET active = 0, endDate = ? WHERE rentId = ?', [moment(new Date()).format("YYYY-MM-DD HH:MM"),  id], function(err, result) {
+    if(err) throw err;
+    done(result);
+  });
+}
+
 app.use('/api/rents', jwtCheck);
 app.get('/api/rents', function(req, res) {
   moment.locale('es');
-  getAll(function(result) {
+  getAll(req.query.q, function(result) {
     _.forEach(result, function(value) {
       value.startDateToString = moment(value.startDate).fromNow();
       value.endDateToString = moment(value.endDate).fromNow();
@@ -115,6 +125,12 @@ app.put('/api/rents/:id', function(req, res) {
 
 app.delete('/api/rents/:id', function(req, res) {
   remove(req.params.id, function(result) {
+    res.status(200).send(result);
+  });
+});
+
+app.put('/api/rents/enddate/:id', function(req, res) {
+  enddate(req.params.id, function(result) {
     res.status(200).send(result);
   });
 });

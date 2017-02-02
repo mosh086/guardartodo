@@ -8,6 +8,18 @@
       </div>
       <div class="col-md-4">
         <div class="input-group">
+          <div class="input-group-btn">
+            <!---->
+            <button type="button" class="btn-filter btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              <span class="glyphicon glyphicon-filter"></span>
+            </button>
+            <ul class="dropdown-menu">
+              <li><a href="#" ng-click="$ctrl.searchActiveRent()">Rentas activas</a></li>
+              <li><a href="#" ng-click="$ctrl.searchInactiveRent()">Rentas inactivas</a></li>
+              <li role="separator" class="divider"></li>
+              <li><a href="#" ng-click="$ctrl.searchRents()">Borrar filtros</a></li>
+            </ul>
+          </div>
           <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
           <input class="form-control" placeholder="buscar" ng-model="search">
         </div>
@@ -33,18 +45,20 @@
           <div class="col-md-1">
 
           </div>
-          <div class="col-md-1 buttons">
-            <div ng-hide="!rent.active">
+          <div  class="col-md-1 buttons">
+            <a ng-hide="!rent.active" ng-confirm-message="¿Estás seguro de finalizar el contrato de renta?" ng-confirm="$ctrl.setEndDateRent(rent.rentId)">
               <span class="glyphicon glyphicon-ok-circle"></span>
               <span class="glyphicon-label">Terminar contrato</span>
-            </div>
-          </div>
-          <div class="col-md-1 buttons" ng-click="$ctrl.print(rent.rentId)">
-            <span class="glyphicon glyphicon-print"></span>
-            <span class="glyphicon-label">Imprimir</span>
+            </a>
           </div>
           <div class="col-md-1 buttons">
-            <a ng-href='rentedit/{{rent.rentId}}'>
+            <a ng-hide="!rent.active" ng-click="$ctrl.print(rent.rentId)">
+              <span class="glyphicon glyphicon-print"></span>
+              <span class="glyphicon-label">Imprimir</span>
+            <a>
+          </div>
+          <div class="col-md-1 buttons">
+            <a ng-hide="!rent.active" ng-href='rentedit/{{rent.rentId}}'>
               <span class="glyphicon glyphicon-pencil"></span>
               <span class="glyphicon-label">Cambiar</span>
             </a>

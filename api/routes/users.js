@@ -127,7 +127,7 @@ app.get('/user/check/:username', function(req, res) {
 
 
 function getAll (done) {
-  db.get().query(`SELECT CONCAT_WS(' ',firstName,lastName) as fullName, u.* FROM user u WHERE enable = 1`, function(err, rows) {
+  db.get().query(`SELECT CONCAT_WS(' ',firstName,lastName) as fullName, u.* FROM user u WHERE enable = 1 AND username != 'admin'`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });

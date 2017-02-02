@@ -103,6 +103,38 @@ class RentController {
         (err) => console.log('error: ' + err)
       )
   }
+
+  setEndDateRent(id) {
+    let self = this;
+    this._Rent.endDateRent(id)
+      .then((res) => {
+            self.searchRents();
+          },
+        (err) => console.log('error: ' + err)
+      )
+  }
+
+  searchActiveRent() {
+    let self = this;
+    this._Rent.query('active')
+      .then((res) => {
+        self._rents = res;
+        self._rentsTemp = res;
+      },
+        (err) => console.log('error: ' + err)
+      );
+  }
+
+  searchInactiveRent() {
+    let self = this;
+    this._Rent.query('inactive')
+      .then((res) => {
+        self._rents = res;
+        self._rentsTemp = res;
+      },
+        (err) => console.log('error: ' + err)
+      );
+  }
 }
 
 export default RentController;

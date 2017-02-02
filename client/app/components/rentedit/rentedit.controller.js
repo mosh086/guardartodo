@@ -81,7 +81,7 @@ class RenteditController {
   getStorageloker() {
     let self = this;
     this._Storageloker
-      .query('available')
+      .query('active')
       .then((res) => self._storagelokers = res,
         (err) => {
           console.log('error: ' + err);
