@@ -1,7 +1,7 @@
 <div id="top" class="top-fix"></div>
 <div class="fixed-sidebar">
   <gt-asidemenu active="rent"></gt-asidemenu>
-  <div class="wrapper">
+  <div class="wrapper rent">
     <div class="form-group filters">
       <div class="col-md-8">
         <a class="btn btn-default" ui-sref="rentedit">Nueva Renta</a>
@@ -30,7 +30,7 @@
         <h4>No existen rentas</h4>
       </li>
       <li ng-repeat="rent in $ctrl._rents track by rent.rentId">
-        <div class="well row">
+        <div class="well row" ng-class="{ 'done': !rent.active }">
           <div class="col-md-1">
           </div>
           <div class="col-md-3">
@@ -47,7 +47,7 @@
           </div>
           <div  class="col-md-1 buttons">
             <a ng-hide="!rent.active" ng-confirm-message="¿Estás seguro de finalizar el contrato de renta?" ng-confirm="$ctrl.setEndDateRent(rent.rentId)">
-              <span class="glyphicon glyphicon-ok-circle"></span>
+              <span class="glyphicon glyphicon-alert"></span>
               <span class="glyphicon-label">Terminar contrato</span>
             </a>
           </div>

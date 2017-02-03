@@ -36,7 +36,6 @@ class SigninController {
   validation() {
     this._errormessage = '';
     angular.forEach(this._scope.sForm, function(value, key) {
-        console.log('in');
          if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
              value.$setDirty();
      });

@@ -1,5 +1,6 @@
 class HomeController {
-  constructor() {
+  constructor($scope, $state) {
+    "ngInject";
   }
 }
 

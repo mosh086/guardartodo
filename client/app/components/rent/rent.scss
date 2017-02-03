@@ -1,7 +1,14 @@
-.wrapper .input-group-addon {
-    border: 0px solid #ccc;
-    border-bottom: 1px solid #ccc;
-    border-top: 1px solid #ccc;
+.wrapper.rent {
+
+    .input-group-addon {
+        border: 0px solid #ccc;
+        border-bottom: 1px solid #ccc;
+        border-top: 1px solid #ccc;
+    }
+
+    .done {
+        background-color: #eee !important
+    }
 }
 
 .dropdown-menu>li>a {
@@ -9,6 +16,6 @@
 }
 
 .btn-filter {
-background-color: #eee;
+    background-color: #eee;
 }
 

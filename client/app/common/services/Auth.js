@@ -61,7 +61,7 @@ class Auth {
       })
         .then(
         (res) => {
-          self.current = res.data;
+          self.current = res.data[0];
           deferred.resolve(true);
         },
         (err) => {
