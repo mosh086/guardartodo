@@ -2,12 +2,13 @@ import moment from 'moment';
 import _ from 'lodash';
 
 class Print {
-  constructor(Company, UserService) {
+  constructor(Company, UserService, $filter) {
     'ngInject';
 
     this._docDefinition = null;
     this._Company = Company.getInfo();
     this._User = UserService;
+    this._filter = $filter;
   }
 
   print() {
@@ -23,7 +24,7 @@ class Print {
       let self = this;
       self._User.me().then((user) => {
         self._User.getByRentId(data.rentId).then((authorization) => {
-          this._docDefinition = new makeDocDefinition(data, self._Company, user.data[0], authorization).getObject();
+          this._docDefinition = new makeDocDefinition(self._filter, data, self._Company, user.data[0], authorization).getObject();
           pdfMake.createPdf(this._docDefinition).open();
         }, (err)=> {})
       }, (err)=> {})
@@ -36,7 +37,7 @@ class Print {
 
 
 class makeDocDefinition {
-  constructor(data, company, user, authorization) {
+  constructor($filter, data, company, user, authorization) {
     moment.locale('es');
     data = this.noNulls(data);
     let temp;
@@ -91,11 +92,11 @@ class makeDocDefinition {
               { colSpan: 2, style: 'title', text: ['I) PERIODO INICIAL DE VIGENCIA DE CONTRATO:\n', {style: 'info', alignment: 'center', text: `${moment(data.startDate).format('LL')}` }] } , {}
             ],
             [{ colSpan: 4, style: 'title', margin: [0, 0, 0, 20], text: 'SERVICIOS CONTRATADOS:   ' }, {}, {}, {}],
-            [{ colSpan: 2, text: ''}, {}, {text: 'PRECIO', style: 'title' }, {text: 'PRECIO CON DESCUENTO', style: 'title' }],
-            [{ colSpan: 2, style: 'title', text: ['J) BODEGA DE TAMAÑO:   ', {style: 'info', alignment: 'center', text: `${data.storagelokertype.name}  ${data.storageloker.number}` }] }, {}, { text: `$${data.cost}` }, { text: `$${data.total}` }],
-            [{ colSpan: 2, style: 'title', text: 'L) SERVICIOS ADICIONALES:   ' }, {}, { colSpan: 2, text: `$${data.extra}` }, {}],
-            [{ colSpan: 2, style: 'title', alignment: 'center', margin: [0, 20, 0, 0], text: 'TOTAL', style: '' }, {}, { margin: [0, 20, 0, 0], text: `$${data.total}` }, { text: '' }],
-            [{ colSpan: 4, style: 'title', text: 'M) SERVICIO MENSUAL TOTAL:   ' }, {}, {}, {}],
+            [{ colSpan: 2, text: ''}, {}, {text: 'PRECIO', style: 'title', alignment: 'center' }, {text: 'PRECIO CON I.V.A.', style: 'title', alignment: 'center' }],
+            [{ colSpan: 2, style: 'title', text: ['J) BODEGA DE TAMAÑO:   ', {style: 'info', alignment: 'center', text: `${data.storagelokertype.name}  ${data.storageloker.number}` }] }, {}, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.cost, '$', 2)}` }, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.total, '$', 2)}` }],
+            [{ colSpan: 2, style: 'title', text: 'L) SERVICIOS ADICIONALES:   ' }, {}, {margin: [20, 0], alignment: 'right', colSpan: 2, text: `${$filter('currency')(data.extra, '$', 2)}` }, {}],
+            [{ colSpan: 2, style: 'title', alignment: 'center', margin: [20, 0], text: 'TOTAL', style: '' }, {}, { text: '' }, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.total, '$', 2)}` }],
+            [{ colSpan: 4, style: 'title', text: `M) SERVICIO MENSUAL TOTAL:   ${$filter('currency')(data.total, '$', 2)}` }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['N) DEPOSITO:   ', {style: 'info2',text: '$0.00 (00/100 M. N.)'} ]}, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['O) USUARIOS AUTORIZADOS:   ', {style: 'info2', text: `${_.map(authorization, function(a) { return a.fullName; }).join(', ')}`}]}, {}, {}, {}],
             [{ colSpan: 4, style: 'obs', text: [`OBSERVACIONES: “GuardarTodo” prestará sus servicios de `, { style:'obsbold', text: `Lunes a Viernes de 8:00 a 18:00 horas y Sábados :00-13:00 horas` }, `, salvo los siguientes días de conformidad con el artículo 74 de la Ley Federal del Trabajo: Enero 1, primer lunes de Febrero en conmemoración del 05 de Febrero, el tercer lunes de Marzo en conmemoración del 21 de Marzo, Mayo 1, Septiembre 16, tercer lunes de Noviembre en conmemoración del 20 de Noviembre, Diciembre 25, y cuando tome posesión de su cargo el Presidente de la República. “GuardarTodo” podrá suspender la prestación de los servicios por razones de inestabilidad política, u otros eventos fuera del control de “GuardarTodo”.`] }, {}, {}, {}],

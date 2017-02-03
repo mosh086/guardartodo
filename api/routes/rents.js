@@ -37,7 +37,7 @@ function insert (data,done) {
   let userAuthorization;
   data.clientId = data.client.clientId;
   data.storagelokerId = data.storageloker.storagelokerId;
-  data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:MM");
+  data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:mm:ss");
   userAuthorization = data.user;
   delete data.client;
   delete data.storageloker;
@@ -54,7 +54,7 @@ function update (id, data, done) {
   let userAuthorization;
   data.clientId = data.client.clientId;
   data.storagelokerId = data.storageloker.storagelokerId;
-  data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:MM");
+  data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:mm:ss");
   userAuthorization = data.user;
   delete data.client;
   delete data.storageloker;
@@ -87,7 +87,7 @@ function authorizedUsers(users, id) {
 }
 
 function enddate(id, done) {
-  db.get().query('UPDATE rent SET active = 0, endDate = ? WHERE rentId = ?', [moment(new Date()).format("YYYY-MM-DD HH:MM"),  id], function(err, result) {
+  db.get().query('UPDATE rent SET active = 0, endDate = ? WHERE rentId = ?', [moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),  id], function(err, result) {
     if(err) throw err;
     done(result);
   });
