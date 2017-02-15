@@ -145,13 +145,13 @@ class makeDocDefinition {
             { style: 'columnbold', text: '13. CONFIDENCIALIDAD. ' }, { text: 'Los sistemas y procedimientos que “GuardarTodo” utiliza para la prestación de los servicios materia de este contrato son propiedad exclusiva de “GuardarTodo”. En consecuencia, EL CLIENTE se obliga a no divulgarlos ni aprovecharlos en forma alguna, ni a participar directa o indirectamente, en la operación o en el desarrollo de negocio alguno que ofrezca servicios iguales o similares a los que presta “GuardarTodo”.\n\n' },
             { style: 'columnbold', text: '14. RESPONSABILIDAD LABORAL. ' }, { text: 'No existe relación laboral alguna entre “GuardarTodo” y EL CLIENTE, empleados de éste último, sus proveedores o personas o terceros que acudan a las instalaciones de “GuardarTodo”.\n\n' },
             { style: 'columnbold', text: '15. JURISDICCIÓN. ' }, { text: 'Para la interpretación y cumplimiento de este contrato, las partes se someten a la jurisdicción de los tribunales competentes de la Ciudad de Monterrey, N. L., renunciando a cualquier otro fuero que por razón de sus domicilios presentes o futuros pudiera corresponderles.\nLeído este contrato y enteradas las partes de su alcance y contenido del anverso, reverso y carátula, lo aceptan y suscriben en la fecha mencionada en la primara hoja de este contrato.\n\n' } ,
-            {text : '\n\n\n\n\n\n'} ,
+            {text : '\n\n\n\n\n\n\n'} ,
             {alignment: 'center', text: '________________________                           ________________________\n'},
             {alignment: 'center', text: ' "GuardarTodo"                                           "EL CLIENTE"'}
           ],
         }]
       }, {
-        image : signature, width: 42, alignment: 'right', margin: [0, -60, 74, 0]
+        image : signature, width: 42, alignment: 'right', margin: [0, -62, 74, 0]
       }],
       styles: {
         header: {
