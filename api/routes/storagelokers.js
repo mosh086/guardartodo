@@ -19,8 +19,6 @@ function getAll (q, done) {
                 LEFT JOIN rent r ON sl.storagelokerId = r.storagelokerId
               WHERE sl.enable = 1 AND (r.rentId IS NULL OR r.active = 0)
               ORDER BY sl.storagelokerId asc`;
-    console.log(q)
-    console.log(query);
   db.get().query(query, function(err, rows) {
     if(err) throw err;
     done(rows);
