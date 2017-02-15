@@ -151,7 +151,7 @@ class makeDocDefinition {
           ],
         }]
       }, {
-        image : signature, width: 47, alignment: 'right', margin: [0, -60, 74, 0]
+        image : signature, width: 45, alignment: 'right', margin: [0, -62, 74, 0]
       }],
       styles: {
         header: {
