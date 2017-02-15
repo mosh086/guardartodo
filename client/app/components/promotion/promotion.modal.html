@@ -1,0 +1,40 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{$ctrl._title}}</h3>
+</div>
+<form name="pForm" id="pForm" novalidate>
+  <div class="modal-body">
+    <div class="row">
+      <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pName.$dirty && pForm.pName.$invalid }">
+        <label for="pName">Nombre de la promoción *</label>
+        <input type="text" class="form-control" id="pName" name="pName" placeholder="Nombre de promoción" ng-model="$ctrl._data.name" maxlength="200" required autofocus>
+        <span class="span-validation" ng-show="pForm.pName.$dirty && pForm.pName.$invalid">
+          <span ng-show="pForm.pName.$error.required">El nombre es requerido.</span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-12">
+        <label for="pDescription">Descripción</label>
+        <input type="text" class="form-control" id="pDescription" placeholder="Descripción" ng-model="$ctrl._data.description" maxlength="400">
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-6">
+        <label for="pPromotiontype">Tipo de promoción *</label>
+        <ui-select id="pPromotiontype" name="pPromotiontype" ng-model="$ctrl._data.promotiontype" title="Tipo de promoción" ng-required="true">
+          <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.promotiontype.name}}</ui-select-match>
+          <ui-select-choices repeat="item in $ctrl._promotiontypes">
+            <span ng-bind-html="item.name"></span>
+          </ui-select-choices>
+        </ui-select>
+        <span class="span-validation" ng-show="pForm.pPromotiontype.$dirty && pForm.pPromotiontype.$invalid">
+          <span ng-show="pForm.pPromotiontype.$error.required">El nombre es requerido.</span>
+        </span>
+      </div>
+    </div>
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.validate() && pForm.$valid && $ctrl.save()">Guardar</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+  </div>
+</form>

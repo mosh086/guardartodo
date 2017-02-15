@@ -14,8 +14,9 @@
               <span class="glyphicon glyphicon-filter"></span>
             </button>
             <ul class="dropdown-menu">
-              <li><a href="#" ng-click="$ctrl.searchActiveRent()">Rentas activas</a></li>
-              <li><a href="#" ng-click="$ctrl.searchInactiveRent()">Rentas inactivas</a></li>
+              <li><a href="#" ng-click="$ctrl.searchActive()">Rentas activas</a></li>
+              <li><a href="#" ng-click="$ctrl.searchInactive()">Rentas inactivas</a></li>
+              <li><a href="#" ng-click="$ctrl.searchPendingPayments()">Rentas con pagos pendientes</a></li>
               <li role="separator" class="divider"></li>
               <li><a href="#" ng-click="$ctrl.searchRents()">Borrar filtros</a></li>
             </ul>
@@ -45,29 +46,37 @@
           <div class="col-md-1">
 
           </div>
-          <div  class="col-md-1 buttons">
-            <a ng-hide="!rent.active" ng-confirm-message="¿Estás seguro de finalizar el contrato de renta?" ng-confirm="$ctrl.setEndDateRent(rent.rentId)">
-              <span class="glyphicon glyphicon-alert"></span>
-              <span class="glyphicon-label">Terminar contrato</span>
-            </a>
-          </div>
-          <div class="col-md-1 buttons">
-            <a ng-hide="!rent.active" ng-click="$ctrl.print(rent.rentId)">
-              <span class="glyphicon glyphicon-print"></span>
-              <span class="glyphicon-label">Imprimir</span>
-            <a>
-          </div>
-          <div class="col-md-1 buttons">
-            <a ng-hide="!rent.active" ng-href='rentedit/{{rent.rentId}}'>
-              <span class="glyphicon glyphicon-pencil"></span>
-              <span class="glyphicon-label">Cambiar</span>
-            </a>
-          </div>
-          <div class="col-md-1 buttons">
-            <a ng-confirm-message="¿Estás seguro de querer eliminar la renta?" ng-confirm="$ctrl.remove(rent.rentId)">
-              <span class="glyphicon glyphicon-trash" ></span>
-              <span class="glyphicon-label">Borrar</span>
-            </a>
+          <div class="col-md-4">
+            <div class="col-md-4 buttoninfo payments">
+              <a ng-payment ng-payment-id="{{rent.rentId}}" ng-hide="!rent.active || rent.pendings == 0">
+                <span><i class="fa fa-money" aria-hidden="true"></i> {{rent.pendings}}</span>
+                <span class="glyphicon-label"></span>
+              </a>
+            </div>
+            <div class="col-md-2 buttons">
+              <a ng-hide="!rent.active" ng-confirm-message="¿Estás seguro de finalizar el contrato de renta?" ng-confirm="$ctrl.setEndDateRent(rent.rentId)">
+                <span class="glyphicon glyphicon-alert"></span>
+                <span class="glyphicon-label">Terminar contrato</span>
+              </a>
+            </div>
+            <div class="col-md-2 buttons">
+              <a ng-hide="!rent.active" ng-click="$ctrl.print(rent.rentId)">
+                <span class="glyphicon glyphicon-print"></span>
+                <span class="glyphicon-label">Imprimir</span>
+              <a>
+            </div>
+            <div class="col-md-2 buttons">
+              <a ng-hide="!rent.active" ng-href='rentedit/{{rent.rentId}}'>
+                <span class="glyphicon glyphicon-pencil"></span>
+                <span class="glyphicon-label">Cambiar</span>
+              </a>
+            </div>
+            <div class="col-md-2 buttons">
+              <a ng-confirm-message="¿Estás seguro de querer eliminar la renta?" ng-confirm="$ctrl.remove(rent.rentId)">
+                <span class="glyphicon glyphicon-trash" ></span>
+                <span class="glyphicon-label">Borrar</span>
+              </a>
+            </div>
           </div>
         </div>
       </li>

@@ -13,6 +13,9 @@ var clients = require('./routes/clients');
 var storagelokers = require('./routes/storagelokers');
 var storagelokertypes = require('./routes/storagelokertypes');
 var rents = require('./routes/rents');
+var promotions = require('./routes/promotions');
+var promotiontypes = require('./routes/promotiontypes');
+var payments = require('./routes/payments');
 
 var app = express();
 
@@ -36,6 +39,9 @@ app.use(clients);
 app.use(storagelokers);
 app.use(storagelokertypes);
 app.use(rents);
+app.use(promotions);
+app.use(promotiontypes);
+app.use(payments);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

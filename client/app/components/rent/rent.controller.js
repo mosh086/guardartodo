@@ -114,7 +114,7 @@ class RentController {
       )
   }
 
-  searchActiveRent() {
+  searchActive() {
     let self = this;
     this._Rent.query('active')
       .then((res) => {
@@ -125,9 +125,20 @@ class RentController {
       );
   }
 
-  searchInactiveRent() {
+  searchInactive() {
     let self = this;
     this._Rent.query('inactive')
+      .then((res) => {
+        self._rents = res;
+        self._rentsTemp = res;
+      },
+        (err) => console.log('error: ' + err)
+      );
+  }
+
+  searchPendingPayments() {
+    let self = this;
+    this._Rent.query('pendings')
       .then((res) => {
         self._rents = res;
         self._rentsTemp = res;

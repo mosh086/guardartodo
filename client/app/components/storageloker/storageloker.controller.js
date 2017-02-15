@@ -11,7 +11,6 @@ class StoragelokerController {
     this._Storagelokertypes = StoragelokertypeService;
 
     this.storageloker = [];
-    this.storagelokertype = [];
     this.storagelokerTemp = [];
     let self = this;
     $scope.$watch('search', function (val) {
@@ -24,7 +23,6 @@ class StoragelokerController {
   $onInit() {
     console.log("initializing Storageloker...");
     this.searchStoragelokers();
-    this.searchStoragelokertypes();
   }
 
   $onDestroy() {
@@ -46,7 +44,7 @@ class StoragelokerController {
           return (id)?self._Storageloker.get(id):undefined;
         },
         storagelokertypes: () => {
-          return self.storagelokertype;
+          return self._Storagelokertypes.query();
         }
       }
     });
@@ -105,18 +103,6 @@ class StoragelokerController {
         self.storageloker = res;
         self.storagelokerTemp = res;
       },
-        (err) => {
-          console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
-        }
-      );
-  }
-
-  searchStoragelokertypes() {
-    let self = this;
-    this._Storagelokertypes
-      .query(this.q)
-      .then((res) => self.storagelokertype = res,
         (err) => {
           console.log('error: ' + err);
           self._toastr.error(`Error ${err.message}`);

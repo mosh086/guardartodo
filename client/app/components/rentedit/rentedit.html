@@ -17,17 +17,14 @@
               <span ng-show="rForm.rClient.$error.required">El cliente es requerido.</span>
             </span>
           </div>
-          <div class="form-group col-md-5" ng-class="{ 'has-error': rForm.rUser.$dirty && rForm.rUser.$invalid }">
-            <label for="rUserAuthorization">Usuarios autorizados</label>
+          <div class="form-group col-md-5">
+            <label for="rUser">Usuarios autorizados</label>
             <ui-select id="rUser" name="rUser" ng-model="$ctrl._data.user" multiple title="Usuarios autorizados">
               <ui-select-match placeholder="- Selecciona -">{{$item.fullName}}</ui-select-match>
               <ui-select-choices repeat="item in $ctrl._users | filter: $select.search">
                 <span ng-bind-html="item.fullName"></span>
               </ui-select-choices>
             </ui-select>
-            <span class="span-validation" ng-show="rForm.rClient.$dirty && rForm.rClient.$invalid">
-              <span ng-show="rForm.rClient.$error.required">El cliente es requerido.</span>
-            </span>
           </div>
         </div>
         <div class="row">
@@ -43,7 +40,17 @@
                 <span ng-show="rForm.rStorageloker.$error.required">La bodega es requerida.</span>
               </span>
           </div>
+          <div class="form-group col-md-5">
+            <label for="rPromotion">Promociones</label>
+            <ui-select id="rPromotion" name="rPromotion" ng-model="$ctrl._data.promotion" multiple title="Promociones">
+              <ui-select-match placeholder="- Selecciona -">{{$item.name}}</ui-select-match>
+              <ui-select-choices repeat="item in $ctrl._promotions | filter: $select.search">
+                <span ng-bind-html="item.name"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
         </div>
+
         <div class="row">
           <div class="col-md-4">
             <div class="row">
