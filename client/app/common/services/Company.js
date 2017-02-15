@@ -3,8 +3,8 @@ class Company {
     'ngInject';
 
     this._current = {
-      name:"GuardarTodo - Barragan",
-      address: "Av. Manuel L. Barragán #1400, Col. las Misiones San Nicolas de los Garza, N.L."
+      name:"GUARDARTODO - BARRAGAN",
+      address: "AV. MANUEL L. BARRAGAN #1400 COL. LAS MISIONES SANICOLAS DE LOS GARZA, N.L."
     };
   }
 

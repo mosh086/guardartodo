@@ -146,6 +146,13 @@ class RenteditController {
     let tempId = self._data.rentId;
     this._Rent.save(self._data)
       .then((res) => {
+            if (res.data.insertId > 0) {
+              self._data.rentId = res.data.insertId;
+              self._toastr.success(`Renta creada correctamente`);
+            } else {
+              self._data.rentId = tempId;
+              self._toastr.success(`Renta actualizada correctamente`);
+            }
             self._saved = true;
             if (typeof tempId == "undefined") {
               self._data.rentId = res.data.insertId;
@@ -153,7 +160,6 @@ class RenteditController {
               self._data.rentId = tempId;
             }
           }, (err) => {
-            console.log(err);
             self._toastr.error(`Error ${err.message}`);
           }
       )
