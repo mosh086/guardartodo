@@ -1,9 +1,10 @@
 class RenteditController {
-  constructor($scope, $stateParams, toastr, Print,
+  constructor($scope, $state, $stateParams, toastr, Documents,
     ClientService, StoragelokerService, StoragelokertypeService, RentService, UserService, PromotionService) {
     "ngInject";
 
     this._scope = $scope;
+    this._state = $state;
     this._toastr = toastr;
     this._stateParams = $stateParams;
 
@@ -13,7 +14,7 @@ class RenteditController {
     this._Rent = RentService;
     this._User = UserService;
     this._Promotion = PromotionService;
-    this._Print = Print;
+    this._Documents = Documents;
 
     this._storagelokertype = {};
     this._storagelokers = [];
@@ -144,30 +145,34 @@ class RenteditController {
   save() {
     let self = this;
     let tempId = self._data.rentId;
+    delete self._data.name;
+    delete self._data.number;
     this._Rent.save(self._data)
       .then((res) => {
-            if (res.data.insertId > 0) {
-              self._data.rentId = res.data.insertId;
-              self._toastr.success(`Renta creada correctamente`);
-            } else {
-              self._data.rentId = tempId;
-              self._toastr.success(`Renta actualizada correctamente`);
-            }
-            self._saved = true;
-            if (typeof tempId == "undefined") {
-              self._data.rentId = res.data.insertId;
-            } else {
-              self._data.rentId = tempId;
-            }
-          }, (err) => {
-            self._toastr.error(`Error ${err.message}`);
+          if (res.data.insertId > 0) {
+            self._data.rentId = res.data.insertId;
+            self._toastr.success(`Renta creada correctamente`);
+            self.print();
+            self._state.go('rent');
+          } else {
+            self._data.rentId = tempId;
+            self._toastr.success(`Renta actualizada correctamente`);
           }
+          self._saved = true;
+          if (typeof tempId == "undefined") {
+            self._data.rentId = res.data.insertId;
+          } else {
+            self._data.rentId = tempId;
+          }
+        }, (err) => {
+          self._toastr.error(`Error ${err.message}`);
+        }
       )
   }
 
   print(){
     let self = this;
-    self._Print.open(self._data);
+    self._Documents.openContract(self._data);
   }
 
   searchRent(id){

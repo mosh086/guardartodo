@@ -43,6 +43,48 @@ class Rent {
     return deferred.promise;
   }
 
+  getPendingPayments(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("rent id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("rent id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/rents/' + id + /pendingpayments/,
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
+  getPromotions(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("rent id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("rent id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/rents/' + id + /promotions/,
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
   save(rent) {
     let request = {};
     if (rent.rentId) {
@@ -89,7 +131,7 @@ class Rent {
       return deferred.promise;
     }
     this._$http({
-      url: this._AppConstants.api + '/rents/enddate/' + id,
+      url: this._AppConstants.api + '/rents/' + id + '/enddate',
       method: 'PUT'
     })
       .then(

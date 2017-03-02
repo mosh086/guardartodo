@@ -1,5 +1,5 @@
 export default class InstanceCtrl {
-  constructor($uibModalInstance, $log, $scope, $filter, client) {
+  constructor($uibModalInstance, $log, $scope, $filter, client, KindOfBusiness, LineOfBusiness) {
     "ngInject";
 
     this._uibModalInstance = $uibModalInstance;
@@ -17,8 +17,8 @@ export default class InstanceCtrl {
       rfc: '',
       kindOfBusiness: '', legalRepresentative: '', lineOfBusiness: '',
     };
-    this._lineOfBusiness = ['Persona Fisica', 'Persona Moral'];
-    this._kindOfBusiness = ['HOGAR', 'EMPRESA'];
+    this._lineOfBusiness = LineOfBusiness;
+    this._kindOfBusiness = KindOfBusiness;
   }
 
   $onInit() {

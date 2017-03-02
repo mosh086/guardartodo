@@ -41,6 +41,13 @@ switch(q) {
   });
 }
 
+function getPendingPaymentsById (id, done) {
+  db.get().query(`call sp_get_pendingpayment_rent(?);`, id, function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
+
 function getById (id, done) {
   db.get().query(`SELECT r.*, c.name, sl.number
                     FROM rent r
@@ -49,6 +56,17 @@ function getById (id, done) {
                     WHERE r.enable = 1 AND r.rentId = ?`, id, function(err, row) {
     if(err) throw err;
     done(row[0]);
+  });
+}
+
+function getPromotionsById (id, done) {
+  db.get().query(`SELECT r.*, p.name, p.description
+                    FROM rent r
+                      INNER JOIN rentpromotion rp ON r.rentId = rp.rentId
+                      INNER JOIN promotion p ON p.promotionId = rp.promotionId
+                    WHERE rp.enable = 1 AND r.enable = 1 AND r.rentId = ?`, id, function(err, row) {
+    if(err) throw err;
+    done(row);
   });
 }
 
@@ -69,7 +87,9 @@ function insert (data,done) {
     if(err) throw err;
     authorizedUsers(userAuthorization, result.insertId, function() {
       promotions(promotion, result.insertId, function() {
-        done(result);
+        updateFolio(result.insertId, function() {
+          done(result);
+        })
       });
     });
   });
@@ -92,7 +112,9 @@ function update (id, data, done) {
     if(err) throw err;
     authorizedUsers(userAuthorization, id, function() {
       promotions(promotion, id, function() {
-        done(result);
+        updateFolio(id, function() {
+          done(result);
+        })
       });
     });
   });
@@ -131,6 +153,14 @@ function promotions(promotions, id, callback) {
   });
 }
 
+function updateFolio(id, callback) {
+  db.get().query(`UPDATE rent a
+                    SET a.folio = CONCAT('B-',DATE_FORMAT(a.startDate, '%y%m'), LPAD(a.rentId, 3, '0'))
+                  WHERE a.rentId = ? `, id, function(err, result) {
+    callback();
+  });
+}
+
 function enddate(id, done) {
   db.get().query('UPDATE rent SET active = 0, endDate = ? WHERE rentId = ?', [moment(new Date()).format("YYYY-MM-DD HH:mm:ss"),  id], function(err, result) {
     if(err) throw err;
@@ -156,6 +186,22 @@ app.get('/api/rents/:id', function(req, res) {
   });
 });
 
+app.get('/api/rents/:id/pendingpayments', function(req, res) {
+  getPendingPaymentsById(parseInt(req.params.id), function(result) {
+    moment.locale('es');
+    _.forEach(result, function(value) {
+      value.description = moment(value.date).format('MMMM - YYYY').toUpperCaseFirstChar();
+    });
+    res.status(200).send(result);
+  });
+});
+
+app.get('/api/rents/:id/promotions', function(req, res) {
+  getPromotionsById(parseInt(req.params.id), function(result) {
+    res.status(200).send(result);
+  });
+});
+
 app.post('/api/rents', function(req, res) {
   insert(req.body, function(result) {
     res.status(200).send(result);
@@ -174,7 +220,7 @@ app.delete('/api/rents/:id', function(req, res) {
   });
 });
 
-app.put('/api/rents/enddate/:id', function(req, res) {
+app.put('/api/rents/:id/enddate', function(req, res) {
   enddate(req.params.id, function(result) {
     res.status(200).send(result);
   });
@@ -190,4 +236,8 @@ function ObjToArray(obj) {
     else
       return val;
   });
+}
+
+String.prototype.toUpperCaseFirstChar = function() {
+    return this.substr( 0, 1 ).toUpperCase() + this.substr( 1 );
 }

@@ -10,14 +10,13 @@ import PaymentService from './payment.service';
 import PromotionService from './promotion.service';
 import Auth from './Auth';
 import JWT from './JWT';
-import Print from './Print';
-import Company from './Company';
+import Documents from './Documents';
+
 //...
 let commonServicesModule = angular.module('app.common.services', [])
   .service('JWT', JWT)
   .service('Auth', Auth)
-  .service('Print', Print)
-  .service('Company', Company)
+  .service('Documents', Documents)
   .service('ClientService', ClientService)
   .service('DashboardService', DashboardService)
   .service('SigninService', SigninService)

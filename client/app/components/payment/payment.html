@@ -21,13 +21,13 @@
         <div class="well row">
           <div class="col-md-1">
           </div>
-          <div class="col-md-6">
-            <h3>{{p.name}}</h3>
-            <p>{{p.number}}</p>
-            <p>{{p.partial}}</p>
+          <div class="col-md-4">
+            <h3>{{p.folio}}</h3>
+            <p>{{p.name}} - {{p.number}}</p>
           </div>
-          <div class="col-md-3">
-            <p>{{p.date}}</p>
+          <div class="col-md-5">
+            <h4>{{p.month}}</h4>
+            <p>{{p.methodOfPayment}}</p>
           </div>
           <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(p.promotionId)">
             <span class="glyphicon glyphicon-pencil" ></span>

@@ -11,7 +11,7 @@ var jwtCheck = jwt({
 });
 
 function getAll (q, done) {
-  db.get().query(`SELECT p.*, c.name, sl.number, slt.price, f_get_payment_status(p.rentId) as partial
+  db.get().query(`SELECT p.*, r.folio, c.name, sl.number, slt.price, f_get_payment_status(p.rentId) as partial
                   FROM payment p
                     INNER JOIN rent r ON p.rentId = r.rentId AND r.enable = 1
                     INNER JOIN client c ON r.clientId = c.clientId
@@ -19,6 +19,7 @@ function getAll (q, done) {
                     LEFT JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId
                   WHERE p.enable = 1;`, function(err, rows) {
     if(err) throw err;
+
     done(rows);
   });
 }
@@ -55,6 +56,10 @@ function remove (id, done) {
 app.use('/api/payments', jwtCheck);
 app.get('/api/payments', function(req, res) {
   getAll(req.query.q, function(result) {
+    moment.locale('es');
+    _.forEach(result, function(value) {
+      value.month = moment(value.date).format('MMMM - YYYY').toUpperCaseFirstChar();
+    });
     res.status(200).send(result);
   });
 });
