@@ -1,22 +1,26 @@
 class RenteditController {
-  constructor($scope, $stateParams, toastr, Print,
-    ClientService, StoragelokerService, StoragelokertypeService, RentService, UserService) {
+  constructor($scope, $state, $stateParams, toastr, Documents,
+    ClientService, StoragelokerService, StoragelokertypeService, RentService, UserService, PromotionService) {
     "ngInject";
 
     this._scope = $scope;
+    this._state = $state;
     this._toastr = toastr;
+    this._stateParams = $stateParams;
 
     this._Client = ClientService;
     this._Storageloker = StoragelokerService;
     this._Storagelokertype = StoragelokertypeService;
     this._Rent = RentService;
     this._User = UserService;
-    this._Print = Print;
+    this._Promotion = PromotionService;
+    this._Documents = Documents;
 
     this._storagelokertype = {};
     this._storagelokers = [];
     this._clients = [];
     this._users = [];
+    this._promotions = [];
 
     this._saved = false;
 
@@ -25,6 +29,7 @@ class RenteditController {
       storageloker: null,
       storagelokertype: null,
       user: null,
+      promotion: null,
       startDate: null,
       cost: 0.00,
       extra: 0.00,
@@ -47,7 +52,6 @@ class RenteditController {
     if ($stateParams.id) {
       this.searchRent($stateParams.id);
     }
-
   }
 
   popupDatepicker = {
@@ -63,6 +67,7 @@ class RenteditController {
     this.getClients();
     this.getStorageloker();
     this.getUsers();
+    this.getPromotions();
     this._data.startDate = new Date();
   }
 
@@ -81,7 +86,7 @@ class RenteditController {
   getStorageloker() {
     let self = this;
     this._Storageloker
-      .query('active')
+      .query('available')
       .then((res) => self._storagelokers = res,
         (err) => {
           console.log('error: ' + err);
@@ -94,7 +99,19 @@ class RenteditController {
     let self = this;
     this._User
       .query(this.q)
-      .then((res) => { console.log(res); self._users = res},
+      .then((res) => self._users = res,
+        (err) => {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
+      );
+  }
+
+  getPromotions() {
+    let self = this;
+    this._Promotion
+      .query(this.q)
+      .then((res) => self._promotions = res,
         (err) => {
           console.log('error: ' + err);
           self._toastr.error(`Error ${err.message}`);
@@ -128,25 +145,34 @@ class RenteditController {
   save() {
     let self = this;
     let tempId = self._data.rentId;
+    delete self._data.name;
+    delete self._data.number;
     this._Rent.save(self._data)
       .then((res) => {
-            if (res.data.insertId > 0) {
-              self._data.rentId = res.data.insertId;
-              self._toastr.success(`Renta creada correctamente`);
-            } else {
-              self._data.rentId = tempId;
-              self._toastr.success(`Renta actualizada correctamente`);
-            }
-            self._saved = true;
-          }, (err) => {
-            self._toastr.error(`Error ${err.message}`);
+          if (res.data.insertId > 0) {
+            self._data.rentId = res.data.insertId;
+            self._toastr.success(`Renta creada correctamente`);
+            self.print();
+            self._state.go('rent');
+          } else {
+            self._data.rentId = tempId;
+            self._toastr.success(`Renta actualizada correctamente`);
           }
+          self._saved = true;
+          if (typeof tempId == "undefined") {
+            self._data.rentId = res.data.insertId;
+          } else {
+            self._data.rentId = tempId;
+          }
+        }, (err) => {
+          self._toastr.error(`Error ${err.message}`);
+        }
       )
   }
 
   print(){
     let self = this;
-    self._Print.open(self._data);
+    self._Documents.openContract(self._data);
   }
 
   searchRent(id){
@@ -158,6 +184,7 @@ class RenteditController {
             self.searchClient(res.clientId);
             self.searchStorageloker(res.storagelokerId);
             self.searchUser(id);
+            self.searchPromotion(id);
           }, (err) => {
             console.log('error: ' + err);
             self._toastr.error(`Error ${err.message}`);
@@ -207,6 +234,18 @@ class RenteditController {
     this._User.getByRentId(id)
       .then((res) => {
             self._data.user = res;
+          }, (err) => {
+            console.log('error: ' + err);
+            self._toastr.error(`Error ${err.message}`);
+          }
+      )
+  }
+
+  searchPromotion(id) {
+    let self = this;
+    this._Promotion.getByRentId(id)
+      .then((res) => {
+            self._data.promotion = res;
           }, (err) => {
             console.log('error: ' + err);
             self._toastr.error(`Error ${err.message}`);

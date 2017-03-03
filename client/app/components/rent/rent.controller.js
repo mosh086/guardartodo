@@ -1,5 +1,5 @@
 class RentController {
-  constructor($scope, $filter, toastr, RentService, ClientService, StoragelokerService, StoragelokertypeService, Print) {
+  constructor($scope, $filter, toastr, RentService, ClientService, StoragelokerService, StoragelokertypeService, Documents) {
     "ngInject";
 
     this._toastr = toastr;
@@ -7,7 +7,7 @@ class RentController {
     this._Storageloker = StoragelokerService;
     this._Storagelokertype = StoragelokertypeService;
     this._Rent = RentService
-    this._Print = Print;
+    this._Documents = Documents;
 
     this._rents = [];
     this._rentsTemp = [];
@@ -98,7 +98,7 @@ class RentController {
     this._Storagelokertype.get(id)
       .then((res) => {
             self._data.storagelokertype = res;
-            self._Print.open(self._data);
+            self._Documents.openContract(self._data);
           },
         (err) => console.log('error: ' + err)
       )
@@ -114,7 +114,7 @@ class RentController {
       )
   }
 
-  searchActiveRent() {
+  searchActive() {
     let self = this;
     this._Rent.query('active')
       .then((res) => {
@@ -125,9 +125,20 @@ class RentController {
       );
   }
 
-  searchInactiveRent() {
+  searchInactive() {
     let self = this;
     this._Rent.query('inactive')
+      .then((res) => {
+        self._rents = res;
+        self._rentsTemp = res;
+      },
+        (err) => console.log('error: ' + err)
+      );
+  }
+
+  searchPendingPayments() {
+    let self = this;
+    this._Rent.query('pendings')
       .then((res) => {
         self._rents = res;
         self._rentsTemp = res;

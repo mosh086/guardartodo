@@ -6,16 +6,17 @@ import StoragelokerService from './storageloker.service';
 import StoragelokertypeService from './storagelokertype.service';
 import UserService from './user.service';
 import RentService from './rent.service';
+import PaymentService from './payment.service';
+import PromotionService from './promotion.service';
 import Auth from './Auth';
 import JWT from './JWT';
-import Print from './Print';
-import Company from './Company';
+import Documents from './Documents';
+
 //...
 let commonServicesModule = angular.module('app.common.services', [])
   .service('JWT', JWT)
   .service('Auth', Auth)
-  .service('Print', Print)
-  .service('Company', Company)
+  .service('Documents', Documents)
   .service('ClientService', ClientService)
   .service('DashboardService', DashboardService)
   .service('SigninService', SigninService)
@@ -24,6 +25,8 @@ let commonServicesModule = angular.module('app.common.services', [])
   .service('StoragelokertypeService', StoragelokertypeService)
   .service('UserService', UserService)
   .service('RentService', RentService)
+  .service('PaymentService', PaymentService)
+  .service('PromotionService', PromotionService)
 .name;
 
 export default commonServicesModule;

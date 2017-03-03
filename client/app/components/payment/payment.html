@@ -1,0 +1,46 @@
+<div id="top" class="top-fix"></div>
+<div class="fixed-sidebar">
+  <gt-asidemenu active="payment"></gt-asidemenu>
+  <div class="wrapper payment">
+    <div class="form-group filters">
+      <div class="col-md-8">
+        <a class="btn btn-default" ng-payment>Nuevo pago</a>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+          <input class="form-control" placeholder="buscar" ng-model="search">
+        </div>
+      </div>
+    </div>
+    <ul>
+      <li ng-if="$ctrl._payments.length === 0">
+        <h4>No existen pagos</h4>
+      </li>
+      <li ng-repeat="p in $ctrl._payments track by $index">
+        <div class="well row">
+          <div class="col-md-1">
+          </div>
+          <div class="col-md-4">
+            <h3>{{p.folio}}</h3>
+            <p>{{p.name}} - {{p.number}}</p>
+          </div>
+          <div class="col-md-5">
+            <h4>{{p.month}}</h4>
+            <p>{{p.methodOfPayment}}</p>
+          </div>
+          <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(p.promotionId)">
+            <span class="glyphicon glyphicon-pencil" ></span>
+            <span class="glyphicon-label">Cambiar</span>
+          </div>
+          <div class="col-md-1 buttons">
+            <a ng-confirm-message="¿Estás seguro de querer eliminar la promoción {{p.name}}?" ng-confirm="$ctrl.remove(p.promotionId)">
+              <span class="glyphicon glyphicon-trash" ></span>
+              <span class="glyphicon-label">Borrar</span>
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

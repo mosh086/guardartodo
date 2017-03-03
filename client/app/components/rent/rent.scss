@@ -19,3 +19,15 @@
     background-color: #eee;
 }
 
+.buttoninfo.payments {
+    cursor: pointer;
+    span.glyphicon-label:before {
+        content: 'Meses pendientes';
+    }
+    &:hover {
+        span.glyphicon-label:before {
+            content: 'Realizar pago';
+        }
+    }
+
+}

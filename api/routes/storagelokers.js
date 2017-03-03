@@ -19,6 +19,14 @@ function getAll (q, done) {
                 LEFT JOIN rent r ON sl.storagelokerId = r.storagelokerId
               WHERE sl.enable = 1 AND (r.rentId IS NULL OR r.active = 0)
               ORDER BY sl.storagelokerId asc`;
+  else if (q=='available')
+    query =   `SELECT DISTINCT sl.*, slt.name as typename
+                FROM storageloker sl
+                INNER JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId AND slt.enable = 1
+                LEFT JOIN rent r ON sl.storagelokerId = r.storagelokerId
+              WHERE sl.enable = 1 AND (r.rentId IS NULL OR r.active = 0 OR r.enable = 0)
+              ORDER BY sl.storagelokerId asc`;
+
   db.get().query(query, function(err, rows) {
     if(err) throw err;
     done(rows);

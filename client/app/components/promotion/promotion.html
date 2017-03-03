@@ -1,0 +1,45 @@
+<div id="top" class="top-fix"></div>
+<div class="fixed-sidebar">
+  <gt-asidemenu active="promotion"></gt-asidemenu>
+  <div class="wrapper promotion">
+    <div class="form-group filters">
+      <div class="col-md-8">
+        <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nueva promoción</button>
+      </div>
+      <div class="col-md-4">
+        <div class="input-group">
+          <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+          <input class="form-control" placeholder="buscar" ng-model="search">
+        </div>
+      </div>
+    </div>
+    <ul>
+      <li ng-if="$ctrl._promotions.length === 0">
+        <h4>No existen promociones</h4>
+      </li>
+      <li ng-repeat="p in $ctrl._promotions track by p.promotionId">
+        <div class="well row">
+          <div class="col-md-1">
+          </div>
+          <div class="col-md-6">
+            <h3>{{p.name}}</h3>
+            <p>{{p.description}}</p>
+          </div>
+          <div class="col-md-3">
+            <p>{{p.promotiontypename}}</p>
+          </div>
+          <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(p.promotionId)">
+            <span class="glyphicon glyphicon-pencil" ></span>
+            <span class="glyphicon-label">Cambiar</span>
+          </div>
+          <div class="col-md-1 buttons">
+            <a ng-confirm-message="¿Estás seguro de querer eliminar la promoción {{p.name}}?" ng-confirm="$ctrl.remove(p.promotionId)">
+              <span class="glyphicon glyphicon-trash" ></span>
+              <span class="glyphicon-label">Borrar</span>
+            </a>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
