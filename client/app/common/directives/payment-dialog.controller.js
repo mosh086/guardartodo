@@ -4,6 +4,7 @@ class ModalPaymentCtrl {
 
     this._uibModalInstance = $uibModalInstance;
     this._RentService = RentService;
+    this.scope = $scope;
 
     this._clients = clients;
     this._rents = null;
@@ -83,6 +84,23 @@ class ModalPaymentCtrl {
 
   onRentSelect(selected) {
     let self = this;
+    self._dates = null;
+    self._promotions = null;
+    console.log(self.scope);
+    self.scope.pForm.pMonth.$$element = [];
+    /*var $example = $(".js-example-programmatic").select2();
+var $exampleMulti = $(".js-example-programmatic-multi").select2();
+
+$(".js-programmatic-set-val").on("click", function () { $example.val("CA").trigger("change"); });
+
+$(".js-programmatic-open").on("click", function () { $example.select2("open"); });
+$(".js-programmatic-close").on("click", function () { $example.select2("close"); });
+
+$(".js-programmatic-init").on("click", function () { $example.select2(); });
+$(".js-programmatic-destroy").on("click", function () { $example.select2("destroy"); });
+
+$(".js-programmatic-multi-set-val").on("click", function () { $exampleMulti.val(["CA", "AL"]).trigger("change"); });
+$(".js-programmatic-multi-clear").on("click", function () { $exampleMulti.val(null).trigger("change"); });*/
     this.getPendingPayments(selected);
     this.getPromotions(selected);
   }
@@ -95,9 +113,9 @@ class ModalPaymentCtrl {
   addPayment() {
     let self = this;
     self._data.payments.push(self._payment);
-    console.log(self._rents)
-    console.log(self._payment.rent)
+
     self._rents = self._rents.filter(item => item.rentId !== self._payment.rent.rentId);
+
     self._payment = {
       rent: null,
       promotion: null,
