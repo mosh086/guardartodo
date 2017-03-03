@@ -59,6 +59,19 @@ function getById (id, done) {
   });
 }
 
+function getByClientId (id, done) {
+  db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename, f_pending_payments(r.rentId) as pendings
+                    FROM rent r
+                      INNER JOIN client c ON r.clientId = c.clientId
+                      INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
+                      INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
+                    WHERE r.enable = 1 AND r.active=1 AND c.clientId = ?
+                    ORDER BY r.startDate DESC, r.rentId DESC`, id, function(err, row) {
+    if(err) throw err;
+    done(row);
+  });
+}
+
 function getPromotionsById (id, done) {
   db.get().query(`SELECT r.*, p.name, p.description
                     FROM rent r
@@ -182,6 +195,12 @@ app.get('/api/rents', function(req, res) {
 
 app.get('/api/rents/:id', function(req, res) {
   getById(parseInt(req.params.id), function(result) {
+    res.status(200).send(result);
+  });
+});
+
+app.get('/api/rents/client/:id', function(req, res) {
+  getByClientId(parseInt(req.params.id), function(result) {
     res.status(200).send(result);
   });
 });

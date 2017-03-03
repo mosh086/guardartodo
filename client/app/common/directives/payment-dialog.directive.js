@@ -1,7 +1,7 @@
 import ModalPaymentCtrl from './payment-dialog.controller'
 import template from './payment-dialog.html';
 
-function PaymentDialog($uibModal, RentService) {
+function PaymentDialog($uibModal, RentService, ClientService) {
   'ngInject';
 
   return {
@@ -20,11 +20,14 @@ function PaymentDialog($uibModal, RentService) {
           size: 'lg',
           windowClass: 'payment-window',
           resolve: {
-            rents: function() {
-              return RentService.query("active");
+            clients: function() {
+              return ClientService.query();
             },
             rent:function() {
               return scope.ngPaymentId ? RentService.get(scope.ngPaymentId): null;
+            },
+            client:function() {
+              return null;
             }
             /*confirmClick: function () {
               return scope.ngConfirm;

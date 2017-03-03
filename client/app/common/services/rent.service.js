@@ -64,6 +64,27 @@ class Rent {
     return deferred.promise;
   }
 
+  getByClientId(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("client id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("client id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/rents/client/' + id,
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
   getPromotions(id) {
     let deferred = this._$q.defer();
     if (!id) {

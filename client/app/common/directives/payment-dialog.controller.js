@@ -10,21 +10,30 @@ class ModalPaymentCtrl {
     this._dates = null;
     this._promotions = null;
     this._methodpayments = MethodOfPayment;
+
+    this._payments = [];
+
     this._data = {
-      rent: rent,
       client: client,
-      promotion: null,
-      dates: null,
+      payments: [],
       date: null,
-      amount: null
+      amount: null,
+      comments: null
     };
+
+    this._payment = {
+      rent: rent,
+      promotion: null,
+      dates: null
+    }
+
     this._uibModalInstance.result.then(() => {},(err) => {});
   }
 
   $onInit() {
     if (this._data.rent) {
-      this.getPendingPayments(this._data.rent.rentId);
-      this.getPromotions(this._data.rent.rentId)
+      this.getPendingPayments(this._payment.rent.rentId);
+      this.getPromotions(this._payment.rent.rentId)
     } else {
 
     }
@@ -44,12 +53,25 @@ class ModalPaymentCtrl {
         );
   }
 
+  getRentsByClientId(id) {
+    let self = this;
+    this._RentService
+      .getByClientId(id)
+      .then((res) => {
+          self._rents = res;
+        },
+          (err) => {
+            console.log('error: ' + err);
+            self._toastr.error(`Error ${err.message}`);
+          }
+        );
+  }
+
   getPromotions(id) {
     let self = this;
     this._RentService
         .getPromotions(id)
         .then((res) => {
-          console.log(res)
           self._promotions = res;
         },
           (err) => {
@@ -61,9 +83,28 @@ class ModalPaymentCtrl {
 
   onRentSelect(selected) {
     let self = this;
-    self._data.date = null;
     this.getPendingPayments(selected);
-    this.getPromotions(selected)
+    this.getPromotions(selected);
+  }
+
+  onClientSelect(selected) {
+    let self = this;
+    this.getRentsByClientId(selected);
+  }
+
+  addPayment() {
+    let self = this;
+    self._data.payments.push(self._payment);
+    console.log(self._rents)
+    console.log(self._payment.rent)
+    self._rents = self._rents.filter(item => item.rentId !== self._payment.rent.rentId);
+    self._payment = {
+      rent: null,
+      promotion: null,
+      dates: null
+    }
+    self._dates = null;
+    self._promotions = null;
   }
 
   closeModal() {
