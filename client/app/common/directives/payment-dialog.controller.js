@@ -1,10 +1,11 @@
 class ModalPaymentCtrl {
-  constructor($scope, $uibModalInstance, rent, client, clients, RentService, MethodOfPayment) {
+  constructor($scope, $uibModalInstance, rent, client, clients, RentService, MethodOfPayment, Documents) {
     'ngInject';
 
     this._uibModalInstance = $uibModalInstance;
     this._RentService = RentService;
     this.scope = $scope;
+    this._Documents = Documents;
 
     this._clients = clients;
     this._rents = null;
@@ -130,6 +131,8 @@ $(".js-programmatic-multi-clear").on("click", function () { $exampleMulti.val(nu
   }
 
   ok() {
+    let self = this;
+    self._Documents.openPayment(self._data);
     this.closeModal();
   }
 
