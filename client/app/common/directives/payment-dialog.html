@@ -24,9 +24,9 @@
       </div>
       <div class="form-group col-md-3" ng-class="{ 'has-error': pForm.pMonth.$dirty && pForm.pMonth.$invalid }">
         <label for="pMonth">Mes a pagar *</label>
-        <ui-select id="pMonth" name="pMonth" ng-model="$ctrl._payment.date" multiple title="Renta a pagar">
-          <ui-select-match placeholder="- Selecciona -">{{$item.description}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._dates | filter: { description: $select.search, valid: 1 }">
+        <ui-select id="pMonth" name="pMonth" ng-model="$ctrl._payment.date" title="Renta a pagar">
+          <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.date.description}}</ui-select-match>
+          <ui-select-choices repeat="item in $ctrl._dates | filter: valid: 1">
             <span ng-bind-html="item.description"></span>
           </ui-select-choices>
         </ui-select>
