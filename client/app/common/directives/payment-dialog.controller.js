@@ -1,11 +1,12 @@
 import lodash from 'lodash';
 
 class ModalPaymentCtrl {
-  constructor($uibModalInstance, rent, client, clients, toastr, $q, RentService, MethodOfPayment, Documents) {
+  constructor($uibModalInstance, rent, client, clients, toastr, $q, PaymentService, RentService, MethodOfPayment, Documents) {
     'ngInject';
 
     this._uibModalInstance = $uibModalInstance;
     this._RentService = RentService;
+    this._PaymentService = PaymentService;
     this._Documents = Documents;
     this._toastr = toastr;
     this._$q = $q;
@@ -16,11 +17,13 @@ class ModalPaymentCtrl {
     this._promotions = null;
     this._methodpayments = MethodOfPayment;
     this._rentSelectedDisabled = false;
+    this._rentSelected = rent;
     this._payments = [];
 
     this._data = {
       client: client,
       payments: [],
+      methodpayment: null,
       date: null,
       amount: null,
       comments: null
@@ -36,8 +39,8 @@ class ModalPaymentCtrl {
   }
 
   $onInit() {
-    this._rentSelectedDisabled = true;
-    if (this._payment.rent) {
+    if (this._rentSelected) {
+      this._rentSelectedDisabled = true;
       this._rents = [];
       this._rents.push(this._payment.rent);
       this.getPendingPayments(this._payment.rent.rentId);
@@ -50,6 +53,7 @@ class ModalPaymentCtrl {
     this._RentService
         .getPendingPayments(id)
         .then((res) => {
+          console.log(res);
           self._dates = res;
         },
           (err) => {
@@ -88,65 +92,67 @@ class ModalPaymentCtrl {
   }
 
   onRentSelect(selected) {
-    let self = this;
-    self._dates = null;
-    self._promotions = null;
+    this._dates = null;
+    this._promotions = null;
+    this._payment = {
+      rent: this._payment.rent,
+      promotion: null,
+      date: null
+    }
     this.getPendingPayments(selected);
     this.getPromotions(selected);
   }
 
   onClientSelect(selected) {
-    let self = this;
-    self.clean();
-    console.log(selected);
+    this.clean();
     this.getRentsByClientId(selected);
   }
 
   addPayment() {
     let self = this;
-
     self.isValid().then(
       (res) => {
-        console.log(res)
         self._data.payments.push(self._payment);
         self.clean();
       }, (err)=> {
         switch(err) {
           case 1:
-            self._toastr.error(`Error ${err.message}`);
+            self._toastr.error(`Error: Ya has agregado el pago del mes / bodega`);
             break;
           case 2:
-            self._toastr.error(`Ya has seleccionado la promocion de la bodega`);
+            self._toastr.error(`Error: Ya has agregado la promocion / bodega`);
             break;
           default:
             self._toastr.error(`Error`);
-
         }
-        console.log(err);
-      })
-
+      });
       //self._rents = self._rents.filter(item => item.rentId !== self._payment.rent.rentId);
   }
 
   clean() {
-    let self = this;
-    self._payment = {
-      rent: null,
-      promotion: null,
-      date: null
+    if (this._rentSelected) {
+      this._payment = {
+        rent: this._payment.rent,
+        promotion: null,
+        date: null
+      }
+    } else {
+      this._payment = {
+        rent: null,
+        promotion: null,
+        date: null
+      }
+      this._dates = null;
+      this._promotions = null;
     }
-    self._dates = null;
-    self._promotions = null;
   }
 
   isValid() {
     let self = this,
-        deferred = self._$q.defer();
-
+        deferred = this._$q.defer();
     _.forEach(self._data.payments, function(value) {
-      console.log(self._payment.date);
-      console.log(value.date);
-      if (self._payment.rent.rentId == value.rent.rentId && self._payment.date.id == value.date.id) {
+      if (self._payment.rent.rentId == value.rent.rentId &&
+          self._payment.date.id == value.date.id) {
         deferred.reject(1);
       }
       if (self._payment.rent.rentId == value.rent.rentId &&
@@ -163,9 +169,15 @@ class ModalPaymentCtrl {
     this._uibModalInstance.dismiss('cancel');
   }
 
-  ok() {
+  save() {
     let self = this;
-    self._Documents.openPayment(self._data);
+    this._PaymentService.save(self._data)
+      .then((res) => {
+
+      }, (err) => {
+
+      })
+    this._Documents.openPayment(this._data);
     this.closeModal();
   }
 

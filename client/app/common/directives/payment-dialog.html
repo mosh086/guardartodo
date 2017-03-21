@@ -94,14 +94,14 @@
         <input type="number" step ="0.01" class="form-control" id="pAmount" placeholder="Monto" ng-model="$ctrl._data.amount">
       </div>
       <div class="form-group col-md-6">
-        <label for="pInformation">Informacion</label>
-        <input type="text" class="form-control" id="pInformation" placeholder="Informacion" ng-model="$ctrl._data.information">
+        <label for="pInformation">Información extra</label>
+        <input type="text" class="form-control" id="pInformation" placeholder="Informacion" ng-model="$ctrl._data.comments">
       </div>
     </div>
 
   </div>
   <div class="modal-footer">
     <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">Cancel</button>
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">Realizar pago</button>
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.save()">Realizar pago</button>
   </div>
 </form>

@@ -1,11 +1,8 @@
 import angular from 'angular';
 
-//...
 let commonFiltersModule = angular.module('app.common.filters', [])
   .filter('paymentTotal', function () {
     return function (data, key) {
-      console.log(data);
-      console.log(key);
       if (typeof (data) === 'undefined' && typeof (key) === 'undefined') {
         return 0;
       }

@@ -17,7 +17,8 @@ function getAll (q, done) {
                     INNER JOIN client c ON r.clientId = c.clientId
                     LEFT JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
                     LEFT JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId
-                  WHERE p.enable = 1;`, function(err, rows) {
+                  WHERE p.enable = 1
+                  ORDER BY p.paymentId DESC;`, function(err, rows) {
     if(err) throw err;
 
     done(rows);
@@ -26,6 +27,13 @@ function getAll (q, done) {
 
 function getById (id, done) {
   db.get().query('SELECT * FROM payment WHERE paymentId = ? AND enable = 1', id, function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
+
+function getLastId (done) {
+  db.get().query('SELECT MAX(paymentId) + 1 as paymentId FROM payment WHERE enable = 1', function(err, row) {
     if(err) throw err;
     done(row[0]);
   });
@@ -71,9 +79,23 @@ app.get('/api/payments/:id', function(req, res) {
 });
 
 app.post('/api/payments', function(req, res) {
-  insert(req.body, function(result) {
-    res.status(200).send(result);
-  });
+  var body;
+  if (_.isArray(req.body.payments)) {
+    getLastId(function(lastId) {
+      _.forEach(req.body.payments, function(value) {
+        body = {
+          paymentId : lastId.paymentId,
+          rentId : value.rent.rentId,
+          date : value.date.date,
+          amount : req.body.amount,
+          comment : req.body.comments,
+          methodOfPayment : req.body.methodpayment
+        }
+        insert(body, function(result) { });
+      });
+      res.status(200).send();
+    });
+  }
 });
 
 app.put('/api/payments/:id', function(req, res) {
