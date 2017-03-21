@@ -1,3 +1,4 @@
+import angular from 'angular';
 import ClientService from './client.service';
 import DashboardService from './dashboard.service';
 import SigninService from './signin.service';

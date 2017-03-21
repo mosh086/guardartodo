@@ -15,7 +15,7 @@ class ModalPaymentCtrl {
     this._dates = null;
     this._promotions = null;
     this._methodpayments = MethodOfPayment;
-
+    this._rentSelectedDisabled = false;
     this._payments = [];
 
     this._data = {
@@ -36,11 +36,12 @@ class ModalPaymentCtrl {
   }
 
   $onInit() {
-    if (this._data.rent) {
+    this._rentSelectedDisabled = true;
+    if (this._payment.rent) {
+      this._rents = [];
+      this._rents.push(this._payment.rent);
       this.getPendingPayments(this._payment.rent.rentId);
       this.getPromotions(this._payment.rent.rentId)
-    } else {
-
     }
   }
 

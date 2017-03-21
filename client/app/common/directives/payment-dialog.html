@@ -6,7 +6,7 @@
     <div class="row">
       <div class="form-group col-md-3" ng-class="{ 'has-error': pForm.pClient.$dirty && pForm.pClient.$invalid }">
         <label for="pClient">Cliente *</label>
-        <ui-select ng-disabled="$ctrl._data.payments.length > 0" id="pClient" name="pClient" ng-model="$ctrl._data.client" title="Cliente" on-select="$ctrl.onClientSelect($ctrl._data.client.clientId)" ng-required="true">
+        <ui-select ng-disabled="$ctrl._data.payments.length > 0 || $ctrl._rentSelectedDisabled" id="pClient" name="pClient" ng-model="$ctrl._data.client" title="Cliente" on-select="$ctrl.onClientSelect($ctrl._data.client.clientId)" ng-required="true">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.client.name}}</ui-select-match>
           <ui-select-choices repeat="item in $ctrl._clients">
             <span ng-bind-html="item.name"></span>
@@ -15,7 +15,7 @@
       </div>
       <div class="form-group col-md-3" ng-class="{ 'has-error': pForm.pRent.$dirty && pForm.pRent.$invalid }">
         <label for="pRent">Renta a pagar *</label>
-        <ui-select id="pRent" name="pRent" ng-model="$ctrl._payment.rent" title="Renta a pagar" on-select="$ctrl.onRentSelect($ctrl._payment.rent.rentId)">
+        <ui-select ng-disabled="$ctrl._rentSelectedDisabled" id="pRent" name="pRent" ng-model="$ctrl._payment.rent" title="Renta a pagar" on-select="$ctrl.onRentSelect($ctrl._payment.rent.rentId)">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.rent.number}}</ui-select-match>
           <ui-select-choices repeat="item in $ctrl._rents">
             <span ng-bind-html="item.number"></span>
@@ -42,7 +42,7 @@
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-10" ng-if="$ctrl._data.payments.length == 0">
+      <div class="form-group col-md-10 payment-list" ng-if="$ctrl._data.payments.length == 0">
         <span>Agrega pagos a la lista</span>
       </div>
       <div class="form-group col-md-10" ng-if="$ctrl._data.payments.length > 0">
@@ -56,12 +56,19 @@
               <th>Cantidad</th>
             </tr>
           </thead>
+          <tfoot>
+            <tr>
+              <td colspan="3"></td>
+              <td><b>Total:</b></td>
+              <td><b>{{$ctrl._data.payments | paymentTotal: 'total' | currency:'$':2}}</b></td>
+            </tr>
+          </tfoot>
           <tbody>
             <tr ng-repeat="pay in $ctrl._data.payments">
               <th scope="row">{{$index + 1}}</th>
               <td>{{pay.rent.number}}</td>
-              <td>{{}}</td>
-              <td>{{}}</td>
+              <td>{{pay.promotion.name}}</td>
+              <td>{{pay.date.description}}</td>
               <td>{{pay.rent.total | currency:'$':2}}</td>
             </tr>
           </tbody>

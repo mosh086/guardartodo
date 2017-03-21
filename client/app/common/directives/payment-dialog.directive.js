@@ -7,7 +7,8 @@ function PaymentDialog($uibModal, RentService, ClientService) {
   return {
     restrict: 'A',
     scope: {
-      ngPaymentId: '@'
+      ngPaymentId: '@',
+      ngClientId: '@'
       //ngConfirmMessage: '@',
       //ngConfirm: '&'
     },
@@ -27,14 +28,8 @@ function PaymentDialog($uibModal, RentService, ClientService) {
               return scope.ngPaymentId ? RentService.get(scope.ngPaymentId): null;
             },
             client:function() {
-              return null;
+              return scope.ngClientId ? ClientService.get(scope.ngClientId): null;
             }
-            /*confirmClick: function () {
-              return scope.ngConfirm;
-            },
-            confirmMessge: function () {
-              return scope.ngConfirmMessage;
-            }*/
           }
         });
       });

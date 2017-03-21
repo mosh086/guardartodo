@@ -7,6 +7,7 @@ import DashboardBack from './dashboard-back.directive';
 
 import PaymentDialog from './payment-dialog.directive';
 import ModalPaymentCtrl from './payment-dialog.controller';
+import './payment-dialog.scss';
 
 let directivesModule = angular.module('app.common.directives', [])
 
