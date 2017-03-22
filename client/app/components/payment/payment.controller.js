@@ -37,6 +37,7 @@ class PaymentController {
     this._PaymentService
       .query(this.q)
       .then((res) => {
+        console.log(res)
         self._payments = res;
         self._paymentsTemp = res;
       },

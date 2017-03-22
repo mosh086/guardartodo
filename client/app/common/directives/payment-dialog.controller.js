@@ -173,12 +173,12 @@ class ModalPaymentCtrl {
     let self = this;
     this._PaymentService.save(self._data)
       .then((res) => {
-
+        this._Documents.openPayment(this._data);
+        this._uibModalInstance.close('cancel');
       }, (err) => {
 
       })
-    this._Documents.openPayment(this._data);
-    this.closeModal();
+
   }
 
   cancel() {

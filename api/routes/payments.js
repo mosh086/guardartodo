@@ -33,7 +33,7 @@ function getById (id, done) {
 }
 
 function getLastId (done) {
-  db.get().query('SELECT MAX(paymentId) + 1 as paymentId FROM payment WHERE enable = 1', function(err, row) {
+  db.get().query('SELECT COALESCE(MAX(paymentId),0) + 1 as paymentId FROM payment WHERE enable = 1', function(err, row) {
     if(err) throw err;
     done(row[0]);
   });

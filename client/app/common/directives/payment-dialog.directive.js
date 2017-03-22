@@ -8,9 +8,9 @@ function PaymentDialog($uibModal, RentService, ClientService) {
     restrict: 'A',
     scope: {
       ngPaymentId: '@',
-      ngClientId: '@'
+      ngClientId: '@',
       //ngConfirmMessage: '@',
-      //ngConfirm: '&'
+      ngRefresh: '&'
     },
     link: function (scope, element) {
       element.bind('click', function () {
@@ -32,6 +32,11 @@ function PaymentDialog($uibModal, RentService, ClientService) {
             }
           }
         });
+
+      modalInstance.result
+        .then((data) => { console.log('dsfsdfsdfasdf asdgf adsvdv'); scope.ngRefresh()},
+          (err) => { }
+        );
       });
     }
   }

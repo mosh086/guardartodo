@@ -4,7 +4,7 @@
   <div class="wrapper payment">
     <div class="form-group filters">
       <div class="col-md-8">
-        <a class="btn btn-default" ng-payment>Nuevo pago</a>
+        <a class="btn btn-default" ng-payment ng-refresh="$ctrl.searchPayments()">Nuevo pago</a>
       </div>
       <div class="col-md-4">
         <div class="input-group">
@@ -22,6 +22,7 @@
           <div class="col-md-1">
           </div>
           <div class="col-md-4">
+            <!--<h3>{{p.folio}}</h3> -->
             <h3>{{p.paymentId}} - {{p.folio}}</h3>
             <p>{{p.name}} - {{p.number}}</p>
           </div>
