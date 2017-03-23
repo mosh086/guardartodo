@@ -73,7 +73,7 @@ function getByClientId (id, done) {
 }
 
 function getPromotionsById (id, done) {
-  db.get().query(`SELECT r.*, p.name, p.description
+  db.get().query(`SELECT r.*, p.promotionId, p.name, p.description
                     FROM rent r
                       INNER JOIN rentpromotion rp ON r.rentId = rp.rentId
                       INNER JOIN promotion p ON p.promotionId = rp.promotionId
@@ -167,9 +167,10 @@ function promotions(promotions, id, callback) {
 }
 
 function updateFolio(id, callback) {
-  db.get().query(`UPDATE rent a
-                    SET a.folio = CONCAT('B-',DATE_FORMAT(a.startDate, '%y%m'), LPAD(a.rentId, 3, '0'))
-                  WHERE a.rentId = ? `, id, function(err, result) {
+  db.get().query(`UPDATE rent AS r
+                    INNER JOIN storageloker AS sl ON r.storagelokerId = sl.storagelokerId
+                    SET r.folio = CONCAT('B',DATE_FORMAT(r.startDate, '%y%m'), sl.number, LPAD(r.rentId, 3, '0'))
+                  WHERE r.rentId = ?`, id, function(err, result) {
     callback();
   });
 }
@@ -222,6 +223,7 @@ app.get('/api/rents/:id/promotions', function(req, res) {
 });
 
 app.post('/api/rents', function(req, res) {
+  console.log('call!')
   insert(req.body, function(result) {
     res.status(200).send(result);
   });
