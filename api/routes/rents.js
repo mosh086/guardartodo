@@ -75,7 +75,7 @@ function getByClientId (id, done) {
 function getPromotionsById (id, done) {
   db.get().query(`SELECT r.*, p.promotionId, p.name, p.description
                     FROM rent r
-                      INNER JOIN rentpromotion rp ON r.rentId = rp.rentId
+                      INNER JOIN rentpromotion rp ON r.rentId = rp.rentId AND rp.applied = 0
                       INNER JOIN promotion p ON p.promotionId = rp.promotionId
                     WHERE rp.enable = 1 AND r.enable = 1 AND r.rentId = ?`, id, function(err, row) {
     if(err) throw err;

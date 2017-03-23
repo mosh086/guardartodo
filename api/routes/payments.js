@@ -60,6 +60,10 @@ function remove (id, done) {
   });
 }
 
+function updatepromotion(rentId, promotionId) {
+  db.get().query('UPDATE rentpromotion SET applied = 1 WHERE rentId = ? AND promotionId = ?', [rentId,promotionId]);
+}
+
 
 app.use('/api/payments', jwtCheck);
 app.get('/api/payments', function(req, res) {
@@ -86,12 +90,17 @@ app.post('/api/payments', function(req, res) {
         body = {
           paymentId : lastId.paymentId,
           rentId : value.rent.rentId,
+          promotionId: (value.promotion)?value.promotion.promotionId:null,
           date : value.date.date,
           amount : req.body.amount,
           comment : req.body.comments,
           methodOfPayment : req.body.methodpayment
         }
-        insert(body, function(result) { });
+        insert(body, function(result) {
+          if (body.promotionId) {
+            updatepromotion(body.rentId, body.promotionId);
+          }
+        });
       });
       res.status(200).send();
     });

@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 
 class ModalPaymentCtrl {
-  constructor($uibModalInstance, rent, client, clients, toastr, $q, PaymentService, RentService, MethodOfPayment, Documents) {
+  constructor($uibModalInstance, rent, client, clients, toastr, $q, $scope, PaymentService, RentService, MethodOfPayment, Documents) {
     'ngInject';
 
     this._uibModalInstance = $uibModalInstance;
@@ -10,6 +10,7 @@ class ModalPaymentCtrl {
     this._Documents = Documents;
     this._toastr = toastr;
     this._$q = $q;
+    this._scope = $scope;
 
     this._clients = clients;
     this._rents = null;
@@ -145,6 +146,11 @@ class ModalPaymentCtrl {
       this._dates = null;
       this._promotions = null;
     }
+
+    angular.forEach(this._scope.pForm, function(value, key) {
+         if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
+             value.$setPristine();
+     });
   }
 
   isValid() {
@@ -171,6 +177,7 @@ class ModalPaymentCtrl {
 
   save() {
     let self = this;
+    return false;
     this._PaymentService.save(self._data)
       .then((res) => {
         this._Documents.openPayment(this._data);
@@ -179,6 +186,26 @@ class ModalPaymentCtrl {
 
       })
 
+  }
+
+  validatePayment() {
+    angular.forEach(this._scope.pForm, function(value, key) {
+
+         if (typeof value === 'object' && value.hasOwnProperty('$modelValue')){
+           console.log(value);
+            value.$setDirty();
+         }
+
+     });
+    return true;
+  }
+
+  validate() {
+    angular.forEach(this._scope.pForm2, function(value, key) {
+         if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
+             value.$setDirty();
+     });
+    return true;
   }
 
   cancel() {
