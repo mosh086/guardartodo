@@ -49,7 +49,7 @@ class makeContractDefinition {
         table: {
           widths: ['*', '*' ],
           body: [
-            [ { image : img, width: 150, alignment: 'center' }, {text: `Contrato\n${data.client.lineOfBusiness}\nFolio:  ${data.folio || folioText}`, alignment: 'center'  }],
+            [ { image : logo, width: 150, alignment: 'center' }, {text: `Contrato\n${data.client.lineOfBusiness}\nFolio:  ${data.folio || folioText}`, alignment: 'center'  }],
             [ { text:''}, { text: ``, alignment: 'center' }],
           ]
         },

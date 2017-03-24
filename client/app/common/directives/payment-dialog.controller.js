@@ -20,6 +20,7 @@ class ModalPaymentCtrl {
     this._rentSelectedDisabled = false;
     this._rentSelected = rent;
     this._payments = [];
+    this._validNumPayment = false;
 
     this._data = {
       client: client,
@@ -177,7 +178,6 @@ class ModalPaymentCtrl {
 
   save() {
     let self = this;
-    return false;
     this._PaymentService.save(self._data)
       .then((res) => {
         this._Documents.openPayment(this._data);
@@ -190,21 +190,23 @@ class ModalPaymentCtrl {
 
   validatePayment() {
     angular.forEach(this._scope.pForm, function(value, key) {
-
-         if (typeof value === 'object' && value.hasOwnProperty('$modelValue')){
-           console.log(value);
-            value.$setDirty();
-         }
-
-     });
+      if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
+        value.$setDirty();
+    });
     return true;
   }
 
   validate() {
+    this._validNumPayment = false;
     angular.forEach(this._scope.pForm2, function(value, key) {
-         if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
-             value.$setDirty();
-     });
+      if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
+        value.$setDirty();
+    });
+
+    if (!(this._data.payments && this._data.payments.length > 0)) {
+      this._validNumPayment = true;
+      return false;
+    }
     return true;
   }
 
