@@ -224,15 +224,171 @@ class makeCredentialDefinition {
 
 class makePaymentDefinition {
   constructor($filter, data) {
+    moment.locale('es');
     this.doc = {
-      pageSize: 'C8',
-
-      // by default we use portrait, you can change it to landscape if you wish
-      pageOrientation: 'landscape',
-
       // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
-      pageMargins: [ 40, 60, 40, 60 ],
-      content: [{}]
+      pageMargins: [ 30, 50, 30, 50 ],
+      content: [{
+        style: 'table',
+        table: {
+          widths: ['30%', '40%', '30%' ],
+          body: [
+            [ { image : logo, width: 100, alignment: 'center' },
+              { text: `AV.MANUEL L. BARRAGAN #1400,\nCOLONIA LAS MISIONES,SAN NICOLAS\nDE LOS GARZA NUEVO LEON\nTELEFONO: 25560582`, style: 'header' },
+              { style: 'table',
+                table: {
+                  widths: [ '*' ],
+                  body: [
+                    [{ style:'headerB', text: 'FOLIO' }],
+                    [{ style:'header', text: `${_.map(data.payments, function(a) { return a.rent.folio; }).join(',/n')}` }],
+                    [{ style:'headerB', text: 'FECHA DE PAGO' }],
+                    [{ style:'header', text: `${moment(data.transaction).format('LL')}` }]
+                  ]
+                }
+              }
+            ]
+          ]
+        }, layout: 'noBorders'
+      }, {
+        style: 'table',
+        margin: [20, 20, 20, 20],
+        table: {
+          widths: [55, '*', 50, 90 ],
+          body: [
+            [ { style:'info', text: 'RECIBI DE :' }, {
+              style: 'table',
+              table: {
+                widths: ['100%'],
+                body: [[ { style:'infoB', text: `${data.client.name}` } ]]
+              }, layout: {
+                  hLineColor: function (i, node) {
+                    return (i === 1 ) ? 'black' : 'white';
+                  },
+                  vLineColor: function (i, node) {
+                    return 'white';
+                  }
+                }
+             }, { style:'info', text: 'IMPORTE :' }, {
+              style: 'table',
+              table: {
+                widths: ['100%'],
+                body: [[ { style:'infoB', text: `${$filter('currency')(data.amount, '$', 2)}` } ]]
+              }, layout: {
+                  hLineColor: function (i, node) {
+                    return (i !== 0 ) ? 'black' : 'white';
+                  },
+                  vLineColor: function (i, node) {
+                    return 'white';
+                  }
+                }
+             } ]
+          ]
+        } , layout: 'noBorders'
+      }, {
+        style: 'table',
+        margin: [20, 5, 20, 0],
+        table:{
+          widths: [90, '*' ],
+          body: [
+            [ { style:'info', text: 'PAGO DE BODEGA :' }, {
+              style: 'table',
+              table:{
+                widths: [ '*' ],
+                body: [[ { style:'infoB', text: `${_.map(data.payments, function(a) { return a.rent.number; }).join(',')}` } ]]
+              }, layout: {
+                  hLineColor: function (i, node) {
+                    return (i === 1 ) ? 'black' : 'white';
+                  },
+                  vLineColor: function (i, node) {
+                    return 'white';
+                  }
+                }
+            } ]
+          ]
+        }, layout: 'noBorders'
+      }, {
+        style: 'table',
+        margin: [20, 5, 20, 0],
+        table:{
+          widths: [90, '*' ],
+          body: [
+            [ { style:'info', text: 'FORMA DE PAGO :' }, {
+              style: 'table',
+              table:{
+                widths: [ '*' ],
+                body: [[ { style:'infoB', text: `${data.methodpayment}` } ]]
+              }, layout: {
+                  hLineColor: function (i, node) {
+                    return (i === 1 ) ? 'black' : 'white';
+                  },
+                  vLineColor: function (i, node) {
+                    return 'white';
+                  }
+                }
+            } ]
+          ]
+        }, layout: 'noBorders'
+      }, {
+        style: 'table',
+        margin: [20, 5, 20, 0],
+        table:{
+          widths: [90, '*' ],
+          body: [
+            [ { style:'info', text: 'OBSEVACIONES :' }, {
+              style: 'table',
+              table:{
+                widths: [ '*' ],
+                body: [[ { style:'infoB', text: `${data.comments}` } ]]
+              }, layout: {
+                  hLineColor: function (i, node) {
+                    return (i === 1 ) ? 'black' : 'white';
+                  },
+                  vLineColor: function (i, node) {
+                    return 'white';
+                  }
+                }
+            } ]
+          ]
+        }, layout: 'noBorders'
+      }, {
+        margin: [20, 30, 20, 0],
+        columns: [
+            { width: '*', text: '' },
+            {
+                width: 'auto',
+                    table:{
+                      widths: [300],
+                      body: [[ { style:'info', alignment: 'center', text: `NOMBRE Y FIRMA` } ]]
+                    }, layout: {
+                      hLineColor: function (i, node) {
+                        return (i === 0 ) ? 'black' : 'white';
+                      },
+                      vLineColor: function (i, node) {
+                        return 'white';
+                      }
+                    }
+            },
+            { width: '*', text: '' },
+        ]
+      }],
+      styles: {
+        header: {
+          alignment: 'center',
+          fontSize: 10
+        },
+        headerB: {
+          alignment: 'center',
+          fontSize: 11,
+          bold: true
+        },
+        info: {
+          fontSize: 10
+        },
+        infoB: {
+          fontSize: 10,
+          bold: true
+        }
+      }
     }
   }
 

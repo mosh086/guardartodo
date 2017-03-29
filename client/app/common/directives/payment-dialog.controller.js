@@ -20,13 +20,13 @@ class ModalPaymentCtrl {
     this._rentSelectedDisabled = false;
     this._rentSelected = rent;
     this._payments = [];
-    this._validNumPayment = false;
+    this._invalidNumPayment = false;
 
     this._data = {
       client: client,
       payments: [],
       methodpayment: null,
-      date: null,
+      transaction: null,
       amount: null,
       comments: null
     };
@@ -55,7 +55,6 @@ class ModalPaymentCtrl {
     this._RentService
         .getPendingPayments(id)
         .then((res) => {
-          console.log(res);
           self._dates = res;
         },
           (err) => {
@@ -178,9 +177,10 @@ class ModalPaymentCtrl {
 
   save() {
     let self = this;
+    self._data.transaction = new Date();
     this._PaymentService.save(self._data)
       .then((res) => {
-        this._Documents.openPayment(this._data);
+        this._Documents.openPayment(self._data);
         this._uibModalInstance.close('cancel');
       }, (err) => {
 
@@ -197,14 +197,14 @@ class ModalPaymentCtrl {
   }
 
   validate() {
-    this._validNumPayment = false;
+    this._invalidNumPayment = false;
     angular.forEach(this._scope.pForm2, function(value, key) {
       if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
         value.$setDirty();
     });
 
     if (!(this._data.payments && this._data.payments.length > 0)) {
-      this._validNumPayment = true;
+      this._invalidNumPayment = true;
       return false;
     }
     return true;

@@ -92,6 +92,7 @@ app.post('/api/payments', function(req, res) {
           rentId : value.rent.rentId,
           promotionId: (value.promotion)?value.promotion.promotionId:null,
           date : value.date.date,
+          transaction: moment(req.body.transaction).format("YYYY-MM-DD HH:mm:ss"),
           amount : req.body.amount,
           comment : req.body.comments,
           methodOfPayment : req.body.methodpayment
