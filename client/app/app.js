@@ -20,6 +20,7 @@ import 'angular-animate';
 import 'angular-touch';
 import 'angular-sanitize';
 import moment from 'moment';
+import ngFileUpload from 'ng-file-upload';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 import uiSelect from 'ui-select';
@@ -40,6 +41,7 @@ const requires = [
   uiRouter,
   uiBootstrap,
   uiSelect,
+  ngFileUpload,
   Common,
   Components
 ];
