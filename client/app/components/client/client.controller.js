@@ -2,13 +2,15 @@ import modalTemplate from './client.modal.html'
 import modalInstanceCtrl from './client.modal.controller'
 
 class ClientController {
-  constructor($uibModal, $scope, $filter, toastr, ClientService) {
+  constructor($uibModal, $scope, $filter, toastr, FileUploadSevice, ClientService) {
     "ngInject";
 
     this._uibModal = $uibModal;
     this._toastr = toastr;
     this._Client = ClientService;
+    this._UploadFile = FileUploadSevice;
 
+    this._myFile;
     this._clients = [];
     this._clientsTemp = [];
     let self = this;
@@ -24,6 +26,14 @@ class ClientController {
 
   $onDestroy() {
     console.log("destroying Client...");
+  }
+
+  uploadFile() {
+    let file = this._myFile;
+    console.log('file is ' );
+    console.dir(file);
+    let uploadUrl = "/fileUpload";
+    this._UploadFile.uploadFileToUrl(file, uploadUrl);
   }
 
   openDialog(id){

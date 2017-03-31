@@ -7,8 +7,8 @@ import commonFiltersModule from './filters';
 
 let commonModule = angular.module('app.common', [
   commonComponentsModule,
-  commonServicesModule,
   commonDirectivesModule,
+  commonServicesModule,
   commonConstantsModule,
   commonFiltersModule
 ])

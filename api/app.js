@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var cors = require('cors');
+const fileUpload = require('express-fileupload');
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -16,6 +17,7 @@ var rents = require('./routes/rents');
 var promotions = require('./routes/promotions');
 var promotiontypes = require('./routes/promotiontypes');
 var payments = require('./routes/payments');
+var upload = require('./routes/upload');
 
 var app = express();
 
@@ -27,6 +29,7 @@ app.set('view engine', 'jade');
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
 app.use(cors());
+app.use(fileUpload());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
@@ -42,6 +45,7 @@ app.use(rents);
 app.use(promotions);
 app.use(promotiontypes);
 app.use(payments);
+app.use(upload);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

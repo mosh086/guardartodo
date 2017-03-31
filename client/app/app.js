@@ -20,7 +20,8 @@ import 'angular-animate';
 import 'angular-touch';
 import 'angular-sanitize';
 import moment from 'moment';
-import ngFileUpload from 'ng-file-upload';
+//import ngFileUpload from 'ng-file-upload';
+import 'angular-file-upload';
 import uiRouter from 'angular-ui-router';
 import uiBootstrap from 'angular-ui-bootstrap';
 import uiSelect from 'ui-select';
@@ -31,7 +32,6 @@ import AppRun from './app.run';
 import AppConstants from './app.constants';
 import AppConfig from './app.config';
 
-
 const requires = [
   'ngTouch',
   'ngMessages',
@@ -41,7 +41,8 @@ const requires = [
   uiRouter,
   uiBootstrap,
   uiSelect,
-  ngFileUpload,
+  //ngFileUpload,
+  //angularFileUpload,
   Common,
   Components
 ];
