@@ -26,17 +26,12 @@
               <p>{{c.address}}</p>
 
             </div>
-            <div class="col-md-3">
+            <div class="col-md-4">
               <p>Email: {{c.email}}</p>
               <p>Celular: {{c.cellPhone}}</p>
               <p>Telefono: {{c.phone}}</p>
             </div>
-            <div class="col-md-1 buttons">
-              <input type="file" upload-file="$ctrl._myFile"/>
-              <button ng-click="$ctrl.uploadFile()">upload me</button>
-              <span class="glyphicon glyphicon-paperclip" ></span>
-              <span class="glyphicon-label">Adjuntar contrato</span>
-            </div>
+
             <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(c.clientId)">
               <span class="glyphicon glyphicon-pencil" ></span>
               <span class="glyphicon-label">Cambiar</span>

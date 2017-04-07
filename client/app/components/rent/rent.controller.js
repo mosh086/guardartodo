@@ -1,5 +1,5 @@
 class RentController {
-  constructor($scope, $filter, toastr, RentService, ClientService, StoragelokerService, StoragelokertypeService, Documents) {
+  constructor($scope, $filter, $timeout, toastr, RentService, ClientService, StoragelokerService, StoragelokertypeService, Documents) {
     "ngInject";
 
     this._toastr = toastr;
@@ -8,6 +8,7 @@ class RentController {
     this._Storagelokertype = StoragelokertypeService;
     this._Rent = RentService
     this._Documents = Documents;
+    this._timeout = $timeout;
 
     this._rents = [];
     this._rentsTemp = [];
@@ -17,6 +18,17 @@ class RentController {
     $scope.$watch('search', function (val) {
       self._rents = $filter('filter')(self._rentsTemp, val);
     });
+
+    $timeout(function() {
+
+      $(document).ready( function() {
+        $(document).on('change', ':file', function() {
+          let input = $(this),
+              label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+        });
+      });
+
+    }, 0);
   }
 
   $onInit() {
