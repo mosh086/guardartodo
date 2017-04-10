@@ -29,11 +29,12 @@ switch(q) {
   }
 }
 
-  db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename, f_pending_payments(r.rentId) as pendings
+  db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename, rf.rentfileId, f_pending_payments(r.rentId) as pendings
                     FROM rent r
                       INNER JOIN client c ON r.clientId = c.clientId
                       INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
                       INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
+                      LEFT JOIN rentfile rf ON r.rentId = rf.rentId AND rf.enable = 1 
                     WHERE r.enable = 1 ${activeCondition}
                     ORDER BY r.startDate DESC, r.rentId DESC`, function(err, rows) {
     if(err) throw err;

@@ -8,12 +8,22 @@ export default class InstanceCtrl {
     this._filter = $filter;
     this._promotion = promotion;
     this._promotiontypes = promotiontypes;
+    this._types = [{
+        id: 1,
+        name: 'Cantidad'
+      }, {
+        id: 2,
+        name: 'Porcentaje'
+      }];
 
     this._title = (promotion)?'Editar promoción':'Nueva promoción';
     this._data = {
       promotionId:null,
       promotiontype: null,
-      promotiontypeId: null
+      promotiontypeId: null,
+      types: null,
+      percentage: 0,
+      amount: 0
     };
   }
 

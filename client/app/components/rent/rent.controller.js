@@ -1,5 +1,8 @@
 class RentController {
-  constructor($scope, $filter, $timeout, toastr, RentService, ClientService, StoragelokerService, StoragelokertypeService, Documents) {
+  constructor($scope, $filter, $timeout, toastr, 
+    RentService, ClientService, 
+    StoragelokerService, StoragelokertypeService, FileUploadSevice,
+    AppConstants, Documents) {
     "ngInject";
 
     this._toastr = toastr;
@@ -8,8 +11,11 @@ class RentController {
     this._Storagelokertype = StoragelokertypeService;
     this._Rent = RentService
     this._Documents = Documents;
+    this._UploadFile = FileUploadSevice;
+    this._AppConstants = AppConstants;
     this._timeout = $timeout;
 
+    this._myFile;
     this._rents = [];
     this._rentsTemp = [];
     this._data = {};
@@ -20,11 +26,19 @@ class RentController {
     });
 
     $timeout(function() {
-
       $(document).ready( function() {
         $(document).on('change', ':file', function() {
           let input = $(this),
               label = input.val().replace(/\\/g, '/').replace(/.*\//, '');
+          let file = self._myFile;
+          let uploadUrl = "/fileUpload/" + input.attr("data-rentid");
+          self._UploadFile.uploadFile(file, uploadUrl).then(
+            (res) => { 
+              self._toastr.success(`El archivo fue adjuntado correctamente`);
+              self.searchRents(); 
+            },
+            (err) => {}
+          );
         });
       });
 
@@ -157,6 +171,17 @@ class RentController {
       },
         (err) => console.log('error: ' + err)
       );
+  }
+
+  download(id, name) {
+    let anchor = angular.element('<a/>');
+    anchor.css({display: 'none'}); // Make sure it's not visible
+    angular.element(document.body).append(anchor); // Attach to document
+    anchor.attr({
+        href: this._AppConstants.api + "/download/" + id,
+        target: '_blank'
+      })[0].click();
+    anchor.remove();    
   }
 }
 

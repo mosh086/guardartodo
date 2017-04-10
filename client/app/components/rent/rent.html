@@ -32,7 +32,14 @@
       </li>
       <li ng-repeat="rent in $ctrl._rents track by rent.rentId">
         <div class="well row" ng-class="{ 'done': !rent.active }">
-          <div class="col-md-1">
+          <div ng-if="!rent.rentfileId" class="col-md-1 buttons btn-file">
+            <input type="file" upload-file="$ctrl._myFile" data-rentid="{{rent.rentId}}"/>
+            <span class="glyphicon glyphicon-paperclip"></span>
+            <span class="glyphicon-label">Adjuntar contrato</span>
+          </div>
+          <div ng-if="rent.rentfileId" class="col-md-1 buttons">
+            <span class="glyphicon glyphicon-file" ng-click="$ctrl.download(rent.rentfileId,'mosh.png')"></span>
+            <span class="glyphicon-label">Contrato</span>
           </div>
           <div class="col-md-3">
             <h3>{{rent.number}}</h3>
@@ -44,17 +51,11 @@
             <p>{{rent.startDateToString}}</p>
           </div>
           <div class="col-md-5">
-            <div class="col-md-2 buttoninfo payments">
+            <div class="col-md-4 buttoninfo payments">
               <a ng-payment ng-payment-id="{{rent.rentId}}" ng-client-id="{{rent.clientId}}" ng-hide="!rent.active || rent.pendings == 0">
                 <span><i class="fa fa-money" aria-hidden="true"></i> {{rent.pendings}}</span>
                 <span class="glyphicon-label"></span>
               </a>
-            </div>
-            <div class="col-md-2 buttons btn-file">
-              <input type="file" upload-file="$ctrl._myFile"/>
-              <!--<button ng-click="$ctrl.uploadFile()">upload me</button>-->
-              <span class="glyphicon glyphicon-paperclip" ></span>
-              <span class="glyphicon-label">Adjuntar contrato</span>
             </div>
             <div class="col-md-2 buttons">
               <a ng-hide="!rent.active" ng-confirm-message="¿Estás seguro de finalizar el contrato de renta?" ng-confirm="$ctrl.setEndDateRent(rent.rentId)">

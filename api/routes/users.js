@@ -85,9 +85,6 @@ app.post('/api/auth/login', function(req, res) {
   });
 });
 
-
-
-
 app.get('/api/users/me', function(req, res) {
   var token;
   if (req.headers.authorization && req.headers.authorization.split(' ')[0] === 'Bearer') {
@@ -110,10 +107,7 @@ app.get('/api/users/me', function(req, res) {
   } else {
     next();
   }
-
 });
-
-
 
 app.get('/user/check/:username', function(req, res) {
   if (!req.params.username) {
