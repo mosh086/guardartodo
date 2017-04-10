@@ -32,10 +32,11 @@ class ModalPaymentCtrl {
     };
 
     this._payment = {
-      rent: rent,
+      rent: null,
       promotion: null,
       date: null
     }
+    this._payment.rent = Object.assign({}, rent)
 
     this._uibModalInstance.result.then(() => {},(err) => {});
   }
@@ -114,6 +115,23 @@ class ModalPaymentCtrl {
     self.isValid().then(
       (res) => {
         self._data.payments.push(self._payment);
+        if (self._payment.promotion) {
+          if (self._payment.promotion.amount && self._payment.promotion.amount > 0) {
+            _.each(self._data.payments, function(item, idx){
+              if(item.rent.rentId == self._payment.rent.rentId && item.date.date == self._payment.date.date){
+                self._data.payments[idx].rent.total = self._payment.rent.total - self._payment.promotion.amount;
+                return false;
+              }
+            });
+          } else if (self._payment.promotion.percentage && self._payment.promotion.percentage > 0) {
+            _.each(self._data.payments, function(item, idx){
+              if(item.rent.rentId == self._payment.rent.rentId && item.date.date == self._payment.date.date){
+                self._data.payments[idx].rent.total = self._payment.rent.total - (self._payment.promotion.percentage / 100 ) * self._payment.rent.total;
+                return false;
+              }
+            });
+          }
+        }
         self.clean();
       }, (err)=> {
         switch(err) {
@@ -133,7 +151,7 @@ class ModalPaymentCtrl {
   clean() {
     if (this._rentSelected) {
       this._payment = {
-        rent: this._payment.rent,
+        rent: Object.assign({}, this._rentSelected),
         promotion: null,
         date: null
       }

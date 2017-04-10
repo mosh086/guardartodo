@@ -75,6 +75,16 @@ app.get('/api/promotions/:id', function(req, res) {
 });
 
 app.post('/api/promotions', function(req, res) {
+  if (req.body.promotiontypeId == 1) {
+    req.body.percentage = 100;
+    delete req.body.amount;
+  } else if (req.body.promotiontypeId == 2 && req.body.types.id == 1) {
+    delete req.body.percentage;
+  } else if (req.body.promotiontypeId == 2 && req.body.types.id == 2) {
+    delete req.body.amount;
+  }
+  delete req.body.types;
+  console.log(req.body);
   insert(req.body, function(result) {
     res.status(200).send(result);
   });

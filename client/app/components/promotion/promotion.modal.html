@@ -28,39 +28,42 @@
           </ui-select-choices>
         </ui-select>
         <span class="span-validation" ng-show="pForm.pPromotiontype.$dirty && pForm.pPromotiontype.$invalid">
-          <span ng-show="pForm.pPromotiontype.$error.required">El nombre es requerido.</span>
+          <span ng-show="pForm.pPromotiontype.$error.required">El tipo de promoción es requerido.</span>
         </span>
       </div>
       <div class="col-md-6" ng-show="$ctrl._data.promotiontype.promotiontypeId == 2">
         <div class="row">
           <div class="form-group col-md-6">
             <label for="pTypes">Tipo</label>
-            <ui-select id="pTypes" name="pTypes" ng-model="$ctrl._data.types" title="Tipo" ng-required="true">
+            <ui-select id="pTypes" name="pTypes" ng-model="$ctrl._data.types" title="Tipo" ng-required="$ctrl._data.promotiontype.promotiontypeId == 2">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.types.name}}</ui-select-match>
               <ui-select-choices repeat="item in $ctrl._types">
                 <span ng-bind-html="item.name"></span>
               </ui-select-choices>
             </ui-select>
             <span class="span-validation" ng-show="pForm.pTypes.$dirty && pForm.pTypes.$invalid">
-              <span ng-show="pForm.pTypes.$error.required">El nombre es requerido.</span>
+              <span ng-show="pForm.pTypes.$error.required">El tipo es requerido.</span>
             </span>
           </div>
-          <div class="form-group col-md-6" ng-show="$ctrl._data.promotiontype.promotiontypeId == 2 && $ctrl._data.types.id == 1">
+          <div class="form-group col-md-6" ng-show="$ctrl._data.promotiontype.promotiontypeId == 2 && $ctrl._data.types.id == 1" ng-class="{ 'has-error': pForm.pAmount.$dirty && pForm.pAmount.$invalid }">
             <label for="pAmount">Cantidad</label>
-            <span>$</span><input type="number" class="form-control" id="pAmount" name="pAmount" placeholder="Cantidad de promoción" ng-model="$ctrl._data.amount">
+            <span>$</span><input type="number" class="form-control" ng-min="0" id="pAmount" name="pAmount" placeholder="Cantidad de promoción" ng-model="$ctrl._data.amount" ng-required="$ctrl._data.promotiontype.promotiontypeId == 2 && $ctrl._data.types.id == 1">
             <span class="span-validation" ng-show="pForm.pAmount.$dirty && pForm.pAmount.$invalid">
               <span ng-show="pForm.pAmount.$error.required">El nombre es requerido.</span>
+              <span ng-show="pForm.pAmount.$error.min">El minimo es de 0.</span>
             </span>
           </div>
-          <div class="form-group col-md-6" ng-show="$ctrl._data.promotiontype.promotiontypeId == 2 && $ctrl._data.types.id == 2">
+          <div class="form-group col-md-6" ng-show="$ctrl._data.promotiontype.promotiontypeId == 2 && $ctrl._data.types.id == 2" ng-class="{ 'has-error': pForm.pPercentage.$dirty && pForm.pPercentage.$invalid }">
             <label for="pPercentage">Porcentaje</label>
-            <span>%</span><input type="text" class="form-control" step="1" min="0" max=100 id="pPercentage" name="pPercentage" placeholder="Porcentaje de promoción" ng-model="$ctrl._data.percentage" maxlength="200" required autofocus>
+            <span>%</span><input type="number" class="form-control" ng-step="1" ng-min="0" ng-max="100" id="pPercentage" name="pPercentage" placeholder="Porcentaje de promoción" ng-model="$ctrl._data.percentage" ng-required="$ctrl._data.promotiontype.promotiontypeId == 2 && $ctrl._data.types.id == 2">
             <span class="span-validation" ng-show="pForm.pPercentage.$dirty && pForm.pPercentage.$invalid">
               <span ng-show="pForm.pPercentage.$error.required">El porcentaje es requerido.</span>
+              <span ng-show="pForm.pPercentage.$error.max">El maximo es de 100.</span>
+              <span ng-show="pForm.pPercentage.$error.min">El minimo es de 0.</span>
             </span>
           </div>
         </div>
-        
+
       </div>
     </div>
   </div>

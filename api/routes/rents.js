@@ -34,7 +34,7 @@ switch(q) {
                       INNER JOIN client c ON r.clientId = c.clientId
                       INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
                       INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
-                      LEFT JOIN rentfile rf ON r.rentId = rf.rentId AND rf.enable = 1 
+                      LEFT JOIN rentfile rf ON r.rentId = rf.rentId AND rf.enable = 1
                     WHERE r.enable = 1 ${activeCondition}
                     ORDER BY r.startDate DESC, r.rentId DESC`, function(err, rows) {
     if(err) throw err;
@@ -74,10 +74,10 @@ function getByClientId (id, done) {
 }
 
 function getPromotionsById (id, done) {
-  db.get().query(`SELECT r.*, p.promotionId, p.name, p.description
+  db.get().query(`SELECT r.*, p.promotionId, p.name, p.description, p.amount, p.percentage
                     FROM rent r
-                      INNER JOIN rentpromotion rp ON r.rentId = rp.rentId AND rp.applied = 0
-                      INNER JOIN promotion p ON p.promotionId = rp.promotionId
+                      INNER JOIN rentpromotion rp ON r.rentId = rp.rentId AND rp.applied = 0 AND rp.enable = 1
+                      INNER JOIN promotion p ON p.promotionId = rp.promotionId AND p.enable = 1
                     WHERE rp.enable = 1 AND r.enable = 1 AND r.rentId = ?`, id, function(err, row) {
     if(err) throw err;
     done(row);
@@ -224,7 +224,6 @@ app.get('/api/rents/:id/promotions', function(req, res) {
 });
 
 app.post('/api/rents', function(req, res) {
-  console.log('call!')
   insert(req.body, function(result) {
     res.status(200).send(result);
   });
