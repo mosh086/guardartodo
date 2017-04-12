@@ -17,28 +17,23 @@
       <li ng-if="$ctrl._payments.length === 0">
         <h4>No existen pagos</h4>
       </li>
-      <li ng-repeat="p in $ctrl._payments track by $index">
+      <li ng-repeat="(key, p) in $ctrl._payments | groupBy: '-paymentId'">
         <div class="well row">
           <div class="col-md-1">
           </div>
           <div class="col-md-4">
-            <!--<h3>{{p.folio}}</h3> -->
-            <h3>{{p.paymentId}} - {{p.folio}}</h3>
-            <p>{{p.name}} - {{p.number}}</p>
+            <h3>{{p[0]['paymentId']}} - {{p[0]['name']}}</h3>
+            <p>{{p[0]['methodOfPayment']}}</p>
           </div>
           <div class="col-md-5">
-            <h4>{{p.month}}</h4>
-            <p>{{p.methodOfPayment}}</p>
-          </div>
-          <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(p.promotionId)">
-            <span class="glyphicon glyphicon-pencil" ></span>
-            <span class="glyphicon-label">Cambiar</span>
+            <div ng-repeat="pay in p">
+              <h4>[{{pay.number}}] - {{pay.month}}</h4>
+              <span><i>{{pay.folio}}</i></span>
+            </div>
           </div>
           <div class="col-md-1 buttons">
-            <a ng-confirm-message="¿Estás seguro de querer eliminar la promoción {{p.name}}?" ng-confirm="$ctrl.remove(p.promotionId)">
-              <span class="glyphicon glyphicon-trash" ></span>
-              <span class="glyphicon-label">Borrar</span>
-            </a>
+          </div>
+          <div class="col-md-1 buttons">
           </div>
         </div>
       </li>

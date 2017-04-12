@@ -19,6 +19,7 @@ import 'angular-messages';
 import 'angular-animate';
 import 'angular-touch';
 import 'angular-sanitize';
+import 'angular-filter';
 import moment from 'moment';
 //import ngFileUpload from 'ng-file-upload';
 import 'angular-file-upload';
@@ -36,6 +37,7 @@ const requires = [
   'ngTouch',
   'ngMessages',
   'ngAnimate',
+  'angular.filter',
   'ngSanitize',
   toastr,
   uiRouter,

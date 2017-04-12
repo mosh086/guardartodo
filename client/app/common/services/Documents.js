@@ -240,7 +240,7 @@ class makePaymentDefinition {
                   widths: [ '*' ],
                   body: [
                     [{ style:'headerB', text: 'FOLIO' }],
-                    [{ style:'header', text: `${_.map(data.payments, function(a) { return a.rent.folio; }).join(',/n')}` }],
+                    [{ style:'header', text: `${_.map(data.payments, function(a) { return a.rent.folio; }).join(',\n')}` }],
                     [{ style:'headerB', text: 'FECHA DE PAGO' }],
                     [{ style:'header', text: `${moment(data.transaction).format('LL')}` }]
                   ]
@@ -294,7 +294,7 @@ class makePaymentDefinition {
               style: 'table',
               table:{
                 widths: [ '*' ],
-                body: [[ { style:'infoB', text: `${_.map(data.payments, function(a) { return a.rent.number; }).join(',')}` } ]]
+                body: [[ { style:'infoB', text: `${_.map(data.payments, function(a) { return '[' + a.rent.number + '] - ' + a.date.date; }).join(', ')}` } ]]
               }, layout: {
                   hLineColor: function (i, node) {
                     return (i === 1 ) ? 'black' : 'white';

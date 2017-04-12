@@ -52,7 +52,7 @@
           </div>
           <div class="col-md-5">
             <div class="col-md-4 buttoninfo payments">
-              <a ng-payment ng-payment-id="{{rent.rentId}}" ng-client-id="{{rent.clientId}}" ng-hide="!rent.active || rent.pendings == 0">
+              <a ng-payment ng-payment-id="{{rent.rentId}}" ng-client-id="{{rent.clientId}}" ng-refresh="$ctrl.searchRents()" ng-hide="!rent.active || rent.pendings == 0">
                 <span><i class="fa fa-money" aria-hidden="true"></i> {{rent.pendings}}</span>
                 <span class="glyphicon-label"></span>
               </a>

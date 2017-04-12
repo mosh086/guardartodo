@@ -70,7 +70,7 @@
             <tr>
               <td colspan="3"></td>
               <td><b>Total:</b></td>
-              <td><b>{{$ctrl._data.payments | paymentTotal: 'total' | currency:'$':2}}</b></td>
+              <td><b>{{$ctrl._data.payments | paymentTotal: 'total' : 'discount' | currency:'$':2}}</b></td>
             </tr>
           </tfoot>
           <tbody>
@@ -79,7 +79,7 @@
               <td>{{pay.rent.number}}</td>
               <td>{{pay.promotion.name}}</td>
               <td>{{pay.date.description}}</td>
-              <td>{{pay.rent.total | currency:'$':2}}</td>
+              <td>{{pay.rent.total - pay.rent.discount | currency:'$':2}}</td>
             </tr>
           </tbody>
         </table>
@@ -100,13 +100,13 @@
           </ui-select-choices>
         </ui-select>
       </div>
-      <div class="form-group col-md-3" ng-class="{ 'has-error': pForm2.pAmount.$dirty && pForm2.pAmount.$invalid }">
+      <!--<div class="form-group col-md-3" ng-class="{ 'has-error': pForm2.pAmount.$dirty && pForm2.pAmount.$invalid }">
         <label for="pAmount">Monto *</label>
         <input type="number" step ="0.01" class="form-control" id="pAmount" name="pAmount" placeholder="Monto" ng-model="$ctrl._data.amount" required>
         <span class="span-validation" ng-show="pForm2.pAmount.$dirty && pForm2.pAmount.$invalid">
           <span ng-show="pForm2.pAmount.$error.required">El monto es requerido.</span>
         </span>
-      </div>
+      </div>-->
       <div class="form-group col-md-6">
         <label for="pInformation">Comentarios extra</label>
         <input type="text" class="form-control" id="pInformation" placeholder="Informacion" ng-model="$ctrl._data.comments">
