@@ -1,7 +1,7 @@
 import lodash from 'lodash';
 
 class ModalPaymentCtrl {
-  constructor($uibModalInstance, rent, client, clients, toastr, $q, $scope, PaymentService, RentService, MethodOfPayment, Documents) {
+  constructor($uibModalInstance, rent, client, clients, toastr, $q, $scope, $filter, PaymentService, RentService, MethodOfPayment, Documents) {
     'ngInject';
 
     this._uibModalInstance = $uibModalInstance;
@@ -11,6 +11,7 @@ class ModalPaymentCtrl {
     this._toastr = toastr;
     this._$q = $q;
     this._scope = $scope;
+    this._filter = $filter;
 
     this._clients = clients;
     this._rents = null;
@@ -199,6 +200,7 @@ class ModalPaymentCtrl {
     self._data.transaction = new Date();
     this._PaymentService.save(self._data)
       .then((res) => {
+        self._data.amount = self._filter('paymentTotal')(self._data.payments,'total','discount')
         this._Documents.openPayment(self._data);
         this._uibModalInstance.close('cancel');
       }, (err) => {
