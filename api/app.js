@@ -18,6 +18,7 @@ var promotions = require('./routes/promotions');
 var promotiontypes = require('./routes/promotiontypes');
 var payments = require('./routes/payments');
 var upload = require('./routes/upload');
+var dashboard = require('./routes/dashboard');
 
 var app = express();
 
@@ -46,6 +47,7 @@ app.use(promotions);
 app.use(promotiontypes);
 app.use(payments);
 app.use(upload);
+app.use(dashboard);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
