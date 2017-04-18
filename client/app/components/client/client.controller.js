@@ -108,7 +108,7 @@ class ClientController {
   credential(id) {
     let self = this,
       data;
-    self._Documents.openCredential(data);
+    self._Documents.openCredential(id);
   }
 }
 

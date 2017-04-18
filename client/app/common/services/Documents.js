@@ -2,12 +2,14 @@ import moment from 'moment';
 import _ from 'lodash';
 
 class Documents {
-  constructor(Company, UserService, $filter) {
+  constructor(Company, UserService, ClientService, RentService, $filter) {
     'ngInject';
 
     this._docDefinition = null;
     this._Company = Company;
     this._User = UserService;
+    this._Client = ClientService;
+    this._Rent = RentService;
     this._filter = $filter;
   }
 
@@ -37,11 +39,15 @@ class Documents {
 
   openCredential(data) {
     let self = this;
-    this._docDefinition = new makeCredentialDefinition(self._filter, data, self._Company).getObject();
-    pdfMake.createPdf(this._docDefinition).open();
-
+    self._Client.get(data).then((client)=> {
+      self._Client.getValidity(client.clientId).then((date) => {
+        self._Rent.getByClientId(client.clientId).then((rent) => {
+          self._docDefinition = new makeCredentialDefinition(self._filter, data, self._Company, client, _.sortBy(rent, 'number'), date).getObject();
+          pdfMake.createPdf(this._docDefinition).open();
+        }, (err) => {})
+      }, (err) => {})
+    }, (err)=> {})
   }
-
 }
 
 class makeContractDefinition {
@@ -211,7 +217,8 @@ class makeContractDefinition {
 }
 
 class makeCredentialDefinition {
-  constructor($filter, data, company) {
+  constructor($filter, data, company, client, rent, date) {
+    moment.locale('es');
     this.doc = {
       pageSize: 'A6',
       pageOrientation: 'landscape',
@@ -231,9 +238,11 @@ class makeCredentialDefinition {
                 body : [[
                   {text:'',border: [false, false, false, false]},{text:'',border: [false, false, false, false]},{colSpan:2, image : logo, width: 40, alignment: 'center', border: [false, false, false, false]},{}
                 ],[
-                  {text:'Bodega:', style: 'normaltext', border: [false, false, false, false]},{colSpan: 3, style: 'middletext', text:'12345', border: [false, false, false, true]},{},{}
+                  {text:'Bodega:', style: 'normaltext', border: [false, false, false, false]},{colSpan: 3, style: 'middletext', text:`${_.map(rent, function(a) { return a.number; }).join(', ')}`, border: [false, false, false, true]},{},{}
                 ],[
-                  {text:'Titular:', style: 'normaltext' , border: [false, false, false, false]},{colSpan: 3, style: 'middletext', text:'1234567890', border: [false, false, false, true]},{},{}
+                  {colSpan:4, text:'', border: [false, false, false, false]},{},{},{}
+                ],[
+                  {text:'Titular:', style: 'normaltext' , border: [false, false, false, false]},{colSpan: 3, style: 'middletext', text:`${client.name}`, border: [false, false, false, true]},{},{}
                 ],[
                   {colSpan:4, text:'', border: [false, false, false, false]},{},{},{}
                 ],[
@@ -276,8 +285,8 @@ class makeCredentialDefinition {
         table: {
           widths: ['*', '*' ],
           body: [[
-              {text: '', margin: [0, 15, 0, 0], fillColor: '#cc1c1c'},
-              { text:'', margin: [0, 15, 0, 0], fillColor: '#1b53cc'}
+              {text:`Vigente hasta ${moment(date.date).format('L')}`, style: 'middletextWhite', fillColor: '#cc1c1c'},
+              {text:'Tarjeta para acceso a bodega', style: 'middletextWhite', fillColor: '#1b53cc'}
             ]]
           }
       }],
@@ -289,6 +298,12 @@ class makeCredentialDefinition {
           fontSize: 6,
           bond: true,
           alignment: 'center'
+        },
+        middletextWhite: {
+          fontSize: 8,
+          bond: true,
+          alignment: 'center',
+          color:'#fff'
         }
       }
     }

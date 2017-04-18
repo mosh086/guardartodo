@@ -66,7 +66,7 @@ function getByClientId (id, done) {
                       INNER JOIN client c ON r.clientId = c.clientId
                       INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
                       INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
-                    WHERE r.enable = 1 AND r.active=1 AND c.clientId = ?
+                    WHERE r.enable = 1 AND r.active = 1 AND c.clientId = ?
                     ORDER BY r.startDate DESC, r.rentId DESC`, id, function(err, row) {
     if(err) throw err;
     done(row);
