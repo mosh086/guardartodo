@@ -26,12 +26,15 @@
               <p>{{c.address}}</p>
 
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <p>Email: {{c.email}}</p>
               <p>Celular: {{c.cellPhone}}</p>
               <p>Telefono: {{c.phone}}</p>
             </div>
-
+            <div class="col-md-1 buttons" ng-click="$ctrl.credential(c.clientId)">
+              <i class="fa fa-id-card" aria-hidden="true"></i>
+              <span class="glyphicon-label">Credencial</span>
+            </div>
             <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(c.clientId)">
               <span class="glyphicon glyphicon-pencil" ></span>
               <span class="glyphicon-label">Cambiar</span>

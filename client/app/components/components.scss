@@ -19,6 +19,7 @@
                 border: 1px solid #d0d0d0;
                 margin-right: 0px;
                 margin-left: 0px;
+                text-align: center;
                 .buttons, .buttons a {
                     color: rgba(204, 204, 204, 0.7);
                     padding-top: 25px;
@@ -32,6 +33,10 @@
                     .glyphicon {
                         font-size: 20px;
                         vertical-align: middle;
+                    }
+                    i.fa {
+                        font-size: 20px;
+
                     }
                     span {
                         display: block;

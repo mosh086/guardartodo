@@ -2,12 +2,13 @@ import modalTemplate from './client.modal.html'
 import modalInstanceCtrl from './client.modal.controller'
 
 class ClientController {
-  constructor($uibModal, $scope, $filter, toastr, ClientService) {
+  constructor($uibModal, $scope, $filter, toastr, ClientService, Documents) {
     "ngInject";
 
     this._uibModal = $uibModal;
     this._toastr = toastr;
     this._Client = ClientService;
+    this._Documents = Documents;
 
     this._clients = [];
     this._clientsTemp = [];
@@ -102,6 +103,12 @@ class ClientController {
           self._toastr.error(`Error ${err.message}`);
         }
       );
+  }
+
+  credential(id) {
+    let self = this,
+      data;
+    self._Documents.openCredential(data);
   }
 }
 

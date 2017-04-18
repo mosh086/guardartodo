@@ -1,7 +1,8 @@
 import lodash from 'lodash';
 
 class ModalPaymentCtrl {
-  constructor($uibModalInstance, rent, client, clients, toastr, $q, $scope, $filter, PaymentService, RentService, MethodOfPayment, Documents) {
+  constructor($uibModalInstance, rent, client, clients, toastr, $q, $scope, $filter,
+    PaymentService, RentService, MethodOfPayment, Documents) {
     'ngInject';
 
     this._uibModalInstance = $uibModalInstance;

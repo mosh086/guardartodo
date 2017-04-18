@@ -35,6 +35,13 @@ class Documents {
     pdfMake.createPdf(this._docDefinition).open();
   }
 
+  openCredential(data) {
+    let self = this;
+    this._docDefinition = new makeCredentialDefinition(self._filter, data, self._Company).getObject();
+    pdfMake.createPdf(this._docDefinition).open();
+
+  }
+
 }
 
 class makeContractDefinition {
@@ -204,16 +211,86 @@ class makeContractDefinition {
 }
 
 class makeCredentialDefinition {
-  constructor($filter, data) {
+  constructor($filter, data, company) {
     this.doc = {
-      pageSize: 'C1',
-
-      // by default we use portrait, you can change it to landscape if you wish
+      pageSize: 'A6',
       pageOrientation: 'landscape',
-
-      // [left, top, right, bottom] or [horizontal, vertical] or just a number for equal margins
       pageMargins: [ 40, 60, 40, 60 ],
-      content: [{}]
+      content: [{
+        style: 'table',
+        table: {
+          widths: ['*', '*', '*', '*' ],
+          body: [
+            [{
+              colSpan: 2,
+              border: [true, true, true, false],
+              margin: [0, 0, 0, 8],
+              style: 'table',
+              table: {
+                widths : ['*', '*', '*', '*'],
+                body : [[
+                  {text:'',border: [false, false, false, false]},{text:'',border: [false, false, false, false]},{colSpan:2, image : logo, width: 40, alignment: 'center', border: [false, false, false, false]},{}
+                ],[
+                  {text:'Bodega:', style: 'normaltext', border: [false, false, false, false]},{colSpan: 3, style: 'middletext', text:'12345', border: [false, false, false, true]},{},{}
+                ],[
+                  {text:'Titular:', style: 'normaltext' , border: [false, false, false, false]},{colSpan: 3, style: 'middletext', text:'1234567890', border: [false, false, false, true]},{},{}
+                ],[
+                  {colSpan:4, text:'', border: [false, false, false, false]},{},{},{}
+                ],[
+                  {text:'Sucursal:', style: 'normaltext', border: [false, false, false, false]},{colSpan: 3, style: 'middletext', text:'Barragan', border: [false, false, false, true]},{},{}
+                ]]
+              }
+            },{},{
+              style: 'table',
+              border: [true, true, true, false],
+              margin: [0, 15, 0, 0],
+              table: {
+                widths : ['*', '*'],
+                body : [[
+                  {colSpan: 2, text:'Horario de oficina', style: 'middletext', border: [false, false, false, false]},{}
+                ],[
+                  {colSpan: 2, text:'Lunes a Viernes de 10:00 - 17:00 hrs', style: 'middletext', border: [false, false, false, false]},{}
+                ],[
+                  {colSpan: 2, text:'Sabado 9:00 - 13:00 hrs', style: 'middletext', border: [false, false, false, false]},{}
+                ]]
+              }
+            },{
+              style: 'table',
+              margin: [0, 15, 0, 0],
+              border: [true, true, true, false],
+              table: {
+                widths : ['*'],
+                body : [[
+                  {text:`${company.address}`, style: 'middletext', border: [false, false, false, false]}
+                ], [
+                  {text:'Telefono: 25560582', style: 'middletext', border: [false, false, false, false]}
+                ], [
+                  {text:'Whatsapp: 8123712694', style: 'middletext', border: [false, false, false, false]}
+                ]]
+              }
+            }]
+          ]
+        }
+      }, {
+        style: 'table',
+        table: {
+          widths: ['*', '*' ],
+          body: [[
+              {text: '', margin: [0, 15, 0, 0], fillColor: '#cc1c1c'},
+              { text:'', margin: [0, 15, 0, 0], fillColor: '#1b53cc'}
+            ]]
+          }
+      }],
+      styles: {
+        normaltext: {
+          fontSize: 6
+        },
+        middletext: {
+          fontSize: 6,
+          bond: true,
+          alignment: 'center'
+        }
+      }
     }
   }
 
