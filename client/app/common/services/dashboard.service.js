@@ -60,6 +60,32 @@ class Dashboard {
     return deferred.promise;
   }
 
+  getNewClients() {
+    let deferred = this._$q.defer();
+    this._$http({
+      url: this._AppConstants.api + '/dashboard/newclients',
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
+  getStoragelokerAvailable() {
+    let deferred = this._$q.defer();
+    this._$http({
+      url: this._AppConstants.api + '/dashboard/available',
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
 }
 
 export default Dashboard;

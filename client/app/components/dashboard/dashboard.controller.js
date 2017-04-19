@@ -6,73 +6,14 @@ class DashboardController {
   constructor(DashboardService) {
     'ngInject';
 
-
     let myChart;
+    let myChart2;
+    let myDoughnutChart;
     this._Dashboard = DashboardService;
 
     this.getChartRented();
-
-    let ctx2 = $("#myChart2");
-    let myChart2 = new Chart(ctx2, {
-      type: 'line',
-      data: {
-          labels: ["Enero", "Febrero", "Marzo", "Mayo", "Abril", "Junio"],
-          datasets: [
-            {
-                label: "Nuevos clientes",
-                fill: false,
-                lineTension: 0.1,
-                backgroundColor: "rgba(75,192,192,0.4)",
-                borderColor: "rgba(75,192,192,1)",
-                borderCapStyle: 'butt',
-                borderDash: [],
-                borderDashOffset: 0.0,
-                borderJoinStyle: 'miter',
-                pointBorderColor: "rgba(75,192,192,1)",
-                pointBackgroundColor: "#fff",
-                pointBorderWidth: 1,
-                pointHoverRadius: 5,
-                pointHoverBackgroundColor: "rgba(75,192,192,1)",
-                pointHoverBorderColor: "rgba(220,220,220,1)",
-                pointHoverBorderWidth: 2,
-                pointRadius: 1,
-                pointHitRadius: 10,
-                data: [3, 6, 1, 2, 4, 0, 2],
-                spanGaps: false
-          }]
-      },
-      options: {}
-    })
-
-    let ctx3 = $("#myChart3");
-    let myDoughnutChart = new Chart(ctx3, {
-        type: 'doughnut',
-        animation:{
-            animateScale:true
-        },
-        data: {
-            labels: [
-                "Bodega no pagada",
-                "Bodega pagada",
-                "Bodega libre"
-            ],
-            datasets: [
-                {
-                    data: [300, 50, 100],
-                    backgroundColor: [
-                        "#FF6384",
-                        "#36A2EB",
-                        "#FFCE56"
-                    ],
-                    hoverBackgroundColor: [
-                        "#FF6384",
-                        "#36A2EB",
-                        "#FFCE56"
-                    ]
-                }]
-        },
-        options: {}
-    });
+    this.getNewClientChart();
+    this.getInRent();
 
   }
 
@@ -90,8 +31,6 @@ class DashboardController {
 
 
   getChartRented() {
-
-
     this._Dashboard
     .getRented()
     .then(
@@ -137,6 +76,86 @@ class DashboardController {
       (err) => {
       });
   }
+
+  getNewClientChart() {
+   this._Dashboard
+    .getNewClients()
+    .then(
+      (data) => {
+        moment.locale('es');
+        let d = _.forEach(data, function(value) {
+            value.month = moment(value.date).format('MMMM').toUpperCaseFirstChar()
+          });
+        this.myChart2 = new Chart($("#myChart2"), {
+          type: 'line',
+          data: {
+              labels: _.map(d,'month'),
+              datasets: [
+                {
+                    label: "Nuevos clientes",
+                    fill: false,
+                    lineTension: 0.1,
+                    backgroundColor: "rgba(75,192,192,0.4)",
+                    borderColor: "rgba(75,192,192,1)",
+                    borderCapStyle: 'butt',
+                    borderDash: [],
+                    borderDashOffset: 0.0,
+                    borderJoinStyle: 'miter',
+                    pointBorderColor: "rgba(75,192,192,1)",
+                    pointBackgroundColor: "#fff",
+                    pointBorderWidth: 1,
+                    pointHoverRadius: 5,
+                    pointHoverBackgroundColor: "rgba(75,192,192,1)",
+                    pointHoverBorderColor: "rgba(220,220,220,1)",
+                    pointHoverBorderWidth: 2,
+                    pointRadius: 1,
+                    pointHitRadius: 10,
+                    data: _.map(d,'count'),
+                    spanGaps: false
+              }]
+          },
+          options: {}
+        })
+      }, (err) => {})
+  }
+
+  getInRent() {
+    this._Dashboard
+    .getStoragelokerAvailable()
+    .then(
+      (data) => {
+            this.myDoughnutChart = new Chart($("#myChart3"), {
+              type: 'doughnut',
+              animation:{
+                  animateScale:true
+              },
+              data: {
+                  labels: [
+                      "Bodega libre",
+                      "Bodega en renta"
+                  ],
+                  datasets: [
+                      {
+                          data: [data.available, data.unavailable],
+                          backgroundColor: [
+                              "#FF6384",
+                              "#36A2EB"
+                          ],
+                          hoverBackgroundColor: [
+                              "#FF6384",
+                              "#36A2EB"
+                          ]
+                      }]
+              },
+              options: {}
+          });
+
+      } , (err) => {
+
+      })
+
+  }
+
 }
 
 String.prototype.toUpperCaseFirstChar = function() {
