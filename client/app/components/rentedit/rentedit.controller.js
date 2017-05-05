@@ -126,7 +126,9 @@ class RenteditController {
       .then((res) => {
           self._storagelokertype = res;
           self._data.storagelokertype = res;
-          self._data.total = self._storagelokertype.price;
+          self._data.cost = self._storagelokertype.price;
+          self._data.iva = self._storagelokertype.price * 0.16;
+          self._data.total = self._data.cost + self._data.iva;
         }, (err) => {
           console.log('error: ' + err);
           self._toastr.error(`Error ${err.message}`);

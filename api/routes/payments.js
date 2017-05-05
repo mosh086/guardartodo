@@ -84,10 +84,8 @@ app.get('/api/payments/:id', function(req, res) {
 
 app.post('/api/payments', function(req, res) {
   var body;
-  console.log('payments')
   if (_.isArray(req.body.payments)) {
     getLastId(function(lastId) {
-      console.log(lastId)
       _.forEach(req.body.payments, function(value) {
         body = {
           paymentId : lastId.paymentId,

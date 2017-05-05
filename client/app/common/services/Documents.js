@@ -70,14 +70,14 @@ class makeContractDefinition {
       }, {
         table: {
           headerRows: 1,
-          widths: [ '*', '*' ],
+          widths: [ '60%', '40%' ],
           body: [
             [{ colSpan: 2, style:'header', text: 'INFORMACION DEL CLIENTE'}, {}],
             [{ colSpan: 2, style: 'title', text: ['A) NOMBRE O RAZON SOCIAL:   ', { style: 'info', text: `${data.client.name}` }]}, {}],
             [{ colSpan: 2, style: 'title', text: ['B) REPRESENTANTE LEGAL:   ', { style: 'info', text: `${data.client.legalRepresentative}` }]}, {}],
             [
               { style: 'title', text: ['C) R.F.C.:   ', { style: 'info', text: `${data.client.rfc}` } ]},
-              { rowSpan: 3, style: 'title', text: ['E) DOMICILIO FISCAL:   ', {  style: 'info', text: `${data.client.address}` }] }
+              { rowSpan: 3, style: 'title', text: ['E) DOMICILIO FISCAL:\n', {  style: 'info', alignment: 'center', text: `${data.client.address}` }] }
             ],
             [{ style: 'title', text: ['D) GIRO:   ', { style: 'info', text: `${data.client.kindOfBusiness}` } ] } ],
             [{ style: 'title', text: ['TELEFONO:   ', { style: 'info', text: `${data.client.phone}` } ] }, {}],
@@ -92,12 +92,12 @@ class makeContractDefinition {
         pageBreak: 'after',
         table: {
           headerRows: 1,
-          widths: [ '*', '*', '*', '*' ],
+          widths: [ '30%', '30%', '20%', '20%' ],
           body: [
             [{ colSpan: 4, style:'header', text: 'DATOS DE CONTRATACION' }, {}, {}, {}],
             [
-              { colSpan: 2, style: 'title', text: ['F) EMPRESA:   ', { style: 'info', text : `${company.name}`}] }, {},
-              { colSpan: 2, style: 'title', text: ['G) DIRECCION:   ', { style: 'info', text : `${company.address}`}] }, {}
+              { colSpan: 2, style: 'title', text: ['F) EMPRESA:\n', { style: 'info', alignment: 'center', text : `${company.name}`}] }, {},
+              { colSpan: 2, style: 'title', text: ['G) DIRECCION:\n', { style: 'info', alignment: 'center', text : `${company.address}`}] }, {}
             ],
             [
               { colSpan: 2, style: 'title', text: ['H) FECHA:\n', {style: 'info', alignment: 'center',  text: `${moment().format('LL')}`} ] }, {},
@@ -107,7 +107,7 @@ class makeContractDefinition {
             [{ colSpan: 2, text: ''}, {}, {text: 'PRECIO', style: 'title', alignment: 'center' }, {text: 'PRECIO CON I.V.A.', style: 'title', alignment: 'center' }],
             [{ colSpan: 2, style: 'title', text: ['J) BODEGA DE TAMAÑO:   ', {style: 'info', alignment: 'center', text: `${data.storagelokertype.name}  ${data.storageloker.number}` }] }, {}, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.cost, '$', 2)}` }, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.total, '$', 2)}` }],
             [{ colSpan: 2, style: 'title', text: 'L) SERVICIOS ADICIONALES:   ' }, {}, {margin: [20, 0], alignment: 'right', colSpan: 2, text: `${$filter('currency')(data.extra, '$', 2)}` }, {}],
-            [{ colSpan: 2, style: 'title', alignment: 'center', margin: [20, 0], text: 'TOTAL', style: '' }, {}, { text: '' }, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.total, '$', 2)}` }],
+            [{ colSpan: 2, style: 'title', alignment: 'center', margin: [20, 0], text: 'TOTAL' }, {}, { text: '' }, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.total, '$', 2)}` }],
             [{ colSpan: 4, style: 'title', text: `M) SERVICIO MENSUAL TOTAL:   ${$filter('currency')(data.total, '$', 2)}` }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['N) DEPOSITO:   ', {style: 'info2',text: '$0.00 (00/100 M. N.)'} ]}, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['O) USUARIOS AUTORIZADOS:   ', {style: 'info2', text: `${_.map(authorization, function(a) { return a.fullName; }).join(', ')}`}]}, {}, {}, {}],
@@ -169,22 +169,23 @@ class makeContractDefinition {
         header: {
           alignment: 'center',
           fillColor: 'black',
-          color: 'white'
+          color: 'white',
+          fontSize:10
         },
         right: {
           fontSize: 18,
           alignment: 'right'
         },
         title: {
-          fontSize: 10
+          fontSize: 9
         },
         info: {
           bold: true,
-          fontSize: 13
+          fontSize: 9
         },
         info2: {
           bold: true,
-          fontSize: 11
+          fontSize: 8
         },
         table: {
           margin: [0, 20, 0, 20]
@@ -430,7 +431,7 @@ class makePaymentDefinition {
               style: 'table',
               table:{
                 widths: [ '*' ],
-                body: [[ { style:'infoB', text: `${data.comments}` } ]]
+                body: [[ { style:'infoB', text: `${(data.comments)?data.comments:''}` } ]]
               }, layout: {
                   hLineColor: function (i, node) {
                     return (i === 1 ) ? 'black' : 'white';
