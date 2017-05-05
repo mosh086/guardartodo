@@ -259,9 +259,9 @@ class makeCredentialDefinition {
                 body : [[
                   {colSpan: 2, text:'Horario de oficina', style: 'middletext', border: [false, false, false, false]},{}
                 ],[
-                  {colSpan: 2, text:'Lunes a Viernes de 10:00 - 17:00 hrs', style: 'middletext', border: [false, false, false, false]},{}
+                  {colSpan: 2, text:'Lunes a Viernes de 8:30 - 16:30 hrs', style: 'middletext', border: [false, false, false, false]},{}
                 ],[
-                  {colSpan: 2, text:'Sabado 9:00 - 13:00 hrs', style: 'middletext', border: [false, false, false, false]},{}
+                  {colSpan: 2, text:'Sabado 9:00 - 15:00 hrs', style: 'middletext', border: [false, false, false, false]},{}
                 ]]
               }
             },{
