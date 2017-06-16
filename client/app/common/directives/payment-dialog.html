@@ -4,58 +4,90 @@
 
 <div class="modal-body">
   <form name="pForm" id="pForm" novalidate>
-    <div class="row">
-      <div class="form-group col-md-3" ng-class="{ 'has-error': pForm.pClient.$dirty && pForm.pClient.$invalid }">
-        <label for="pClient">Cliente *</label>
-        <ui-select ng-disabled="$ctrl._data.payments.length > 0 || $ctrl._rentSelectedDisabled" id="pClient" name="pClient" ng-model="$ctrl._data.client" title="Cliente" on-select="$ctrl.onClientSelect($ctrl._data.client.clientId)" ng-required="true">
-          <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.client.name}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._clients">
-            <span ng-bind-html="item.name"></span>
-          </ui-select-choices>
-        </ui-select>
-        <span class="span-validation" ng-show="pForm.pClient.$dirty && pForm.pClient.$invalid">
-          <span ng-show="pForm.pClient.$error.required">El cliente es requerido.</span>
-        </span>
+    <div class="row method">
+      <div class="form-group col-md-6 method-left">
+        <div class="row">
+          <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pClient.$dirty && pForm.pClient.$invalid }">
+            <label for="pClient">Cliente *</label>
+            <ui-select ng-disabled="$ctrl._data.payments.length > 0 || $ctrl._rentSelectedDisabled" id="pClient" name="pClient" ng-model="$ctrl._data.client" title="Cliente" on-select="$ctrl.onClientSelect($ctrl._data.client.clientId)" ng-required="true">
+              <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.client.name}}</ui-select-match>
+              <ui-select-choices repeat="item in $ctrl._clients">
+                <span ng-bind-html="item.name"></span>
+              </ui-select-choices>
+            </ui-select>
+            <span class="span-validation" ng-show="pForm.pClient.$dirty && pForm.pClient.$invalid">
+              <span ng-show="pForm.pClient.$error.required">El cliente es requerido.</span>
+            </span>
+          </div>
+          <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pRent.$dirty && pForm.pRent.$invalid }">
+            <label for="pRent">Renta a pagar *</label>
+            <ui-select ng-disabled="$ctrl._rentSelectedDisabled" id="pRent" name="pRent" ng-model="$ctrl._payment.rent" data-v1 title="Renta a pagar" on-select="$ctrl.onRentSelect($ctrl._payment.rent.rentId)" ng-required="true">
+              <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.rent.number}}</ui-select-match>
+              <ui-select-choices repeat="item in $ctrl._rents">
+                <span ng-bind-html="item.number"></span>
+              </ui-select-choices>
+            </ui-select>
+            <span class="span-validation" ng-show="pForm.pRent.$dirty && pForm.pRent.$invalid">
+              <span ng-show="pForm.pRent.$error.required">La renta es requerida.</span>
+            </span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pMonth.$dirty && pForm.pMonth.$invalid }">
+            <label for="pMonth">Mes a pagar *</label>
+            <ui-select id="pMonth" name="pMonth" ng-model="$ctrl._payment.date" title="Renta a pagar" ng-required="true">
+              <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.date.description}}</ui-select-match>
+              <ui-select-choices repeat="item in $ctrl._dates | filter: {valid: 1}">
+                <span ng-bind-html="item.description"></span>
+              </ui-select-choices>
+            </ui-select>
+            <span class="span-validation" ng-show="pForm.pMonth.$dirty && pForm.pMonth.$invalid">
+              <span ng-show="pForm.pMonth.$error.required">El mes a pagar es requerido.</span>
+            </span>
+          </div>
+          <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pPromotion.$dirty && pForm.pPromotion.$invalid }">
+            <label for="pPromotion">Promociones disponibles</label>
+            <ui-select id="pPromotion" name="pPromotion" ng-model="$ctrl._payment.promotion" title="Renta a pagar">
+              <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.promotion.name}}</ui-select-match>
+              <ui-select-choices repeat="item in $ctrl._promotions">
+                <span ng-bind-html="item.name"></span>
+              </ui-select-choices>
+            </ui-select>
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <p ng-show="$ctrl._payment.rent"><b>Precio de renta: </b>{{$ctrl._payment.rent.cost}}</p>
+            <p ng-show="$ctrl._payment.rent"><b>I.V.A: </b>{{$ctrl._payment.rent.iva}}</p>
+            <p ng-show="$ctrl._payment.rent"><b>Total: </b>{{$ctrl._payment.rent.total}}</p>
+          </div>
+          <div class="form-group col-md-6">
+            <label>Monto a pagar:</label><input class="form-control" id="pPaymentAmount" placeholder="Monto a pagar" />
+            <br />
+            <button class="btn btn-warning pull-right" type="button" ng-click="$ctrl.validatePayment() && pForm.$valid && $ctrl.addPayment()">Agregar pago<br />renta de bodega</button>
+          </div>
+        </div>
       </div>
-      <div class="form-group col-md-3" ng-class="{ 'has-error': pForm.pRent.$dirty && pForm.pRent.$invalid }">
-        <label for="pRent">Renta a pagar *</label>
-        <ui-select ng-disabled="$ctrl._rentSelectedDisabled" id="pRent" name="pRent" ng-model="$ctrl._payment.rent" data-v1 title="Renta a pagar" on-select="$ctrl.onRentSelect($ctrl._payment.rent.rentId)" ng-required="true">
-          <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.rent.number}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._rents">
-            <span ng-bind-html="item.number"></span>
-          </ui-select-choices>
-        </ui-select>
-        <span class="span-validation" ng-show="pForm.pRent.$dirty && pForm.pRent.$invalid">
-          <span ng-show="pForm.pRent.$error.required">La renta es requerida.</span>
-        </span>
-      </div>
-      <div class="form-group col-md-3" ng-class="{ 'has-error': pForm.pMonth.$dirty && pForm.pMonth.$invalid }">
-        <label for="pMonth">Mes a pagar *</label>
-        <ui-select id="pMonth" name="pMonth" ng-model="$ctrl._payment.date" title="Renta a pagar" ng-required="true">
-          <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.date.description}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._dates | filter: {valid: 1}">
-            <span ng-bind-html="item.description"></span>
-          </ui-select-choices>
-        </ui-select>
-        <span class="span-validation" ng-show="pForm.pMonth.$dirty && pForm.pMonth.$invalid">
-          <span ng-show="pForm.pMonth.$error.required">El mes a pagar es requerido.</span>
-        </span>
-      </div>
-      <div class="form-group col-md-3" ng-class="{ 'has-error': pForm.pPromotion.$dirty && pForm.pPromotion.$invalid }">
-        <label for="pPromotion">Promociones disponibles</label>
-        <ui-select id="pPromotion" name="pPromotion" ng-model="$ctrl._payment.promotion" title="Renta a pagar">
-          <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.promotion.name}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._promotions">
-            <span ng-bind-html="item.name"></span>
-          </ui-select-choices>
-        </ui-select>
+      <div class="form-group col-md-6 method-right">
+        <div class="row">
+          <div class="form-group col-md-12">
+            <label>Articulo / Servicio:</label><input class="form-control" id="pItemPaymentAmount" placeholder="Descripcion de articulo o servicio" />
+          </div>
+        </div>
+        <div class="row">
+          <div class="form-group col-md-6">
+            <label>Monto a pagar:</label><input class="form-control" id="pItemPaymentAmount" placeholder="Monto a pagar" />
+            <br />
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.validateItemPayment() && pForm.$valid && $ctrl.addItemPayment()">Agregar pago<br />articulo / servicio</button>
+          </div>
+        </div>
       </div>
     </div>
     <div class="row">
-      <div class="form-group col-md-9 payment-list" ng-if="$ctrl._data.payments.length == 0" ng-class="{'has-error' : $ctrl._invalidNumPayment}">
+      <div class="form-group payment-list" ng-if="$ctrl._data.payments.length == 0" ng-class="{'has-error' : $ctrl._invalidNumPayment}">
         <span class="">Agrega pagos a la lista</span>
       </div>
-      <div class="form-group col-md-10" ng-if="$ctrl._data.payments.length > 0">
+      <div class="form-group" ng-if="$ctrl._data.payments.length > 0">
         <table class="table table-sm">
           <thead>
             <tr>
@@ -83,9 +115,6 @@
             </tr>
           </tbody>
         </table>
-      </div>
-      <div class="form-group col-md-2">
-        <button class="btn btn-warning" type="button" ng-click="$ctrl.validatePayment() && pForm.$valid && $ctrl.addPayment()">Agregar pago</button>
       </div>
     </div>
   </form>

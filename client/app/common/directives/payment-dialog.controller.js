@@ -37,8 +37,8 @@ class ModalPaymentCtrl {
       promotion: null,
       date: null
     }
-    this._payment.rent = Object.assign({}, rent)
 
+    if (rent) this._payment.rent = Object.assign({}, rent);
     this._uibModalInstance.result.then(() => {},(err) => {});
   }
 

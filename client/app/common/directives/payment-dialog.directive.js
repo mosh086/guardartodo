@@ -34,7 +34,7 @@ function PaymentDialog($uibModal, RentService, ClientService) {
         });
 
       modalInstance.result
-        .then((data) => { console.log('dsfsdfsdfasdf asdgf adsvdv'); scope.ngRefresh()},
+        .then((data) => { scope.ngRefresh() },
           (err) => { }
         );
       });

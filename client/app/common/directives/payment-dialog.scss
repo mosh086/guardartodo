@@ -1,11 +1,34 @@
-.payment-list {
-    text-align: center;
-    padding: 32px;
-    font-style: italic;
-    margin: 0px 20px 20px 20px;
-    &.has-error {
-        color: darkred;
-        border: 1px solid darkred;
-        border-radius: 10px;
+.payment-window {
+    .payment-list {
+        text-align: center;
+        padding: 32px;
+        font-style: italic;
+        margin: 0px 20px 20px 20px;
+        &.has-error {
+            color: darkred;
+            border: 1px solid darkred;
+            border-radius: 10px;
+        }
+    }
+
+    @media (min-width: 1200px){
+        .modal-lg {
+            width: 1108px;
+        }
+    }
+    @media (min-width: 1400px){
+        .modal-lg {
+            width: 1308px;
+        }
+    }
+
+    .method {
+        border-bottom: 1px solid #e5e5e5;
+    }
+    .method-left {
+        border-right: 1px solid #e5e5e5;
+    }
+    .method-right {
+        border-left: 1px solid #e5e5e5;
     }
 }
