@@ -35,7 +35,14 @@ class ModalPaymentCtrl {
     this._payment = {
       rent: null,
       promotion: null,
-      date: null
+      date: null,
+      payment: null,
+      description: null
+    }
+
+    this._paymentItem = {
+      payment: null,
+      description: null
     }
 
     if (rent) this._payment.rent = Object.assign({}, rent);
@@ -113,13 +120,15 @@ class ModalPaymentCtrl {
 
   addPayment() {
     let self = this;
+    console.log('asdasd - 234235234')
     self.isValid().then(
       (res) => {
+        console.log('pass');
         self._data.payments.push(self._payment);
         if (self._payment.promotion) {
           if (self._payment.promotion.amount && self._payment.promotion.amount > 0) {
             _.each(self._data.payments, function(item, idx){
-              if(item.rent.rentId == self._payment.rent.rentId && item.date.date == self._payment.date.date){
+              if(item.rent && item.rent.rentId == self._payment.rent.rentId && item.date.date == self._payment.date.date){
                 self._data.payments[idx].rent.discount = self._payment.promotion.amount;
                 //self._data.payments[idx].rent.total = self._payment.rent.total - self._payment.promotion.amount;
                 return false;
@@ -127,7 +136,7 @@ class ModalPaymentCtrl {
             });
           } else if (self._payment.promotion.percentage && self._payment.promotion.percentage > 0) {
             _.each(self._data.payments, function(item, idx){
-              if(item.rent.rentId == self._payment.rent.rentId && item.date.date == self._payment.date.date){
+              if(item.rent && item.rent.rentId == self._payment.rent.rentId && item.date.date == self._payment.date.date){
                 self._data.payments[idx].rent.discount = (self._payment.promotion.percentage / 100 ) * self._payment.rent.total;
                 //self._data.payments[idx].rent.total = self._payment.rent.total - (self._payment.promotion.percentage / 100 ) * self._payment.rent.total;
                 return false;
@@ -149,6 +158,11 @@ class ModalPaymentCtrl {
         }
       });
       //self._rents = self._rents.filter(item => item.rentId !== self._payment.rent.rentId);
+  }
+
+  addItemPayment() {
+    let self = this;
+    self._data.payments.push(self._paymentItem);
   }
 
   clean() {
@@ -175,20 +189,22 @@ class ModalPaymentCtrl {
   }
 
   isValid() {
+    console.log('234235234')
     let self = this,
         deferred = this._$q.defer();
     _.forEach(self._data.payments, function(value) {
-      if (self._payment.rent.rentId == value.rent.rentId &&
+      if (self._payment.rent && value.rent && self._payment.rent.rentId == value.rent.rentId &&
           self._payment.date.id == value.date.id) {
         deferred.reject(1);
       }
-      if (self._payment.rent.rentId == value.rent.rentId &&
+      if (self._payment.rent && value.rent && self._payment.rent.rentId == value.rent.rentId &&
           self._payment.promotion != null && value.promotion != null &&
           self._payment.promotion.promotionId == value.promotion.promotionId) {
         deferred.reject(2);
       }
     });
     deferred.resolve(0);
+
     return deferred.promise;
   }
 
@@ -212,6 +228,14 @@ class ModalPaymentCtrl {
 
   validatePayment() {
     angular.forEach(this._scope.pForm, function(value, key) {
+      if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
+        value.$setDirty();
+    });
+    return true;
+  }
+
+  validateItemPayment() {
+    angular.forEach(this._scope.eForm, function(value, key) {
       if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
         value.$setDirty();
     });

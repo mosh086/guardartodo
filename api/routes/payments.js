@@ -89,12 +89,12 @@ app.post('/api/payments', function(req, res) {
       _.forEach(req.body.payments, function(value) {
         body = {
           paymentId : lastId.paymentId,
-          rentId : value.rent.rentId,
-          promotionId: (value.promotion)?value.promotion.rentpromotionId:null,
-          date : value.date.date,
+          rentId : value.rent ? value.rent.rentId : null,
+          promotionId: value.promotion ? value.promotion.rentpromotionId : null,
+          date : value.date ? value.date.date : null,
           transaction: moment(req.body.transaction).format("YYYY-MM-DD HH:mm:ss"),
-          amount : value.rent.total,
-          discount: value.rent.discount,
+          amount : value.payment,
+          discount: value.rent ? value.rent.discount : null,
           comment : req.body.comments,
           methodOfPayment : req.body.methodpayment
         }

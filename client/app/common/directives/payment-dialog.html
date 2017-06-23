@@ -3,9 +3,10 @@
 </div>
 
 <div class="modal-body">
-  <form name="pForm" id="pForm" novalidate>
-    <div class="row method">
-      <div class="form-group col-md-6 method-left">
+
+  <div class="row method">
+    <div class="form-group col-md-6 method-left">
+      <form name="pForm" id="pForm" novalidate>
         <div class="row">
           <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pClient.$dirty && pForm.pClient.$invalid }">
             <label for="pClient">Cliente *</label>
@@ -57,67 +58,106 @@
         </div>
         <div class="row">
           <div class="form-group col-md-6">
-            <p ng-show="$ctrl._payment.rent"><b>Precio de renta: </b>{{$ctrl._payment.rent.cost}}</p>
-            <p ng-show="$ctrl._payment.rent"><b>I.V.A: </b>{{$ctrl._payment.rent.iva}}</p>
-            <p ng-show="$ctrl._payment.rent"><b>Total: </b>{{$ctrl._payment.rent.total}}</p>
+            <div class="row" ng-show="$ctrl._payment.rent">
+              <div class="col-md-6" ng-show="$ctrl._payment.rent">
+                <div class="pull-right"><b>Precio de renta:</b></div>
+              </div>
+              <div class="col-md-6" ng-show="$ctrl._payment.rent">
+                <p>{{$ctrl._payment.rent.cost | currency : "$" : 2}}</p>
+              </div>
+            </div>
+            <div class="row" ng-show="$ctrl._payment.rent">
+              <div class="col-md-6" ng-show="$ctrl._payment.rent">
+                <div class="pull-right"><b>I.V.A:</b></div>
+              </div>
+              <div class="col-md-6" ng-show="$ctrl._payment.rent">
+                <p>{{$ctrl._payment.rent.iva | currency : "$" : 2}}</p>
+              </div>
+            </div>
+            <div class="row" ng-show="$ctrl._payment.rent">
+              <div class="col-md-6" ng-show="$ctrl._payment.rent">
+                <div class="pull-right"><b>Total:</b></div>
+              </div>
+              <div class="col-md-6" ng-show="$ctrl._payment.rent">
+                <p>{{$ctrl._payment.rent.total | currency : "$" : 2}}</p>
+              </div>
+            </div>
           </div>
-          <div class="form-group col-md-6">
-            <label>Monto a pagar:</label><input class="form-control" id="pPaymentAmount" placeholder="Monto a pagar" />
+          <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pPaymentAmount.$dirty && pForm.pPaymentAmount.$invalid }">
+            <label>Monto a pagar:</label>
+            <input type="number" class="form-control" id="pPaymentAmount" name="pPaymentAmount" placeholder="Monto a pagar" ng-model="$ctrl._payment.payment" required/>
+            <span class="span-validation" ng-show="pForm.pPaymentAmount.$dirty && pForm.pPaymentAmount.$invalid">
+              <span ng-show="pForm.pPaymentAmount.$error.required">El monto del pago es requerido.</span>
+            </span>
             <br />
             <button class="btn btn-warning pull-right" type="button" ng-click="$ctrl.validatePayment() && pForm.$valid && $ctrl.addPayment()">Agregar pago<br />renta de bodega</button>
           </div>
         </div>
-      </div>
-      <div class="form-group col-md-6 method-right">
+      </form>
+    </div>
+    <div class="form-group col-md-6 method-right">
+      <form name="eForm" id="eForm" novalidate>
         <div class="row">
-          <div class="form-group col-md-12">
-            <label>Articulo / Servicio:</label><input class="form-control" id="pItemPaymentAmount" placeholder="Descripcion de articulo o servicio" />
+          <div class="form-group col-md-12" ng-class="{ 'has-error': eForm.pItem.$dirty && eForm.pItem.$invalid }">
+            <label>Articulo / Servicio:</label>
+            <input class="form-control" id="pItem" name="pItem" ng-model="$ctrl._paymentItem.description" placeholder="Descripcion de articulo o servicio" required />
+            <span class="span-validation" ng-show="eForm.pItem.$dirty && eForm.pItem.$invalid">
+              <span ng-show="eForm.pItem.$error.required">El Articulo / Servicio es requerido.</span>
+            </span>
           </div>
         </div>
         <div class="row">
-          <div class="form-group col-md-6">
-            <label>Monto a pagar:</label><input class="form-control" id="pItemPaymentAmount" placeholder="Monto a pagar" />
+          <div class="form-group col-md-6" ng-class="{ 'has-error': eForm.pItemPaymentAmount.$dirty && eForm.pItemPaymentAmount.$invalid }">
+            <label>Monto a pagar:</label>
+            <input type="number" class="form-control" id="pItemPaymentAmount" name="pItemPaymentAmount" ng-model="$ctrl._paymentItem.payment" placeholder="Monto a pagar" required />
+            <span class="span-validation" ng-show="eForm.pItemPaymentAmount.$dirty && eForm.pItemPaymentAmount.$invalid">
+              <span ng-show="eForm.pItemPaymentAmount.$error.required">El monto del pago es requerido.</span>
+            </span>
             <br />
-            <button class="btn btn-warning" type="button" ng-click="$ctrl.validateItemPayment() && pForm.$valid && $ctrl.addItemPayment()">Agregar pago<br />articulo / servicio</button>
+            <button class="btn btn-warning" type="button" ng-click="$ctrl.validateItemPayment() && eForm.$valid && $ctrl.addItemPayment()">Agregar pago<br />articulo / servicio</button>
           </div>
         </div>
-      </div>
+      </form>
     </div>
-    <div class="row">
-      <div class="form-group payment-list" ng-if="$ctrl._data.payments.length == 0" ng-class="{'has-error' : $ctrl._invalidNumPayment}">
-        <span class="">Agrega pagos a la lista</span>
-      </div>
-      <div class="form-group" ng-if="$ctrl._data.payments.length > 0">
-        <table class="table table-sm">
-          <thead>
-            <tr>
-              <th>#</th>
-              <th>Bodega</th>
-              <th>Promocion</th>
-              <th>Mes</th>
-              <th>Cantidad</th>
-            </tr>
-          </thead>
-          <tfoot>
-            <tr>
-              <td colspan="3"></td>
-              <td><b>Total:</b></td>
-              <td><b>{{$ctrl._data.payments | paymentTotal: 'total' : 'discount' | currency:'$':2}}</b></td>
-            </tr>
-          </tfoot>
-          <tbody>
-            <tr ng-repeat="pay in $ctrl._data.payments">
-              <th scope="row">{{$index + 1}}</th>
-              <td>{{pay.rent.number}}</td>
-              <td>{{pay.promotion.name}}</td>
-              <td>{{pay.date.description}}</td>
-              <td>{{pay.rent.total - pay.rent.discount | currency:'$':2}}</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
+  </div>
+  <div class="row">
+    <div class="form-group payment-list" ng-if="$ctrl._data.payments.length == 0" ng-class="{'has-error' : $ctrl._invalidNumPayment}">
+      <span class="">Agrega pagos a la lista</span>
     </div>
-  </form>
+    <div class="form-group col-md-12" ng-if="$ctrl._data.payments.length > 0">
+      <table class="table table-sm">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Bodega / Articulo</th>
+            <th>Promocion</th>
+            <th>Mes</th>
+            <th>Costo</th>
+            <th>Pago</th>
+          </tr>
+        </thead>
+        <tfoot>
+          <tr>
+            <td colspan="3"></td>
+            <td><b>Total:</b></td>
+            <td><b>{{$ctrl._data.payments | costTotal : 'total' : 'discount' | currency:'$':2}}</b></td>
+            <td><b>{{$ctrl._data.payments | paymentTotal | currency:'$':2}}</b></td>
+          </tr>
+        </tfoot>
+        <tbody>
+          <tr ng-repeat="pay in $ctrl._data.payments">
+            <th scope="row">{{$index + 1}}</th>
+            <td>{{pay.rent ? 'Bodega ' + pay.rent.number : pay.description}}</td>
+            <td>{{pay.promotion.name}}</td>
+            <td>{{pay.date.description}}</td>
+            <td>{{pay.rent ? pay.rent.total - pay.rent.discount : pay.payment | currency:'$':2}}</td>
+            <td>{{pay.payment | currency:'$':2}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
   <form name="pForm2" id="pForm2" novalidate>
     <div class="row">
       <div class="form-group col-md-3">
