@@ -3,8 +3,8 @@ var pool  = null;
 exports.connect = function() {
   pool = mysql.createPool({
     host     : 'localhost',
-    user     : 'root',
-    password : 'Toolmosh_86',
+    user     : 'acanijo',
+    password : 'M3gamente',
     database : 'guardartododb',
     dateStrings:true
   });

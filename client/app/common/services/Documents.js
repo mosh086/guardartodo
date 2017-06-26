@@ -333,7 +333,9 @@ class makePaymentDefinition {
                   widths: [ '*' ],
                   body: [
                     [{ style:'headerB', text: 'FOLIO' }],
-                    [{ style:'header', text: `${_.map(data.payments, function(a) { return a.rent.folio; }).join(',\n')}` }],
+                    [{ style:'header', text: `${_.map(
+                        _.reject(data.payments, ['rent', null]), 
+                      function(a) { return a.rent.folio }).join(',\n')}` }],
                     [{ style:'headerB', text: 'FECHA DE PAGO' }],
                     [{ style:'header', text: `${moment(data.transaction).format('LL')}` }]
                   ]
@@ -352,7 +354,7 @@ class makePaymentDefinition {
               style: 'table',
               table: {
                 widths: ['100%'],
-                body: [[ { style:'infoB', text: `${data.client.name}` } ]]
+                body: [[ { style:'infoB', text: data.client ? `${data.client.name}` : 'Publico en general' } ]]
               }, layout: {
                   hLineColor: function (i, node) {
                     return (i === 1 ) ? 'black' : 'white';
@@ -381,13 +383,20 @@ class makePaymentDefinition {
         style: 'table',
         margin: [20, 5, 20, 0],
         table:{
-          widths: [90, '*' ],
+          widths: [110, '*' ],
           body: [
-            [ { style:'info', text: 'PAGO DE BODEGA :' }, {
+            [ { style:'info', text: 'POR CONCEPTO DE: ' }, {
               style: 'table',
               table:{
                 widths: [ '*' ],
-                body: [[ { style:'infoB', text: `${_.map(data.payments, function(a) { return '[' + a.rent.number + '] - ' + a.date.date; }).join(', ')}` } ]]
+                body: [[ { style:'infoB', text: `
+                  ${_.map(data.payments, function(a) {
+                    if (a.rent && a.date) {
+                      return ((a.partial)? 'PAGO PARCIAL' : 'PAGO') + ' DE BODEGA #' + a.rent.number + ' CON FECHA DE ' + a.date.description;
+                    } else {
+                      return 'PAGO DE ARTICULO / SERVICIO ' + a.description;
+                    }
+                  }).join('\n')}` } ]]
               }, layout: {
                   hLineColor: function (i, node) {
                     return (i === 1 ) ? 'black' : 'white';
@@ -403,7 +412,7 @@ class makePaymentDefinition {
         style: 'table',
         margin: [20, 5, 20, 0],
         table:{
-          widths: [90, '*' ],
+          widths: [110, '*' ],
           body: [
             [ { style:'info', text: 'FORMA DE PAGO :' }, {
               style: 'table',
@@ -425,7 +434,7 @@ class makePaymentDefinition {
         style: 'table',
         margin: [20, 5, 20, 0],
         table:{
-          widths: [90, '*' ],
+          widths: [110, '*' ],
           body: [
             [ { style:'info', text: 'OBSEVACIONES :' }, {
               style: 'table',

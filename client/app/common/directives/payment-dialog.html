@@ -10,7 +10,7 @@
         <div class="row">
           <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pClient.$dirty && pForm.pClient.$invalid }">
             <label for="pClient">Cliente *</label>
-            <ui-select ng-disabled="$ctrl._data.payments.length > 0 || $ctrl._rentSelectedDisabled" id="pClient" name="pClient" ng-model="$ctrl._data.client" title="Cliente" on-select="$ctrl.onClientSelect($ctrl._data.client.clientId)" ng-required="true">
+            <ui-select ng-disabled="$ctrl.isClientDisabled()" id="pClient" name="pClient" ng-model="$ctrl._data.client" title="Cliente" on-select="$ctrl.onClientSelect($ctrl._data.client.clientId)" ng-required="true">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.client.name}}</ui-select-match>
               <ui-select-choices repeat="item in $ctrl._clients">
                 <span ng-bind-html="item.name"></span>

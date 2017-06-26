@@ -95,6 +95,7 @@ app.post('/api/payments', function(req, res) {
           transaction: moment(req.body.transaction).format("YYYY-MM-DD HH:mm:ss"),
           amount : value.payment,
           discount: value.rent ? value.rent.discount : null,
+          description: value.description,
           comment : req.body.comments,
           methodOfPayment : req.body.methodpayment
         }

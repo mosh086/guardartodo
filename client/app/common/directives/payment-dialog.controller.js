@@ -37,10 +37,12 @@ class ModalPaymentCtrl {
       promotion: null,
       date: null,
       payment: null,
-      description: null
+      description: null,
+      partial: false
     }
 
     this._paymentItem = {
+      rent: null,
       payment: null,
       description: null
     }
@@ -71,6 +73,11 @@ class ModalPaymentCtrl {
             self._toastr.error(`Error ${err.message}`);
           }
         );
+  }
+
+  isClientDisabled() {
+    let self = this;
+    return _.some(self._data.payments, function(rent){ return rent.rent; } ) || self._rentSelectedDisabled;
   }
 
   getRentsByClientId(id) {
@@ -120,10 +127,11 @@ class ModalPaymentCtrl {
 
   addPayment() {
     let self = this;
-    console.log('asdasd - 234235234')
     self.isValid().then(
       (res) => {
-        console.log('pass');
+        console.log(self._payment)
+        self._payment.rent.discount = 0;
+        self._payment.partial = true;
         self._data.payments.push(self._payment);
         if (self._payment.promotion) {
           if (self._payment.promotion.amount && self._payment.promotion.amount > 0) {
@@ -153,6 +161,9 @@ class ModalPaymentCtrl {
           case 2:
             self._toastr.error(`Error: Ya has agregado la promocion / bodega`);
             break;
+          case 3:
+            self._toastr.error(`Error: El pago es mayor al costo de la bodega`);
+            break;
           default:
             self._toastr.error(`Error`);
         }
@@ -163,6 +174,7 @@ class ModalPaymentCtrl {
   addItemPayment() {
     let self = this;
     self._data.payments.push(self._paymentItem);
+    self.cleanItem();
   }
 
   clean() {
@@ -176,7 +188,9 @@ class ModalPaymentCtrl {
       this._payment = {
         rent: null,
         promotion: null,
-        date: null
+        date: null,
+        payment: null,
+        description: null
       }
       this._dates = null;
       this._promotions = null;
@@ -188,8 +202,20 @@ class ModalPaymentCtrl {
      });
   }
 
+  cleanItem() {
+    let self = this;
+    self._paymentItem = {
+      payment: null,
+      description: null
+    }
+
+    angular.forEach(this._scope.eForm, function(value, key) {
+         if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
+             value.$setPristine();
+     });
+  }
+
   isValid() {
-    console.log('234235234')
     let self = this,
         deferred = this._$q.defer();
     _.forEach(self._data.payments, function(value) {
@@ -203,6 +229,23 @@ class ModalPaymentCtrl {
         deferred.reject(2);
       }
     });
+
+    if (self._payment.promotion) {
+      if (self._payment.promotion.amount && self._payment.promotion.amount > 0) {
+        if ((self._payment.rent.total - self._payment.promotion.amount) < self._payment.payment) {
+          deferred.reject(3);
+        }
+      } else if (self._payment.promotion.percentage && self._payment.promotion.percentage > 0) {
+        if (self._payment.rent.total - ((self._payment.promotion.percentage / 100 ) * self._payment.rent.total)) {
+          deferred.reject(3);
+        }
+      }
+    } else {
+      if (self._payment.rent.total < self._payment.payment) {
+        deferred.reject(3);
+      }
+    }
+
     deferred.resolve(0);
 
     return deferred.promise;

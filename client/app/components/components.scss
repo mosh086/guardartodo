@@ -77,6 +77,12 @@
 }
 
 
+.ui-select-match-text{
+  width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding-right: 40px;
+}
 
 .modal-header {
     padding: 10px;
