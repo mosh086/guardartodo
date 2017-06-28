@@ -12,6 +12,7 @@ class FileUpload {
     let self = this;
     let deferred = this._$q.defer();
     let fd = new FormData();
+    console.log(file)
     fd.append('file', file);
     self._$http.post(self._AppConstants.api + uploadUrl, fd, {
         transformRequest: angular.identity,

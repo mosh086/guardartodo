@@ -19,7 +19,11 @@
         </li>
         <li ng-repeat="c in $ctrl._clients track by c.clientId">
           <div class="well row">
-            <div class="col-md-1">
+            <div class="col-md-1 buttons">
+              <a ng-href='client/file/{{c.clientId}}'>
+                <span class="glyphicon glyphicon-paperclip"></span>
+                <span class="glyphicon-label">Archivos</span>
+              </a>
             </div>
             <div class="col-md-5">
               <h3>{{c.name}}</h3>

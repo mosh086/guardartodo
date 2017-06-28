@@ -9,6 +9,7 @@ import UserService from './user.service';
 import RentService from './rent.service';
 import PaymentService from './payment.service';
 import PromotionService from './promotion.service';
+import FileService from './file.service';
 import FileUploadService from './file-upload.service';
 import Auth from './Auth';
 import JWT from './JWT';
@@ -29,6 +30,7 @@ let commonServicesModule = angular.module('app.common.services', [])
   .service('RentService', RentService)
   .service('PaymentService', PaymentService)
   .service('PromotionService', PromotionService)
+  .service('FileService', FileService)
   .service('FileUploadSevice', FileUploadService)
 .name;
 

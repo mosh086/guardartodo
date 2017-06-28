@@ -12,6 +12,7 @@ import Rent from'./rent';
 import Rentedit from'./rentedit';
 import Payment from'./payment';
 import Promotion from'./promotion';
+import File from'./client/file';
 
 //...
 
@@ -30,7 +31,8 @@ let componentsModule = angular.module('app.components', [
   Rent,
   Rentedit,
   Payment,
-  Promotion
+  Promotion,
+  File
 //...
 ])
 .name;

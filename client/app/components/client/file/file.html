@@ -1,0 +1,41 @@
+<div id="top" class="top-fix"></div>
+  <div class="fixed-sidebar">
+    <gt-asidemenu active="client"></gt-asidemenu>
+    <div class="wrapper">
+      <div class="form-group filters">
+        <div class="col-md-8">
+          <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nuevo archivo</button>
+        </div>
+        <div class="col-md-4">
+          <div class="input-group">
+            <span class="input-group-addon"><span class="glyphicon glyphicon-search"></span></span>
+            <input class="form-control" placeholder="buscar" ng-model="search">
+          </div>
+        </div>
+      </div>
+      <ul>
+        <li ng-if="$ctrl._files.length === 0">
+          <h4>No existen archivos para este cliente</h4>
+        </li>
+        <li ng-repeat="c in $ctrl._files track by c.fileId">
+          <div class="well row">
+            <div class="col-md-1 buttons">
+
+            </div>
+            <div class="col-md-5">
+              <h3></h3>
+              <p></p>
+            </div>
+            <div class="col-md-5">
+            </div>
+            <div class="col-md-1 buttons">
+              <a ng-confirm-message="¿Estás seguro de querer eliminar el archivo {{c.name}}?" ng-confirm="$ctrl.remove(c.fileId, c.name)">
+                <span class="glyphicon glyphicon-trash" ></span>
+                <span class="glyphicon-label">Borrar</span>
+              </a>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>

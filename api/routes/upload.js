@@ -58,6 +58,6 @@ app.get('/api/download/:id', function(req, res){
     let file = 'files/' + result.name;
     res.download(file);
   });
-  
-  
+
+
 });

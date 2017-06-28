@@ -5,6 +5,7 @@ import ConfirmDialog from './confirm-dialog.directive';
 import ModalConfirmCtrl from './confirm-dialog.controller';
 import DashboardBack from './dashboard-back.directive';
 import UploadFile from './upload-file.directive';
+import ValidFile from './valid-file.directive';
 
 import PaymentDialog from './payment-dialog.directive';
 import ModalPaymentCtrl from './payment-dialog.controller';
@@ -18,6 +19,7 @@ let directivesModule = angular.module('app.common.directives', [])
 .directive('ngPayment', PaymentDialog)
 .directive('dashboardBack', DashboardBack)
 .directive('uploadFile', UploadFile)
+.directive('validFile', ValidFile)
 .controller('modalPaymentCtrl', ModalPaymentCtrl)
 .controller('modalConfirmCtrl', ModalConfirmCtrl)
 .name;

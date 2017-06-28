@@ -1,0 +1,31 @@
+<div class="modal-header">
+  <h3 class="modal-title">{{$ctrl._title}}</h3>
+</div>
+<form name="fForm" id="fForm" novalidate>
+  <div class="modal-body">
+
+    <div class="row">
+      <div class="form-group col-md-4" ng-class="{ 'has-error': fForm.fDescription.$dirty && fForm.fDescription.$invalid }">
+        <label for="fDescription">Description</label>
+        <input type="text" class="form-control" id="fDescription" name="fDescription" placeholder="Descripcion" ng-model="$ctrl._data.description" maxlength="2000" required>
+        <span class="span-validation" ng-show="fForm.fDescription.$dirty && fForm.fDescription.$invalid">
+          <span ng-show="fForm.fDescription.$error.required">La descripcion es requerida.</span>
+        </span>
+      </div>
+    </div>
+    <div class="row">
+      <div class="form-group col-md-4" ng-class="{ 'has-error': fForm.fFile.$dirty && fForm.fFile.$invalid }">
+        <label for="fFile">Archivo</label>
+        <input type="file" ngf-select="" valid-file ng-required="true" upload-file="$ctrl._data.file" ng-model="$ctrl._data.urlfile" name="fFile" id="fFile" ngf-accept="'*/*'">
+        <span class="span-validation" ng-show="fForm.fFile.$dirty && fForm.fFile.$invalid">
+          <span ng-show="fForm.fFile.$error.required">El archivo es requerido.</span>
+        </span>
+      </div>
+    </div>
+
+  </div>
+  <div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.validate() && fForm.$valid && $ctrl.save()">Guardar</button>
+    <button class="btn btn-default" type="button" ng-click="$ctrl.cancel()">Cancelar</button>
+  </div>
+</form>
