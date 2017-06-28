@@ -129,29 +129,14 @@ class ModalPaymentCtrl {
     let self = this;
     self.isValid().then(
       (res) => {
-        console.log(self._payment)
         self._payment.rent.discount = 0;
-        self._payment.partial = true;
-        self._data.payments.push(self._payment);
-        if (self._payment.promotion) {
-          if (self._payment.promotion.amount && self._payment.promotion.amount > 0) {
-            _.each(self._data.payments, function(item, idx){
-              if(item.rent && item.rent.rentId == self._payment.rent.rentId && item.date.date == self._payment.date.date){
-                self._data.payments[idx].rent.discount = self._payment.promotion.amount;
-                //self._data.payments[idx].rent.total = self._payment.rent.total - self._payment.promotion.amount;
-                return false;
-              }
-            });
-          } else if (self._payment.promotion.percentage && self._payment.promotion.percentage > 0) {
-            _.each(self._data.payments, function(item, idx){
-              if(item.rent && item.rent.rentId == self._payment.rent.rentId && item.date.date == self._payment.date.date){
-                self._data.payments[idx].rent.discount = (self._payment.promotion.percentage / 100 ) * self._payment.rent.total;
-                //self._data.payments[idx].rent.total = self._payment.rent.total - (self._payment.promotion.percentage / 100 ) * self._payment.rent.total;
-                return false;
-              }
-            });
-          }
+        if (self._payment.promotion && self._payment.promotion.amount && self._payment.promotion.amount > 0) {
+          self._payment.rent.discount = self._payment.promotion.amount;
+        } else if (self._payment.promotion && self._payment.promotion.percentage && self._payment.promotion.percentage > 0) {
+          self._payment.rent.discount = (self._payment.promotion.percentage / 100 ) * self._payment.rent.total;
         }
+        self._payment.partial = ((self._payment.rent.total - self._payment.rent.discount) > self._payment.payment) ? true : false;
+        self._data.payments.push(self._payment);
         self.clean();
       }, (err)=> {
         switch(err) {
@@ -178,23 +163,16 @@ class ModalPaymentCtrl {
   }
 
   clean() {
-    if (this._rentSelected) {
-      this._payment = {
-        rent: Object.assign({}, this._rentSelected),
-        promotion: null,
-        date: null
-      }
-    } else {
-      this._payment = {
-        rent: null,
-        promotion: null,
-        date: null,
-        payment: null,
-        description: null
-      }
-      this._dates = null;
-      this._promotions = null;
+    this._payment = {
+      rent: this._rentSelected ? Object.assign({}, this._rentSelected) : null,
+      promotion: null,
+      date: null,
+      payment: null,
+      description: null,
+      partial: false
     }
+    this._dates = null;
+    this._promotions = null;
 
     angular.forEach(this._scope.pForm, function(value, key) {
          if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))

@@ -16,8 +16,8 @@ function insert (data,done) {
 
 function getInfoById (id, done) {
   db.get().query(`SELECT *
-                    FROM rentfile
-                    WHERE enable = 1 AND rentfileId = ?`, id, function(err, row) {
+                    FROM clientfile
+                    WHERE enable = 1 AND fileId = ?`, id, function(err, row) {
     if(err) throw err;
     done(row[0]);
   });

@@ -40,7 +40,7 @@ function update (id, data, done) {
 }
 
 function remove (id, done) {
-  db.get().query('UPDATE payment SET enable = 0 WHERE paymentId = ?', id, function(err, result) {
+  db.get().query('UPDATE clientfile SET enable = 0 WHERE fileId = ?', id, function(err, result) {
     if(err) throw err;
     done(result);
   });
@@ -83,7 +83,7 @@ app.put('/api/files/:id', function(req, res) {
   });
 });
 
-app.delete('/api/payments/:id', function(req, res) {
+app.delete('/api/files/:id', function(req, res) {
   remove(req.params.id, function(result) {
     res.status(200).send(result);
   });

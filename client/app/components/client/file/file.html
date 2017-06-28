@@ -23,13 +23,17 @@
 
             </div>
             <div class="col-md-5">
-              <h3></h3>
-              <p></p>
+              <h3>{{c.description}}</h3>
+              <p>{{c.name}}</p>
             </div>
-            <div class="col-md-5">
+            <div class="col-md-4">
+            </div>
+            <div class="col-md-4 buttons" ng-click="$ctrl.download(c.fileId)">
+              <span class="glyphicon glyphicon-download" ></span>
+              <span class="glyphicon-label">Descargar</span>
             </div>
             <div class="col-md-1 buttons">
-              <a ng-confirm-message="¿Estás seguro de querer eliminar el archivo {{c.name}}?" ng-confirm="$ctrl.remove(c.fileId, c.name)">
+              <a ng-confirm-message="¿Estás seguro de querer eliminar el archivo {{c.name}}?" ng-confirm="$ctrl.remove(c.fileId)">
                 <span class="glyphicon glyphicon-trash" ></span>
                 <span class="glyphicon-label">Borrar</span>
               </a>

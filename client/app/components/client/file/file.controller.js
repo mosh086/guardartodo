@@ -2,7 +2,7 @@ import modalTemplate from './file.modal.html'
 import modalInstanceCtrl from './file.modal.controller'
 
 class FileController {
-  constructor($uibModal, $scope, $filter, $stateParams, toastr, ClientService, FileService) {
+  constructor($uibModal, $scope, $filter, $stateParams, toastr, ClientService, FileService, AppConstants) {
     "ngInject";
 
     this._uibModal = $uibModal;
@@ -10,7 +10,7 @@ class FileController {
     this._FileService = FileService;
     this._ClientService = ClientService;
     this._clientId = $stateParams.id;
-
+    this._AppConstants = AppConstants;
     this._files = [];
   }
 
@@ -65,6 +65,7 @@ class FileController {
           self._toastr.success(`El archivo ${data.name} se adjunto correctamente`);
         else {
           self._FileService.saveData(res.data.insertId, data).then((res) => {
+            self.searchFiles();
             self._toastr.success(`El archivo ${data.name} se adjunto correctamente`);
           });
         }
@@ -75,6 +76,31 @@ class FileController {
           self._toastr.error(`Error ${err.message}`);
         }
       )
+  }
+
+  download(id) {
+    let anchor = angular.element('<a/>');
+    anchor.css({display: 'none'}); // Make sure it's not visible
+    angular.element(document.body).append(anchor); // Attach to document
+    anchor.attr({
+        href: this._AppConstants.api + "/download/" + id,
+        target: '_blank'
+      })[0].click();
+    anchor.remove();    
+  }
+
+  remove(id, name) {
+    let self = this;
+    this._FileService.remove(id)
+      .then((res) => {
+        self._toastr.success(`El archivo ${name} fue eliminado correctamente`);
+        self.searchFiles();
+      },
+        (err) =>  {
+          console.log('error: ' + err);
+          self._toastr.error(`Error ${err.message}`);
+        }
+      );
   }
 
 }

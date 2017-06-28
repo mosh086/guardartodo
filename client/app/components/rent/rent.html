@@ -32,7 +32,7 @@
       </li>
       <li ng-repeat="rent in $ctrl._rents track by rent.rentId">
         <div class="well row" ng-class="{ 'done': !rent.active }">
-          <div ng-if="!rent.rentfileId" class="col-md-1 buttons btn-file">
+          <!--<div ng-if="!rent.rentfileId" class="col-md-1 buttons btn-file" >
             <input type="file" upload-file="$ctrl._myFile" data-rentid="{{rent.rentId}}"/>
             <span class="glyphicon glyphicon-paperclip"></span>
             <span class="glyphicon-label">Adjuntar contrato</span>
@@ -40,8 +40,8 @@
           <div ng-if="rent.rentfileId" class="col-md-1 buttons">
             <span class="glyphicon glyphicon-file" ng-click="$ctrl.download(rent.rentfileId,'mosh.png')"></span>
             <span class="glyphicon-label">Contrato</span>
-          </div>
-          <div class="col-md-3">
+          </div>-->
+          <div class="col-md-4">
             <h3>{{rent.number}}</h3>
             <p>{{rent.storagelokertypename}}</p>
           </div>

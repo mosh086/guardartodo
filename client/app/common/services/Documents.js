@@ -389,10 +389,9 @@ class makePaymentDefinition {
               style: 'table',
               table:{
                 widths: [ '*' ],
-                body: [[ { style:'infoB', text: `
-                  ${_.map(data.payments, function(a) {
+                body: [[ { style:'infoB', text: `${_.map(data.payments, function(a) {
                     if (a.rent && a.date) {
-                      return ((a.partial)? 'PAGO PARCIAL' : 'PAGO') + ' DE BODEGA #' + a.rent.number + ' CON FECHA DE ' + a.date.description;
+                      return ((a.partial)? 'PAGO PARCIAL' : 'PAGO') + ' DE BODEGA ' + a.rent.number + ' CON FECHA DE ' + a.date.description;
                     } else {
                       return 'PAGO DE ARTICULO / SERVICIO ' + a.description;
                     }
