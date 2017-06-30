@@ -56,6 +56,20 @@
     }
 }
 
+//.glyphicon.glyphicon-alert:hover, span.glyphicon-label.alert,  .glyphicon.glyphicon-alert ~ span.glyphicon-label.alert:hover  {
+//    color: #ca0000;
+//}
+
+.buttons {
+    position: relative;
+}
+
+.glyphicon-label {
+    position:absolute;
+    left:0;
+    right:0;
+}
+
 .app {
   height: 100%;
   //ackground-color: $lightBgColor;

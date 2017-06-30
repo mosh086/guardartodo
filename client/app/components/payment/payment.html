@@ -34,6 +34,10 @@
           <div class="col-md-1 buttons">
           </div>
           <div class="col-md-1 buttons">
+            <a ng-confirm-message="¿Estás seguro de querer eliminar el pago?" ng-confirm="$ctrl.remove(p[0]['paymentId'])">
+                <span class="glyphicon glyphicon-trash" ></span>
+                <span class="glyphicon-label">Borrar</span>
+              </a>
           </div>
         </div>
       </li>

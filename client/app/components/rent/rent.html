@@ -41,16 +41,16 @@
             <span class="glyphicon glyphicon-file" ng-click="$ctrl.download(rent.rentfileId,'mosh.png')"></span>
             <span class="glyphicon-label">Contrato</span>
           </div>-->
-          <div class="col-md-4">
+          <div class="col-md-2">
             <h3>{{rent.number}}</h3>
             <p>{{rent.storagelokertypename}}</p>
           </div>
-          <div class="col-md-3">
+          <div class="col-md-6">
             <h4>{{rent.name}}</h4>
             <p>{{rent.active?'En renta':'finalizado'}}</p>
             <p>{{rent.startDateToString}}</p>
           </div>
-          <div class="col-md-5">
+          <div class="col-md-4">
             <div class="col-md-4 buttoninfo payments">
               <a ng-payment ng-payment-id="{{rent.rentId}}" ng-client-id="{{rent.clientId}}" ng-refresh="$ctrl.searchRents()" ng-hide="!rent.active || rent.pendings == 0">
                 <span><i class="fa fa-money" aria-hidden="true"></i> {{rent.pendings}}</span>
@@ -60,15 +60,15 @@
             <div class="col-md-2 buttons">
               <a ng-hide="!rent.active" ng-confirm-message="¿Estás seguro de finalizar el contrato de renta?" ng-confirm="$ctrl.setEndDateRent(rent.rentId)">
                 <span class="glyphicon glyphicon-alert"></span>
-                <span class="glyphicon-label">Terminar contrato</span>
+                <span class="glyphicon-label alert">Terminar contrato</span>
               </a>
             </div>
-            <div class="col-md-2 buttons">
+            <!--<div class="col-md-2 buttons">
               <a ng-hide="!rent.active" ng-click="$ctrl.print(rent.rentId)">
                 <span class="glyphicon glyphicon-print"></span>
                 <span class="glyphicon-label">Imprimir</span>
               <a>
-            </div>
+            </div>-->
             <div class="col-md-2 buttons">
               <a ng-hide="!rent.active" ng-href='rentedit/{{rent.rentId}}'>
                 <span class="glyphicon glyphicon-pencil"></span>
