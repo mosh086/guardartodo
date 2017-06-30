@@ -13,6 +13,7 @@ import Rentedit from'./rentedit';
 import Payment from'./payment';
 import Promotion from'./promotion';
 import File from'./client/file';
+import Credential from'./client/credential';
 
 //...
 
@@ -32,7 +33,8 @@ let componentsModule = angular.module('app.components', [
   Rentedit,
   Payment,
   Promotion,
-  File
+  File,
+  Credential
 //...
 ])
 .name;
