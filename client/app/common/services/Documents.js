@@ -47,7 +47,7 @@ class Documents {
 
   openPayment(data) {
     let self = this;
-    this._docDefinition = new makePaymentDefinition(self._filter, data, self.Image).getObject();
+    this._docDefinition = new makePaymentDefinition(self._filter, data, self._Image).getObject();
     pdfMake.createPdf(this._docDefinition).open();
   }
 

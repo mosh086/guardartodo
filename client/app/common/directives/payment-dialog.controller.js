@@ -130,12 +130,13 @@ class ModalPaymentCtrl {
     self.isValid().then(
       (res) => {
         self._payment.rent.discount = 0;
-        if (self._payment.promotion && self._payment.promotion.amount && self._payment.promotion.amount > 0) {
-          self._payment.rent.discount = self._payment.promotion.amount;
-        } else if (self._payment.promotion && self._payment.promotion.percentage && self._payment.promotion.percentage > 0) {
-          self._payment.rent.discount = (self._payment.promotion.percentage / 100 ) * self._payment.rent.total;
+        if (self._payment.promotion && self._payment.promotion.amount && parseFloat(self._payment.promotion.amount) > 0) {
+          self._payment.rent.discount = parseFloat(self._payment.promotion.amount).toFixed(2);
+        } else if (self._payment.promotion && self._payment.promotion.percentage && parseFloat(self._payment.promotion.percentage) > 0) {
+          self._payment.rent.discount = parseFloat((parseFloat(self._payment.promotion.percentage) / 100 ) * parseFloat(self._payment.rent.total)).toFixed(2);
         }
-        self._payment.partial = ((self._payment.rent.total - self._payment.rent.discount) > self._payment.payment) ? true : false;
+        
+        self._payment.partial = ((parseFloat(self._payment.rent.total).toFixed(2) - parseFloat(self._payment.rent.discount).toFixed(2)) > parseFloat(self._payment.payment).toFixed(2)) ? true : false;
         self._data.payments.push(self._payment);
         self.clean();
       }, (err)=> {
@@ -183,6 +184,7 @@ class ModalPaymentCtrl {
   cleanItem() {
     let self = this;
     self._paymentItem = {
+      rent: null,
       payment: null,
       description: null
     }
@@ -210,16 +212,16 @@ class ModalPaymentCtrl {
 
     if (self._payment.promotion) {
       if (self._payment.promotion.amount && self._payment.promotion.amount > 0) {
-        if ((self._payment.rent.total - self._payment.promotion.amount) < self._payment.payment) {
+        if ((parseFloat(self._payment.rent.total).toFixed(2) - parseFloat(self._payment.promotion.amount).toFixed(2)) < parseFloat(self._payment.payment).toFixed(2)) {
           deferred.reject(3);
         }
       } else if (self._payment.promotion.percentage && self._payment.promotion.percentage > 0) {
-        if (self._payment.rent.total - ((self._payment.promotion.percentage / 100 ) * self._payment.rent.total)) {
+        if ((parseFloat(self._payment.rent.total).toFixed(2) - parseFloat((self._payment.promotion.percentage / 100 ) * parseFloat(self._payment.rent.total).toFixed(2)) < parseFloat(self._payment.payment).toFixed(2))) {
           deferred.reject(3);
         }
       }
     } else {
-      if (self._payment.rent.total < self._payment.payment) {
+      if (parseFloat(self._payment.rent.total).toFixed(2) < parseFloat(self._payment.payment).toFixed(2)) {
         deferred.reject(3);
       }
     }

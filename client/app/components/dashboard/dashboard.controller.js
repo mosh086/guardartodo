@@ -11,9 +11,9 @@ class DashboardController {
     let myDoughnutChart;
     this._Dashboard = DashboardService;
 
-    this.getChartRented();
-    this.getNewClientChart();
-    this.getInRent();
+    //this.getChartRented();
+    //this.getNewClientChart();
+    //this.getInRent();
 
   }
 
