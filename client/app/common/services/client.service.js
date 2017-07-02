@@ -64,6 +64,27 @@ class Client {
     return deferred.promise;
   }
 
+  getRentValidity(clientId, rentId) {
+    let deferred = this._$q.defer();
+    if (!clientId) {
+      deferred.reject("client id is empty");
+      return deferred.promise;
+    }
+    if (!clientId.toString().replace(" ", "")) {
+      deferred.reject("client id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/client/' + clientId + '/validity/' + rentId,
+      method: 'GET'
+    })
+      .then(
+      (res) => deferred.resolve(res.data),
+      (err) => deferred.reject(err)
+      );
+    return deferred.promise;
+  }
+
   save(client) {
     let request = {};
     if (client.clientId) {

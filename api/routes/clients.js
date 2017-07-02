@@ -38,6 +38,17 @@ function getValidityById(id, done) {
   })
 }
 
+function getRentValidityById(clientid, rentid, done) {
+  db.get().query(`SELECT DATE_ADD(max(coalesce(p.date, r.startDate, now())), INTERVAL 1 MONTH) as date
+                  FROM client c
+                    INNER JOIN rent r ON c.clientId = r.clientId AND r.enable = 1 AND r.rentId = ?
+                    LEFT JOIN payment p ON p.rentId = r.rentId AND p.enable = 1
+                  WHERE c.clientId = ? and c.enable = 1`, [rentid, clientid], function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
+
 function insert (data,done) {
   db.get().query('INSERT INTO client SET ?', data, function(err, result) {
     if(err) throw err;
@@ -74,6 +85,12 @@ app.get('/api/clients/:id', function(req, res) {
 
 app.get('/api/client/:id/validity', function(req, res){
   getValidityById(req.params.id, function(result) {
+    res.status(200).send(result);
+  })
+})
+
+app.get('/api/client/:clientid/validity/:rentid', function(req, res){
+  getRentValidityById(req.params.clientid, req.params.rentid, function(result) {
     res.status(200).send(result);
   })
 })
