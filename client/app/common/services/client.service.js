@@ -120,6 +120,12 @@ class Client {
     return deferred.promise;
   }
 
+  validate() {
+    let deferred = this._$q.defer();
+    deferred.resolve(true);
+    return deferred.promise;
+  }
+
 }
 
 export default Client;

@@ -17,8 +17,8 @@
         <label for="slStoragelokertype">Tipo de bodega *</label>
         <ui-select id="slStoragelokertype" name="slStoragelokertype" ng-model="$ctrl._selectSlt" title="Tipo de bodega" ng-required="true">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._selectSlt.name}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._storagelokertypes">
-            <span ng-bind-html="item.name"></span>
+          <ui-select-choices repeat="item in $ctrl._storagelokertypes | filter: $select.search">
+            <span ng-bind-html="item.name | highlight: $select.search"></span>
           </ui-select-choices>
         </ui-select>
         <span class="span-validation" ng-show="stForm.slStoragelokertype.$dirty && stForm.slStoragelokertype.$invalid">

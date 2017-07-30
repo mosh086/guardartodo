@@ -23,8 +23,8 @@
         <label for="pPromotiontype">Tipo de promoción *</label>
         <ui-select id="pPromotiontype" name="pPromotiontype" ng-model="$ctrl._data.promotiontype" title="Tipo de promoción" ng-required="true">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.promotiontype.name}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._promotiontypes">
-            <span ng-bind-html="item.name"></span>
+          <ui-select-choices repeat="item in $ctrl._promotiontypes | filter: $select.search">
+            <span ng-bind-html="item.name | highlight: $select.search"></span>
           </ui-select-choices>
         </ui-select>
         <span class="span-validation" ng-show="pForm.pPromotiontype.$dirty && pForm.pPromotiontype.$invalid">

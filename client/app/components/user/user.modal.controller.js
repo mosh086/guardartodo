@@ -1,11 +1,12 @@
 export default class InstanceCtrl {
-  constructor($uibModalInstance, $log, $filter, $scope, user) {
+  constructor($uibModalInstance, $log, $filter, $scope, user, UserService) {
     "ngInject";
 
     this._uibModalInstance = $uibModalInstance;
     this._log = $log;
     this._scope = $scope;
     this._user = user;
+    this._UserService = UserService;
 
     this._title = (user)?'Editar usuario':'Nuevo usuario';
     this._data = {
@@ -40,11 +41,26 @@ export default class InstanceCtrl {
   };
 
   validate() {
+
+
+
+
     angular.forEach(this._scope.uForm, function(value, key) {
          if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
              value.$setDirty();
      });
-    return true;
+
+    this._UserService
+      .validate()
+      .then((res) => {
+        console.log('true')
+        return false;
+      },(err) => {
+        console.log('false')
+        return false;
+      });
+
+
   }
 
   up() {

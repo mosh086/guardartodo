@@ -9,8 +9,8 @@
             <label for="rClient">Cliente</label>
             <ui-select id="rClient" name="rClient" ng-model="$ctrl._data.client" title="Cliente" ng-required="true">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.client.name}}</ui-select-match>
-              <ui-select-choices repeat="item in $ctrl._clients">
-                <span ng-bind-html="item.name"></span>
+              <ui-select-choices repeat="item in $ctrl._clients | filter: $select.search">
+                <span ng-bind-html="item.name | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
             <span class="span-validation" ng-show="rForm.rClient.$dirty && rForm.rClient.$invalid">
@@ -32,8 +32,8 @@
             <label for="slStorageloker">Bodega</label>
             <ui-select id="rStorageloker" name="rStorageloker" ng-model="$ctrl._data.storageloker" title="Bodega" on-select="$ctrl.onStoragelokerSelect($ctrl._data.storageloker.storagelokertypeId)" ng-required="true">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.storageloker.number}}</ui-select-match>
-              <ui-select-choices repeat="item in $ctrl._storagelokers">
-                <span ng-bind-html="item.number"></span>
+              <ui-select-choices repeat="item in $ctrl._storagelokers | filter: $select.search">
+                <span ng-bind-html="item.number | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
             <span class="span-validation" ng-show="rForm.rStorageloker.$dirty && rForm.rStorageloker.$invalid">

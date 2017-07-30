@@ -38,11 +38,6 @@ class RenteditController {
     }
 
     this._dateOptions = {
-      dateDisabled: function (data) {
-                      var date = data.date,
-                      mode = data.mode;
-                      return mode === 'day' && (date.getDay() === 0 || date.getDay() === 6);
-                    },
       formatYear: 'yyyy',
       maxDate: new Date(2200, 1, 1),
       minDate: new Date(1980, 1, 1),

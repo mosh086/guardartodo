@@ -139,6 +139,12 @@ class User {
     return deferred.promise;
   }
 
+  validate() {
+    let deferred = this._$q.defer();
+    deferred.reject(true);
+    return deferred.promise;
+  }
+
 }
 
 export default User;

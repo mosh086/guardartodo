@@ -33,9 +33,16 @@
         <label for="cState">Estado</label>
         <input type="text" class="form-control" id="cState" placeholder="Estado" ng-model="$ctrl._data.state" maxlength="200">
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-4" ng-class="{ 'has-error': cForm.cZipcode.$dirty && cForm.cZipcode.$invalid }">
         <label for="cZipcode">Codigo postal</label>
-        <input type="text" class="form-control" id="cZipcode" placeholder="Codigo postal" ng-model="$ctrl._data.zipcode" maxlength="5">
+        <input type="text" class="form-control" id="cZipcode" name="cZipcode" maxlength="5"
+            placeholder="Codigo postal"
+            ng-model="$ctrl._data.zipcode"
+            ng-trim="false"
+            ng-pattern="/^(\d{5})?$/">
+        <span class="span-validation" ng-show="cForm.cZipcode.$dirty && cForm.cZipcode.$invalid">
+          <span ng-show="cForm.cZipcode.$error.pattern">Codigo Postal no valido.</span>
+        </span>
       </div>
     </div>
 
@@ -48,16 +55,26 @@
         <label for="cCellphone">Celular</label>
         <input type="text" class="form-control" id="cCellphone" placeholder="Celular"ng-model="$ctrl._data.cellPhone" maxlength="45">
       </div>
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-4" ng-class="{ 'has-error': cForm.cEmail.$dirty && cForm.cEmail.$invalid }">
         <label for="cEmail">Correo electronico</label>
-        <input class="form-control" id="cEmail" placeholder="Correo electronico"ng-model="$ctrl._data.email" maxlength="250">
+        <input class="form-control" id="cEmail" name="cEmail" type="email" placeholder="Correo electronico"ng-model="$ctrl._data.email" maxlength="250">
+        <span class="span-validation" ng-show="cForm.cEmail.$dirty && cForm.cEmail.$invalid">
+          <span ng-show="cForm.cEmail.$error.email">Email no valido.</span>
+        </span>
       </div>
     </div>
 
     <div class="row">
-      <div class="form-group col-md-4">
+      <div class="form-group col-md-4" ng-class="{ 'has-error': cForm.cRfc.$dirty && cForm.cRfc.$invalid }">
         <label for="cRfc">RFC</label>
-        <input type="text" class="form-control" id="cRfc" placeholder="RFC" ng-model="$ctrl._data.rfc" maxlength="45">
+        <input type="text" class="form-control" id="cRfc" name="cRfc" maxlength="45"
+            placeholder="RFC"
+            ng-model="$ctrl._data.rfc"
+            ng-trim="false"
+            ng-pattern="[A-ZÑ&]{3,4}\d{6}[A-V1-9][A-Z1-9][0-9A]">
+        <span class="span-validation" ng-show="cForm.cRfc.$dirty && cForm.cRfc.$invalid">
+          <span ng-show="cForm.cRfc.$error.pattern">RFC no valido.</span>
+        </span>
       </div>
     </div>
 
@@ -66,8 +83,8 @@
         <label for="cLineOfBusiness">Persona de tipo</label>
         <ui-select id="cLineOfBusiness" name="cLineOfBusiness" ng-model="$ctrl._data.lineOfBusiness" title="Persona de tipo">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.lineOfBusiness}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._lineOfBusiness">
-            <span ng-bind-html="item"></span>
+          <ui-select-choices repeat="item in $ctrl._lineOfBusiness | filter: $select.search">
+            <span ng-bind-html="item | highlight: $select.search"></span>
           </ui-select-choices>
         </ui-select>
       </div>
@@ -79,8 +96,8 @@
         <label for="cKindOfBusiness">Giro</label>
         <ui-select id="cKindOfBusiness" name="cKindOfBusiness" ng-model="$ctrl._data.kindOfBusiness" title="Giro">
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.kindOfBusiness}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._kindOfBusiness">
-            <span ng-bind-html="item"></span>
+          <ui-select-choices repeat="item in $ctrl._kindOfBusiness | filter: $select.search">
+            <span ng-bind-html="item | highlight: $select.search"></span>
           </ui-select-choices>
         </ui-select>
       </div>

@@ -12,8 +12,8 @@
             <label for="pClient">Cliente *</label>
             <ui-select ng-disabled="$ctrl.isClientDisabled()" id="pClient" name="pClient" ng-model="$ctrl._data.client" title="Cliente" on-select="$ctrl.onClientSelect($ctrl._data.client.clientId)" ng-required="true">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.client.name}}</ui-select-match>
-              <ui-select-choices repeat="item in $ctrl._clients">
-                <span ng-bind-html="item.name"></span>
+              <ui-select-choices repeat="item in $ctrl._clients | filter: $select.search">
+                <span ng-bind-html="item.name | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
             <span class="span-validation" ng-show="pForm.pClient.$dirty && pForm.pClient.$invalid">
@@ -24,8 +24,8 @@
             <label for="pRent">Renta a pagar *</label>
             <ui-select ng-disabled="$ctrl._rentSelectedDisabled" id="pRent" name="pRent" ng-model="$ctrl._payment.rent" data-v1 title="Renta a pagar" on-select="$ctrl.onRentSelect($ctrl._payment.rent.rentId)" ng-required="true">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.rent.number}}</ui-select-match>
-              <ui-select-choices repeat="item in $ctrl._rents">
-                <span ng-bind-html="item.number"></span>
+              <ui-select-choices repeat="item in $ctrl._rents | filter: {number: $select.search}">
+                <span ng-bind-html="item.number | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
             <span class="span-validation" ng-show="pForm.pRent.$dirty && pForm.pRent.$invalid">
@@ -38,8 +38,8 @@
             <label for="pMonth">Mes a pagar *</label>
             <ui-select id="pMonth" name="pMonth" ng-model="$ctrl._payment.date" title="Renta a pagar" ng-required="true">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._payment.date.description}}</ui-select-match>
-              <ui-select-choices repeat="item in $ctrl._dates | filter: {valid: 1}">
-                <span ng-bind-html="item.description"></span>
+              <ui-select-choices repeat="item in $ctrl._dates | filter: {valid: 1, description: $select.search}">
+                <span ng-bind-html="item.description | highlight: $select.search"></span>
               </ui-select-choices>
             </ui-select>
             <span class="span-validation" ng-show="pForm.pMonth.$dirty && pForm.pMonth.$invalid">
@@ -164,8 +164,8 @@
         <label for="pMethodPayment">Forma de pago *</label>
         <ui-select id="pMethodPayment" name="pMethodPayment" ng-model="$ctrl._data.methodpayment" title="Forma de pago" >
           <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.methodpayment}}</ui-select-match>
-          <ui-select-choices repeat="item in $ctrl._methodpayments">
-            <span ng-bind-html="item"></span>
+          <ui-select-choices repeat="item in $ctrl._methodpayments | filter: $select.search">
+            <span ng-bind-html="item | highlight: $select.search"></span>
           </ui-select-choices>
         </ui-select>
       </div>
