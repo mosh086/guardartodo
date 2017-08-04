@@ -83,15 +83,12 @@ class StoragelokertypeController {
     );
   }
 
-  search() {
-    console.log("query storagelokertype by keyword" + this.q);
-  }
-
   searchStoragelokertypes() {
     let self = this;
     this._Storagelokertype
       .query(this.q)
       .then((res) => {
+        console.log(res)
         self._storagelokertype = res;
         self._storagelokertypeTemp = res;
       },

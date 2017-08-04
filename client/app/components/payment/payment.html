@@ -4,7 +4,7 @@
   <div class="wrapper payment">
     <div class="form-group filters">
       <div class="col-md-8">
-        <a class="btn btn-default" ng-payment ng-refresh="$ctrl.searchPayments()">Nuevo pago</a>
+        <a class="btn btn-primary" ng-payment ng-refresh="$ctrl.searchPayments()">Nuevo pago</a>
       </div>
       <div class="col-md-4">
         <div class="input-group">
@@ -20,14 +20,15 @@
       <li ng-repeat="(key, p) in $ctrl._payments | groupBy: '-paymentId'">
         <div class="well row">
           <div class="col-md-1">
+            <p>{{p[0]['paymentId']}}</p>
           </div>
           <div class="col-md-4">
-            <h3>{{p[0]['paymentId']}} - {{p[0]['name']}}</h3>
+            <h3 class="principal">{{p[0]['name']}}</h3>
             <p>{{p[0]['methodOfPayment']}}</p>
           </div>
           <div class="col-md-5">
             <div ng-repeat="pay in p">
-              <h4>[{{pay.number}}] - {{pay.month}}</h4>
+              <h4>[<span class="principal">{{pay.number}}</span>] - {{pay.month}}</h4>
               <span><i>{{pay.folio}}</i></span>
             </div>
           </div>

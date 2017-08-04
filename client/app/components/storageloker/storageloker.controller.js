@@ -16,8 +16,6 @@ class StoragelokerController {
     $scope.$watch('search', function (val) {
       self.storageloker = $filter('filter')(self.storagelokerTemp, val);
     });
-
-
   }
 
   $onInit() {
@@ -89,10 +87,6 @@ class StoragelokerController {
           self._toastr.error(`Error ${err.message}`);
         }
       )
-  }
-
-  search() {
-    console.log("query storageloker by keyword" + this.q);
   }
 
   searchStoragelokers() {

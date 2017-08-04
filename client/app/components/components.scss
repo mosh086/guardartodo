@@ -12,17 +12,22 @@
         li {
             list-style-type: none;
             .well {
+                display: flex;
+                justify-content: center;
+                text-align: center;
+
                 padding: 5px;
-                text-align: left;
+                //text-align: left;
                 margin-bottom: 10px;
                 background-color: #ffffff;
                 border: 1px solid #d0d0d0;
                 margin-right: 0px;
                 margin-left: 0px;
-                text-align: center;
+
+
+
                 .buttons, .buttons a {
                     color: rgba(204, 204, 204, 0.7);
-                    padding-top: 25px;
                     &:hover {
                         color: #4e1515;
                         cursor: pointer;
@@ -50,7 +55,8 @@
                 }
 
                 .buttoninfo {
-                    padding-top: 20px;
+                    margin-top: -5px;
+                    //padding-top: 20px;
                     span {
                         color: #4e1515;
                         display: block;
@@ -66,16 +72,18 @@
                 }
             }
             .well.row {
-                min-height:100px;
+                min-height: 100px;
                 min-height: 100px;
                 box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 .5px 2px 0 rgba(0, 0, 0, 0.19);
-            }
-            .well.row {
                 &:hover {
-                        color: black;
-                        background:#f3f3f3;
-                        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.19);
-                    }
+                    color: black;
+                    background:#f3f3f3;
+                    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 1px 4px 0 rgba(0, 0, 0, 0.19);
+                }
+
+                div {
+                    align-self: center;
+                }
             }
         }
     }
@@ -85,6 +93,10 @@
     }
 }
 
+h3.principal, h4.principal, span.principal{
+  font-weight: 700;
+  color: #337ab7
+}
 
 .ui-select-match-text{
   width: 100%;

@@ -2,9 +2,6 @@
     margin-bottom: 0;
 }
 
-#navigation {
-    //margin-top: 70px;
-}
 .top-fix {
     height: 75px;
 }
@@ -13,6 +10,7 @@
 }
 
 .body {
+    font-family: 'Roboto', Arial, Helvetica, sans-serif;
     min-height: calc(100vh - 96px);
     background: #f1f3f6;
 }
@@ -46,33 +44,28 @@
 }
 
 .footer {
-    padding: 30px 0 15px 0;
-    color: #999;
-    text-align: center;
-    background-color: #f8f8f8;
-    border-top: 1px solid #e7e7e7;
-    p:last-child {
-        margin-bottom: 0;
-    }
+  padding: 30px 0 15px 0;
+  color: #999;
+  text-align: center;
+  background-color: #f8f8f8;
+  border-top: 1px solid #e7e7e7;
+  p:last-child {
+    margin-bottom: 0;
+  }
 }
 
-//.glyphicon.glyphicon-alert:hover, span.glyphicon-label.alert,  .glyphicon.glyphicon-alert ~ span.glyphicon-label.alert:hover  {
-//    color: #ca0000;
-//}
-
 .buttons {
-    position: relative;
+  position: relative;
 }
 
 .glyphicon-label {
-    position:absolute;
-    left:0;
-    right:0;
+  position:absolute;
+  left:0;
+  right:0;
 }
 
 .app {
   height: 100%;
-  //ackground-color: $lightBgColor;
 }
 
 

@@ -4,7 +4,7 @@
   <div class="wrapper">
     <div class="form-group filters">
       <div class="col-md-8">
-        <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nueva bodega</button>
+        <button class="btn btn-primary" ng-click="$ctrl.openDialog()">Nueva bodega</button>
       </div>
       <div class="col-md-4">
         <div class="input-group">
@@ -20,12 +20,18 @@
       <li ng-repeat="sl in $ctrl.storageloker track by sl.storagelokerId">
         <div class="well row">
           <div class="col-md-1">
+            <span ng-show="{{sl.rentId != null}}" class="label label-success">
+              <span class="glyphicon glyphicon-star-empty"></span>
+            </span>
+            <p ng-show="{{sl.rentId != null}}" class="info">En renta</p>
           </div>
           <div class="col-md-6">
-            <h3>{{sl.number}}</h3>
+            <h3 class="principal">{{sl.number}}</h3>
             <p>{{sl.typename}}</p>
           </div>
           <div class="col-md-3">
+            <p>{{sl.clientname}}</p>
+            <p>{{sl.startDateToString}}</p>
           </div>
           <div class="col-md-1 buttons" ng-click="$ctrl.openDialog(sl.storagelokerId)">
             <span class="glyphicon glyphicon-pencil" ></span>

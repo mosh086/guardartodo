@@ -11,10 +11,13 @@ var jwtCheck = jwt({
 });
 
 function getAll (q, done) {
-  db.get().query(`SELECT p.*, pt.name as promotiontypename
+  db.get().query(`SELECT p.promotionId, p.promotiontypeId, p.name, p.description, p.amount, p.percentage, p.enable, pt.name as promotiontypename,
+                      COUNT(rp.rentpromotionId) AS \`using\`
                     FROM promotion p
+                    LEFT JOIN rentpromotion rp ON p.promotionId = rp.promotionId AND rp.enable = 1 AND rp.applied = 0
                     LEFT JOIN promotiontype pt ON p.promotiontypeId = pt.promotiontypeId AND pt.enable = 1
-                  WHERE p.enable = 1`, function(err, rows) {
+                  WHERE p.enable = 1
+                  GROUP BY p.promotionId, p.promotiontypeId, p.name, p.description, p.amount, p.percentage, p.enable, pt.name`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });

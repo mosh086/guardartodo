@@ -8,7 +8,12 @@ var jwtCheck = jwt({
 });
 
 function getAll (done) {
-  db.get().query('SELECT * FROM storagelokertype WHERE enable = 1', function(err, rows) {
+  db.get().query(`SELECT stl.storagelokertypeId, COUNT(st.storagelokerId) AS \`using\`, stl.name, stl.description, stl.price, stl.size, stl.enable, stl.createDatetime
+        FROM storagelokertype stl
+          LEFT JOIN storageloker st ON st.storagelokertypeId = stl.storagelokertypeId AND st.enable = 1
+      WHERE stl.enable = 1
+      GROUP BY stl.storagelokertypeId, stl.name, stl.description, stl.price, stl.size, stl.enable, stl.createDatetime
+      ORDER BY stl.name`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });
