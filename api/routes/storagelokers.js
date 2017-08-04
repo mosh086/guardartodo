@@ -71,6 +71,14 @@ function remove (id, done) {
   });
 }
 
+function unique(data,done) {
+  console.log('SELECT * FROM storageloker WHERE ' + ((data.key != undefined && data.key != '')?'storagelokerId != '+data.key+' AND ':'') + data.property + " = '" + data.value + "' AND enable = 1")
+  db.get().query('SELECT * FROM storageloker WHERE ' + ((data.key != undefined && data.key != '')?'storagelokerId != '+data.key+' AND ':'') + data.property + " = '" + data.value + "' AND enable = 1", function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
+
 app.use('/api/storagelokers', jwtCheck);
 app.get('/api/storagelokers', function(req, res) {
   moment.locale('es');
@@ -103,6 +111,12 @@ app.put('/api/storagelokers/:id', function(req, res) {
 
 app.delete('/api/storagelokers/:id', function(req, res) {
   remove(req.params.id, function(result) {
+    res.status(200).send(result);
+  });
+});
+
+app.post('/api/storagelokers/unique', function(req, res) {
+  unique(req.body, function(result) {
     res.status(200).send(result);
   });
 });

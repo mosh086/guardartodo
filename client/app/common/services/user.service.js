@@ -121,8 +121,6 @@ class User {
     return deferred.promise;
   }
 
-
-
   me() {
     let deferred = this._$q.defer();
     this._$http({
@@ -143,6 +141,20 @@ class User {
     let deferred = this._$q.defer();
     deferred.reject(true);
     return deferred.promise;
+  }
+
+  checkUniqueValue(data, value) {
+    let request = {};
+    if (!data.property.toString().replace(" ", "")) {
+      return this._$http(request);
+    }
+    if (!value.toString().replace(" ", "")) {
+      return this._$http(request);
+    }
+    request.url = `${this._AppConstants.api}/users/unique`;
+    request.method = 'POST';
+    request.data = {"key": data.key, "property": data.property, "value": value};
+    return this._$http(request);
   }
 
 }

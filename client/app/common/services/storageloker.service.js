@@ -74,6 +74,20 @@ class Storageloker {
     return deferred.promise;
   }
 
+  checkUniqueValue(data, value) {
+    let request = {};
+    if (!data.property.toString().replace(" ", "")) {
+      return this._$http(request);
+    }
+    if (!value.toString().replace(" ", "")) {
+      return this._$http(request);
+    }
+    request.url = `${this._AppConstants.api}/storagelokers/unique`;
+    request.method = 'POST';
+    request.data = {"key": data.key, "property": data.property, "value": value};
+    return this._$http(request);
+  }
+
 }
 
 export default Storageloker;

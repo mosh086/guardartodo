@@ -88,7 +88,6 @@ class StoragelokertypeController {
     this._Storagelokertype
       .query(this.q)
       .then((res) => {
-        console.log(res)
         self._storagelokertype = res;
         self._storagelokertypeTemp = res;
       },

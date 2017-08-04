@@ -6,6 +6,9 @@ import ModalConfirmCtrl from './confirm-dialog.controller';
 import DashboardBack from './dashboard-back.directive';
 import UploadFile from './upload-file.directive';
 import ValidFile from './valid-file.directive';
+import UniqueStoragelokertype from './unique-storagelokertype.directive';
+import UniqueStorageloker from './unique-storageloker.directive';
+import UniqueUser from './unique-user.directive';
 
 import PaymentDialog from './payment-dialog.directive';
 import ModalPaymentCtrl from './payment-dialog.controller';
@@ -20,6 +23,9 @@ let directivesModule = angular.module('app.common.directives', [])
 .directive('dashboardBack', DashboardBack)
 .directive('uploadFile', UploadFile)
 .directive('validFile', ValidFile)
+.directive('uniqueStoragelokertype', UniqueStoragelokertype)
+.directive('uniqueStorageloker', UniqueStorageloker)
+.directive('uniqueUser', UniqueUser)
 .controller('modalPaymentCtrl', ModalPaymentCtrl)
 .controller('modalConfirmCtrl', ModalConfirmCtrl)
 .name;

@@ -185,6 +185,13 @@ function reset(id, data, done) {
   });
 }
 
+function unique(data,done) {
+  db.get().query('SELECT * FROM user WHERE ' + ((data.key != undefined && data.key != '')?'userId != '+data.key+' AND ':'') + data.property + " = '" + data.value + "' AND enable = 1", function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
+
 app.use('/api/users', jwtCheck);
 app.get('/api/users', function(req, res) {
   getAll(function(result) {
@@ -228,5 +235,10 @@ app.get('/api/users/rent/:id', function(req, res) {
   });
 });
 
+app.post('/api/users/unique', function(req, res) {
+  unique(req.body, function(result) {
+    res.status(200).send(result);
+  });
+});
 
 

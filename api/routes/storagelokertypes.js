@@ -47,6 +47,13 @@ function remove (id, done) {
   });
 }
 
+function unique(data,done) {
+  db.get().query('SELECT * FROM storagelokertype WHERE ' + ((data.key != undefined && data.key != '')?'storagelokertypeId != '+data.key+' AND ':'') + data.property + " = '" + data.value + "' AND enable = 1", function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
+
 app.use('/api/storagelokertypes', jwtCheck);
 app.get('/api/storagelokertypes', function(req, res) {
   getAll(function(result) {
@@ -74,6 +81,12 @@ app.put('/api/storagelokertypes/:id', function(req, res) {
 
 app.delete('/api/storagelokertypes/:id', function(req, res) {
   remove(req.params.id, function(result) {
+    res.status(200).send(result);
+  });
+});
+
+app.post('/api/storagelokertypes/unique', function(req, res) {
+  unique(req.body, function(result) {
     res.status(200).send(result);
   });
 });
