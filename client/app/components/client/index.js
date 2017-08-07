@@ -10,7 +10,7 @@ let clientModule = angular.module('app.components.client', [
   "ngInject";
   $stateProvider
     .state('client', {
-      url: '/client',
+      url: '/client?goto',
       component: 'client',
       data: {
         requiresAuth: true

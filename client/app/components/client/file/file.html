@@ -4,7 +4,8 @@
     <div class="wrapper">
       <div class="form-group filters">
         <div class="col-md-8">
-          <button class="btn btn-default" ng-click="$ctrl.openDialog()">Nuevo archivo</button>
+          <button class="btn btn-default" ui-sref="client({goto: $ctrl._clientId})"><span class="glyphicon glyphicon-hand-left"></span>Regresar</button>
+          <button class="btn btn-primary" ng-click="$ctrl.openDialog()">Nuevo archivo</button>
         </div>
         <div class="col-md-4">
           <div class="input-group">

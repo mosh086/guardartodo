@@ -9,11 +9,12 @@ class CredentialController {
     this._credentials = [];
     this._credentialsTemp = [];
     let self = this;
-    
+
     $scope.$watch('search', function (val) {
       self._credentials = $filter('filter')(self._credentialsTemp, val);
     });
-    this._ClientId = $stateParams.id;
+    this._clientId = $stateParams.id;
+
   }
 
   $onInit() {
@@ -24,7 +25,7 @@ class CredentialController {
   searchRent() {
     let self = this;
     this._Rent
-      .getByClientId(self._ClientId)
+      .getByClientId(self._clientId)
       .then((res) => {
         self._credentials = res;
         self._credentialsTemp = res;
@@ -38,7 +39,7 @@ class CredentialController {
 
   credential(id) {
     let self = this;
-    self._Documents.openCredentialByRenId(self._ClientId, id);
+    self._Documents.openCredentialByRenId(self._clientId, id);
   }
 
 

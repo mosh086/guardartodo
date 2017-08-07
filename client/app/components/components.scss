@@ -87,9 +87,14 @@
             }
         }
     }
+
     .form-group.filters {
         margin-bottom: 50px;
         text-align: left;
+    }
+
+    button span.glyphicon.glyphicon-hand-left{
+      padding-right: 10px;
     }
 }
 

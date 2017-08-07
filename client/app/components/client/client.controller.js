@@ -2,13 +2,15 @@ import modalTemplate from './client.modal.html'
 import modalInstanceCtrl from './client.modal.controller'
 
 class ClientController {
-  constructor($uibModal, $scope, $filter, toastr, ClientService, Documents) {
+  constructor($uibModal, $scope, $filter, $stateParams, $timeout, toastr, ClientService, Documents) {
     "ngInject";
 
     this._uibModal = $uibModal;
     this._toastr = toastr;
     this._Client = ClientService;
     this._Documents = Documents;
+    this._timeout = $timeout;
+    this._stateParams = $stateParams;
 
     this._clients = [];
     this._clientsTemp = [];
@@ -16,10 +18,12 @@ class ClientController {
     $scope.$watch('search', function (val) {
       self._clients = $filter('filter')(self._clientsTemp, val);
     });
+
   }
 
   $onInit() {
     console.log("initializing Client...");
+    let self = this;
     this.searchClients();
   }
 
@@ -97,6 +101,16 @@ class ClientController {
       .then((res) => {
         self._clients = res;
         self._clientsTemp = res;
+
+        this._timeout(function() {
+          $(window).scrollTo($('#client-' + self._stateParams.goto), 1000, { offset: { top: -100, left: 0 } });
+          //$('#client-' + self._stateParams.goto).waypoint(function(obj) {
+          //    alert('gdfhdfg');
+          //}, {
+          //    offset: '50%',
+          //    triggerOnce: true
+          //});
+        }, 0);
       },
         (err) => {
           console.log('error: ' + err);
