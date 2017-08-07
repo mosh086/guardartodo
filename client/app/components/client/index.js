@@ -10,10 +10,13 @@ let clientModule = angular.module('app.components.client', [
   "ngInject";
   $stateProvider
     .state('client', {
-      url: '/client?goto',
+      url: '/client',
       component: 'client',
       data: {
         requiresAuth: true
+      },
+      params: {
+        goto: ""
       }
     });
 })
