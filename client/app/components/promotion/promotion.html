@@ -35,7 +35,7 @@
             <span class="glyphicon-label">Cambiar</span>
           </div>
           <div class="col-md-1 buttons">
-            <a ng-confirm-message="¿Estás seguro de querer eliminar la promoción {{p.name}}?" ng-confirm="$ctrl.remove(p.promotionId)">
+            <a  ng-hide="{{p.using > 0}}" ng-confirm-validation='{"validation":"promotion", "id":{{p.promotionId}}}' ng-confirm-message="¿Estás seguro de querer eliminar la promoción {{p.name}}?" ng-confirm="$ctrl.remove(p.promotionId)">
               <span class="glyphicon glyphicon-trash" ></span>
               <span class="glyphicon-label">Borrar</span>
             </a>

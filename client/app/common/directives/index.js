@@ -9,6 +9,7 @@ import ValidFile from './valid-file.directive';
 import UniqueStoragelokertype from './unique-storagelokertype.directive';
 import UniqueStorageloker from './unique-storageloker.directive';
 import UniqueUser from './unique-user.directive';
+import UniquePromotion from './unique-promotion.directive';
 
 import PaymentDialog from './payment-dialog.directive';
 import ModalPaymentCtrl from './payment-dialog.controller';
@@ -26,6 +27,7 @@ let directivesModule = angular.module('app.common.directives', [])
 .directive('uniqueStoragelokertype', UniqueStoragelokertype)
 .directive('uniqueStorageloker', UniqueStorageloker)
 .directive('uniqueUser', UniqueUser)
+.directive('uniquePromotion', UniquePromotion)
 .controller('modalPaymentCtrl', ModalPaymentCtrl)
 .controller('modalConfirmCtrl', ModalConfirmCtrl)
 .name;

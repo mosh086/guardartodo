@@ -51,7 +51,7 @@
             </div>
 
             <div class="col-md-1 buttons">
-              <a ng-confirm-message="¿Estás seguro de querer eliminar el cliente {{c.name}}?" ng-confirm="$ctrl.remove(c.clientId, c.name)">
+              <a ng-confirm-validation="true" ng-confirm-message="¿Estás seguro de querer eliminar el cliente {{c.name}}?" ng-confirm="$ctrl.remove(c.clientId, c.name)">
                 <span class="glyphicon glyphicon-trash" ></span>
                 <span class="glyphicon-label">Borrar</span>
               </a>

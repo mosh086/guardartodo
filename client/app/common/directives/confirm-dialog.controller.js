@@ -6,7 +6,7 @@ class ModalConfirmCtrl {
     this._confirmMessage = confirmMessge;
     this._confirmClick = confirmClick;
 
-    this._uibModalInstance.result.then(() => {},(err) => {});
+    this._uibModalInstance.result.then((res) => {},(err) => {});
   }
 
   closeModal() {

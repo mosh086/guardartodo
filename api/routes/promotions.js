@@ -63,6 +63,24 @@ function remove (id, done) {
   });
 }
 
+function removeValidation (id, done) {
+  db.get().query(`SELECT p.promotionId, p.name, COUNT(rp.rentpromotionId) AS \`using\`
+                    FROM promotion p
+                  LEFT JOIN rentpromotion rp ON p.promotionId = rp.promotionId AND rp.enable = 1 AND rp.applied = 0
+                  WHERE p.enable = 1 AND p.promotionId = ?
+                  GROUP BY p.promotionId, p.name`, id, function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
+
+function unique(data,done) {
+  console.log('SELECT * FROM promotion WHERE ' + ((data.key != undefined && data.key != '')?'promotionId != '+data.key+' AND ':'') + data.property + " = '" + data.value + "' AND enable = 1")
+  db.get().query('SELECT * FROM promotion WHERE ' + ((data.key != undefined && data.key != '')?'promotionId != '+data.key+' AND ':'') + data.property + " = '" + data.value + "' AND enable = 1", function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
 
 app.use('/api/promotions', jwtCheck);
 app.get('/api/promotions', function(req, res) {
@@ -111,3 +129,14 @@ app.get('/api/promotions/rent/:id', function(req, res) {
   });
 });
 
+app.post('/api/promotions/unique', function(req, res) {
+  unique(req.body, function(result) {
+    res.status(200).send(result);
+  });
+});
+
+app.post('/api/promotions/:id/validation', function(req, res) {
+  removeValidation(req.params.id, function(result) {
+    res.status(200).send(result);
+  });
+});

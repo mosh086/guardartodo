@@ -6,9 +6,14 @@
     <div class="row">
       <div class="form-group col-md-6" ng-class="{ 'has-error': pForm.pName.$dirty && pForm.pName.$invalid }">
         <label for="pName">Nombre de la promoción *</label>
-        <input type="text" class="form-control" id="pName" name="pName" placeholder="Nombre de promoción" ng-model="$ctrl._data.name" maxlength="200" required autofocus>
+        <input type="text" class="form-control" id="pName" name="pName" required autofocus
+          placeholder="Nombre de promoción"
+          maxlength="200"
+          ng-model="$ctrl._data.name"
+          unique-promotion="{key: $ctrl._data.promotionId, property: 'name'}">
         <span class="span-validation" ng-show="pForm.pName.$dirty && pForm.pName.$invalid">
           <span ng-show="pForm.pName.$error.required">El nombre es requerido.</span>
+          <span ng-show="pForm.pName.$error.unique">El nombre ya existe.</span>
         </span>
       </div>
     </div>

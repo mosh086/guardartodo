@@ -33,7 +33,7 @@
               <span class="glyphicon-label">Descargar</span>
             </div>
             <div class="col-md-1 buttons">
-              <a ng-confirm-message="¿Estás seguro de querer eliminar el archivo {{c.name}}?" ng-confirm="$ctrl.remove(c.fileId)">
+              <a ng-confirm-validation="true" ng-confirm-message="¿Estás seguro de querer eliminar el archivo {{c.name}}?" ng-confirm="$ctrl.remove(c.fileId)">
                 <span class="glyphicon glyphicon-trash" ></span>
                 <span class="glyphicon-label">Borrar</span>
               </a>

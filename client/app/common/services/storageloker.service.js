@@ -74,6 +74,30 @@ class Storageloker {
     return deferred.promise;
   }
 
+  removeValidation(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("storageloker id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("storageloker id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/storagelokers/' + id + '/validation',
+      method: 'POST'
+    }).then((res) => {
+      if (res.data && res.data.rentId)
+        deferred.reject(res.data)
+      else
+        deferred.resolve(true)
+    },
+      (err) => deferred.reject(err)
+    );
+    return deferred.promise;
+  }
+
   checkUniqueValue(data, value) {
     let request = {};
     if (!data.property.toString().replace(" ", "")) {

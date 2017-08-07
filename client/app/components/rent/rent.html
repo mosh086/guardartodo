@@ -79,7 +79,7 @@
               </a>
             </div>
             <div class="col-md-2 buttons">
-              <a ng-confirm-message="¿Estás seguro de querer eliminar la renta?" ng-confirm="$ctrl.remove(rent.rentId)">
+              <a ng-confirm-validation="true" ng-confirm-message="¿Estás seguro de querer eliminar la renta?" ng-confirm="$ctrl.remove(rent.rentId)">
                 <span class="glyphicon glyphicon-trash" ></span>
                 <span class="glyphicon-label">Borrar</span>
               </a>

@@ -87,6 +87,32 @@ class Storagelokertype {
     return this._$http(request);
   }
 
+  removeValidation(id) {
+    let deferred = this._$q.defer();
+    if (!id) {
+      deferred.reject("storagelokertype id is empty");
+      return deferred.promise;
+    }
+    if (!id.toString().replace(" ", "")) {
+      deferred.reject("storagelokertype id is empty");
+      return deferred.promise;
+    }
+    this._$http({
+      url: this._AppConstants.api + '/storagelokertypes/' + id + '/validation',
+      method: 'POST'
+    }).then((res) => {
+      if (res.data && res.data.using > 0) {
+        deferred.reject(res.data)
+      } else {
+        console.log(res.data); deferred.resolve(true)
+      }
+
+    },
+      (err) => deferred.reject(err)
+    );
+    return deferred.promise;
+  }
+
 }
 
 export default Storagelokertype;

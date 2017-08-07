@@ -47,6 +47,17 @@ function remove (id, done) {
   });
 }
 
+function removeValidation (id, done) {
+  db.get().query(`SELECT stl.storagelokertypeId, COUNT(st.storagelokerId) AS \`using\`, stl.name
+      FROM storagelokertype stl
+        LEFT JOIN storageloker st ON st.storagelokertypeId = stl.storagelokertypeId AND st.enable = 1
+      WHERE stl.enable = 1 AND stl.storagelokertypeId = ?
+      GROUP BY stl.storagelokertypeId, stl.name`, id, function(err, row) {
+    if(err) throw err;
+    done(row[0]);
+  });
+}
+
 function unique(data,done) {
   db.get().query('SELECT * FROM storagelokertype WHERE ' + ((data.key != undefined && data.key != '')?'storagelokertypeId != '+data.key+' AND ':'') + data.property + " = '" + data.value + "' AND enable = 1", function(err, row) {
     if(err) throw err;
@@ -87,6 +98,12 @@ app.delete('/api/storagelokertypes/:id', function(req, res) {
 
 app.post('/api/storagelokertypes/unique', function(req, res) {
   unique(req.body, function(result) {
+    res.status(200).send(result);
+  });
+});
+
+app.post('/api/storagelokertypes/:id/validation', function(req, res) {
+  removeValidation(req.params.id, function(result) {
     res.status(200).send(result);
   });
 });
