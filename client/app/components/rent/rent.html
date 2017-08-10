@@ -48,7 +48,7 @@
           <div class="col-md-6">
             <h4 class="principal">{{rent.name}}</h4>
             <p>{{rent.active?'En renta':'finalizado'}}</p>
-            <p>{{rent.startDateToString}}</p>
+            <p>{{rent.active?rent.startDateToString:rent.endDateToString}}</p>
           </div>
           <div class="col-md-4">
             <div class="col-md-4 buttoninfo payments">

@@ -136,7 +136,7 @@ class RenteditController {
         if (typeof value === 'object' && value.hasOwnProperty('$modelValue'))
           value.$setDirty();
      });
-    return true;
+     return true;
   }
 
   save() {
@@ -144,27 +144,34 @@ class RenteditController {
     let tempId = self._data.rentId;
     delete self._data.name;
     delete self._data.number;
-    this._Rent.save(self._data)
+
+    this._Rent.validate(self._data)
       .then((res) => {
-          if (res.data.insertId > 0) {
-            self._data.rentId = res.data.insertId;
-            self._toastr.success(`Renta creada correctamente`);
-            self.print();
-            self._state.go('rent');
-          } else {
-            self._data.rentId = tempId;
-            self._toastr.success(`Renta actualizada correctamente`);
-          }
-          self._saved = true;
-          if (typeof tempId == "undefined") {
-            self._data.rentId = res.data.insertId;
-          } else {
-            self._data.rentId = tempId;
-          }
+          this._Rent.save(self._data)
+            .then((res) => {
+                if (res.data.insertId > 0) {
+                  self._data.rentId = res.data.insertId;
+                  self._toastr.success(`Renta creada correctamente`);
+                  self.print();
+                  self._state.go('rent');
+                } else {
+                  self._data.rentId = tempId;
+                  self._toastr.success(`Renta actualizada correctamente`);
+                }
+                self._saved = true;
+                if (typeof tempId == "undefined") {
+                  self._data.rentId = res.data.insertId;
+                } else {
+                  self._data.rentId = tempId;
+                }
+              }, (err) => {
+                self._toastr.error(`Error: ${err.data}`);
+              }
+            )
         }, (err) => {
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`); return false;
         }
-      )
+      );
   }
 
   print(){

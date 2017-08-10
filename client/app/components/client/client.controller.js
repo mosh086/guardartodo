@@ -71,7 +71,7 @@ class ClientController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
       )
   }
@@ -85,7 +85,7 @@ class ClientController {
       },
         (err) =>  {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
       );
   }
@@ -114,7 +114,7 @@ class ClientController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
       );
   }

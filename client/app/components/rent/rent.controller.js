@@ -1,6 +1,6 @@
 class RentController {
-  constructor($scope, $filter, $timeout, toastr, 
-    RentService, ClientService, 
+  constructor($scope, $filter, $timeout, toastr,
+    RentService, ClientService,
     StoragelokerService, StoragelokertypeService, FileUploadSevice,
     AppConstants, Documents) {
     "ngInject";
@@ -33,9 +33,9 @@ class RentController {
           let file = self._myFile;
           let uploadUrl = "/fileUpload/" + input.attr("data-rentid");
           self._UploadFile.uploadFile(file, uploadUrl).then(
-            (res) => { 
+            (res) => {
               self._toastr.success(`El archivo fue adjuntado correctamente`);
-              self.searchRents(); 
+              self.searchRents();
             },
             (err) => {}
           );
@@ -80,7 +80,7 @@ class RentController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
       )
   }
@@ -181,7 +181,7 @@ class RentController {
         href: this._AppConstants.api + "/download/" + id,
         target: '_blank'
       })[0].click();
-    anchor.remove();    
+    anchor.remove();
   }
 }
 

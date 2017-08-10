@@ -73,7 +73,7 @@ class FileController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
       )
   }
@@ -86,7 +86,7 @@ class FileController {
         href: this._AppConstants.api + "/download/" + id,
         target: '_blank'
       })[0].click();
-    anchor.remove();    
+    anchor.remove();
   }
 
   remove(id, name) {
@@ -98,7 +98,7 @@ class FileController {
       },
         (err) =>  {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
       );
   }

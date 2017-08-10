@@ -21,20 +21,12 @@ function getAll (q, done) {
                   GROUP BY sl.storagelokerId, sl.storagelokertypeId, sl.number, sl.enable
                 ORDER BY sl.number`;
 
-
-  if (q=='active')
-    query =   `SELECT DISTINCT sl.*, slt.name as typename
+  if (q=='available')
+    query =   `SELECT sl.*, slt.name as typename, r.rentId
                 FROM storageloker sl
                 INNER JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId AND slt.enable = 1
-                LEFT JOIN rent r ON sl.storagelokerId = r.storagelokerId
-              WHERE sl.enable = 1 AND (r.rentId IS NULL OR r.active = 0)
-              ORDER BY sl.number, sl.storagelokerId`;
-  else if (q=='available')
-    query =   `SELECT DISTINCT sl.*, slt.name as typename
-                FROM storageloker sl
-                INNER JOIN storagelokertype slt ON sl.storagelokertypeId = slt.storagelokertypeId AND slt.enable = 1
-                LEFT JOIN rent r ON sl.storagelokerId = r.storagelokerId
-              WHERE sl.enable = 1 AND (r.rentId IS NULL OR r.active = 0 OR r.enable = 0)
+                LEFT JOIN rent r ON sl.storagelokerId = r.storagelokerId AND r.enable = 1 and r.active = 1
+              WHERE sl.enable = 1 AND r.rentId IS NULL
               ORDER BY sl.number, sl.storagelokerId`;
 
   db.get().query(query, function(err, rows) {

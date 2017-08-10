@@ -70,7 +70,7 @@ class ModalPaymentCtrl {
         },
           (err) => {
             console.log('error: ' + err);
-            self._toastr.error(`Error ${err.message}`);
+            self._toastr.error(`Error: ${err.data}`);
           }
         );
   }
@@ -89,7 +89,7 @@ class ModalPaymentCtrl {
         },
           (err) => {
             console.log('error: ' + err);
-            self._toastr.error(`Error ${err.message}`);
+            self._toastr.error(`Error: ${err.data}`);
           }
         );
   }
@@ -103,7 +103,7 @@ class ModalPaymentCtrl {
         },
           (err) => {
             console.log('error: ' + err);
-            self._toastr.error(`Error ${err.message}`);
+            self._toastr.error(`Error: ${err.data}`);
           }
         );
   }
@@ -135,7 +135,7 @@ class ModalPaymentCtrl {
         } else if (self._payment.promotion && self._payment.promotion.percentage && parseFloat(self._payment.promotion.percentage) > 0) {
           self._payment.rent.discount = parseFloat((parseFloat(self._payment.promotion.percentage) / 100 ) * parseFloat(self._payment.rent.total)).toFixed(2);
         }
-        
+
         self._payment.partial = ((parseFloat(self._payment.rent.total).toFixed(2) - parseFloat(self._payment.rent.discount).toFixed(2)) > parseFloat(self._payment.payment).toFixed(2)) ? true : false;
         self._data.payments.push(self._payment);
         self.clean();

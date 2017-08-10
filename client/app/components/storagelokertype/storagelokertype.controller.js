@@ -64,7 +64,7 @@ class StoragelokertypeController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
     );
   }
@@ -78,7 +78,7 @@ class StoragelokertypeController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
     );
   }
@@ -93,7 +93,7 @@ class StoragelokertypeController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         });
   }
 

@@ -11,7 +11,8 @@ function getAll (done) {
   db.get().query(`SELECT  CONCAT_WS(' ',street,town,country,state,zipcode) as address,
                           c.*
                   FROM client c
-                  WHERE enable = 1`, function(err, rows) {
+                  WHERE enable = 1
+                  ORDER BY c.name ASC`, function(err, rows) {
     if(err) throw err;
     done(rows);
   });

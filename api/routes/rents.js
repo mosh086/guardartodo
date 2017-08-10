@@ -10,7 +10,7 @@ var jwtCheck = jwt({
   secret: config.secretKey
 });
 
-function getAll (q, done) {
+function getAll(q, done) {
   let activeCondition = '';
   if (q) { activeCondition = (q=='active')?' AND r.active=1 ':' AND r.active=0 '; }
 
@@ -31,9 +31,9 @@ switch(q) {
 
   db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename, rf.rentfileId, f_pending_payments(r.rentId) as pendings
                     FROM rent r
-                      INNER JOIN client c ON r.clientId = c.clientId
-                      INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
-                      INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId
+                      INNER JOIN client c ON r.clientId = c.clientId AND c.enable = 1
+                      INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId AND sl.enable = 1
+                      INNER JOIN storagelokertype slt ON slt.storagelokertypeId = sl.storagelokertypeId AND slt.enable = 1
                       LEFT JOIN rentfile rf ON r.rentId = rf.rentId AND rf.enable = 1
                     WHERE r.enable = 1 ${activeCondition}
                     ORDER BY r.startDate DESC, r.rentId DESC`, function(err, rows) {
@@ -42,14 +42,14 @@ switch(q) {
   });
 }
 
-function getPendingPaymentsById (id, done) {
+function getPendingPaymentsById(id, done) {
   db.get().query(`call sp_get_pendingpayment_rent(?);`, id, function(err, row) {
     if(err) throw err;
     done(row[0]);
   });
 }
 
-function getById (id, done) {
+function getById(id, done) {
   db.get().query(`SELECT r.*, c.name, sl.number
                     FROM rent r
                       INNER JOIN client c ON r.clientId = c.clientId
@@ -60,7 +60,7 @@ function getById (id, done) {
   });
 }
 
-function getByClientId (id, done) {
+function getByClientId(id, done) {
   db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename, f_pending_payments(r.rentId) as pendings
                     FROM rent r
                       INNER JOIN client c ON r.clientId = c.clientId
@@ -73,7 +73,7 @@ function getByClientId (id, done) {
   });
 }
 
-function getPromotionsById (id, done) {
+function getPromotionsById(id, done) {
   db.get().query(`SELECT r.*, p.promotionId, p.name, p.description, p.amount, p.percentage, rp.rentpromotionId
                     FROM rent r
                       INNER JOIN rentpromotion rp ON r.rentId = rp.rentId AND rp.applied = 0 AND rp.enable = 1
@@ -84,7 +84,7 @@ function getPromotionsById (id, done) {
   });
 }
 
-function insert (data,done) {
+function insert(data,done) {
   let userAuthorization;
   let promotion;
   data.clientId = data.client.clientId;
@@ -109,7 +109,7 @@ function insert (data,done) {
   });
 }
 
-function update (id, data, done) {
+function update(id, data, done) {
   let userAuthorization;
   let promotion;
   data.clientId = data.client.clientId;
@@ -183,6 +183,18 @@ function enddate(id, done) {
   });
 }
 
+function validate(data, done) {
+  db.get().query(`SELECT r.*, c.name, sl.number, sl.storagelokerId
+                    FROM rent r
+                      INNER JOIN client c ON r.clientId = c.clientId
+                      INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
+                    WHERE r.enable = 1 AND r.active = 1
+                    AND sl.storagelokerId = ?`, [ data.storageloker.storagelokerId ], function(err, result) {
+    if(err) throw err;
+    done(result);
+  });
+}
+
 app.use('/api/rents', jwtCheck);
 app.get('/api/rents', function(req, res) {
   moment.locale('es');
@@ -247,6 +259,14 @@ app.put('/api/rents/:id/enddate', function(req, res) {
   });
 });
 
+app.post('/api/rents/validate', function(req, res) {
+  validate(req.body, function(result) {
+    if (result.length > 0)
+      res.status(409).send('La Bodega esta en uso');
+    else
+      res.status(200).send(result);
+  });
+});
 
 function ObjToArray(obj) {
   var arr = obj instanceof Array;

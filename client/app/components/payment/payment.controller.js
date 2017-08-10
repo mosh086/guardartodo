@@ -36,7 +36,7 @@ class PaymentController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
       )
   }
@@ -51,7 +51,7 @@ class PaymentController {
       },
         (err) => {
           console.log('error: ' + err);
-          self._toastr.error(`Error ${err.message}`);
+          self._toastr.error(`Error: ${err.data}`);
         }
       );
   }

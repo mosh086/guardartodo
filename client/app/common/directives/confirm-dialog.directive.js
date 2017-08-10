@@ -12,8 +12,8 @@ function ConfirmDialog($uibModal, toastr, StoragelokertypeService, StoragelokerS
     },
     link: function (scope, element) {
       element.bind('click', function () {
-        let confirmObject = angular.fromJson(scope.ngConfirmValidation)
-        if (confirmObject == undefined || confirmObject.validation != undefined) {
+        let confirmObject = angular.fromJson(scope.ngConfirmValidation);
+        if (confirmObject != undefined && confirmObject.validation != undefined) {
           switch(confirmObject.validation) {
               case "storagelokertype":
                 StoragelokertypeService.removeValidation(confirmObject.id).then(
@@ -36,6 +36,8 @@ function ConfirmDialog($uibModal, toastr, StoragelokertypeService, StoragelokerS
               default:
                 modalDialog(scope, element);
           }
+        } else {
+          modalDialog(scope, element);
         }
       });
     }

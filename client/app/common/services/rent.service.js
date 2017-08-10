@@ -162,6 +162,14 @@ class Rent {
     return deferred.promise;
   }
 
+  validate(data) {
+    let request = {};
+    request.url = `${this._AppConstants.api}/rents/validate`;
+    request.method = 'POST';
+    request.data = data;
+    return this._$http(request);
+  }
+
 }
 
 export default Rent;
