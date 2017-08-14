@@ -14,20 +14,20 @@ function getAll(q, done) {
   let activeCondition = '';
   if (q) { activeCondition = (q=='active')?' AND r.active=1 ':' AND r.active=0 '; }
 
-switch(q) {
-  case 'active': {
-    activeCondition = ' AND r.active=1 ';
-    break;
+  switch(q) {
+    case 'active': {
+      activeCondition = ' AND r.active=1 ';
+      break;
+    }
+    case'inactive': {
+      activeCondition = ' AND r.active=0 ';
+      break;
+    }
+    case 'pendings': {
+      activeCondition = ` AND r.active=1 HAVING pendings > 0 `
+      break;
+    }
   }
-  case'inactive': {
-    activeCondition = ' AND r.active=0 ';
-    break;
-  }
-  case 'pendings': {
-    activeCondition = ` AND r.active=1 HAVING pendings > 0 `
-    break;
-  }
-}
 
   db.get().query(`SELECT r.*, c.name, sl.number, slt.name as storagelokertypename, rf.rentfileId, f_pending_payments(r.rentId) as pendings
                     FROM rent r
@@ -85,52 +85,52 @@ function getPromotionsById(id, done) {
 }
 
 function insert(data,done) {
-  let userAuthorization;
+  //let userAuthorization;
   let promotion;
   data.clientId = data.client.clientId;
   data.storagelokerId = data.storageloker.storagelokerId;
   data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:mm:ss");
-  userAuthorization = data.user;
+  //userAuthorization = data.user;
   promotion = data.promotion;
   delete data.client;
   delete data.storageloker;
   delete data.storagelokertype;
-  delete data.user;
+  //delete data.user;
   delete data.promotion;
   db.get().query('INSERT INTO rent SET ?', data, function(err, result) {
     if(err) throw err;
-    authorizedUsers(userAuthorization, result.insertId, function() {
+    //authorizedUsers(userAuthorization, result.insertId, function() {
       promotions(promotion, result.insertId, function() {
         updateFolio(result.insertId, function() {
           done(result);
         })
       });
-    });
+    //});
   });
 }
 
 function update(id, data, done) {
-  let userAuthorization;
+  //let userAuthorization;
   let promotion;
   data.clientId = data.client.clientId;
   data.storagelokerId = data.storageloker.storagelokerId;
   data.startDate = moment(data.startDate).format("YYYY-MM-DD HH:mm:ss");
-  userAuthorization = data.user;
+  //userAuthorization = data.user;
   promotion = data.promotion;
   delete data.client;
   delete data.storageloker;
   delete data.storagelokertype;
-  delete data.user;
+  //delete data.user;
   delete data.promotion;
   db.get().query('UPDATE rent SET ? WHERE rentId = ? AND enable = 1', [data, id], function(err, result) {
     if(err) throw err;
-    authorizedUsers(userAuthorization, id, function() {
+    //authorizedUsers(userAuthorization, id, function() {
       promotions(promotion, id, function() {
         updateFolio(id, function() {
           done(result);
         })
       });
-    });
+    //});
   });
 }
 
@@ -141,7 +141,7 @@ function remove (id, done) {
   });
 }
 
-function authorizedUsers(users, id, callback) {
+/*function authorizedUsers(users, id, callback) {
   let mapped = ObjToArray(
       _.map(users, item => _.extend(
                               _.pick(item, 'userId'),
@@ -152,7 +152,7 @@ function authorizedUsers(users, id, callback) {
         callback();
     });
   });
-}
+}*/
 
 function promotions(promotions, id, callback) {
   let mapped = ObjToArray(
@@ -184,11 +184,14 @@ function enddate(id, done) {
 }
 
 function validate(data, done) {
+  let updateCondition = '';
+  if (data.rentId) { updateCondition = ' AND r.rentId != ' + data.rentId + ' '; }
+
   db.get().query(`SELECT r.*, c.name, sl.number, sl.storagelokerId
                     FROM rent r
                       INNER JOIN client c ON r.clientId = c.clientId
                       INNER JOIN storageloker sl ON r.storagelokerId = sl.storagelokerId
-                    WHERE r.enable = 1 AND r.active = 1
+                    WHERE r.enable = 1 AND r.active = 1 ${updateCondition}
                     AND sl.storagelokerId = ?`, [ data.storageloker.storagelokerId ], function(err, result) {
     if(err) throw err;
     done(result);

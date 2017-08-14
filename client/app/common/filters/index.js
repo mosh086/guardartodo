@@ -8,7 +8,7 @@ let commonFiltersModule = angular.module('app.common.filters', [])
       }
       var sum = 0;
       for (var i = 0; i < data.length; i++) {
-        sum = sum + ((data[i].payment) ? parseInt(data[i].payment) : 0);
+        sum = sum + ((data[i].payment) ? parseFloat(data[i].payment) : 0);
       }
       return sum;
     }
@@ -21,9 +21,9 @@ let commonFiltersModule = angular.module('app.common.filters', [])
       var sum = 0;
       for (var i = 0; i < data.length; i++) {
         if (data[i].rent)
-          sum = sum + parseInt(data[i].rent[key1]) - (!isNaN(parseInt(data[i].rent[key2]))? parseInt(data[i].rent[key2]) : 0);
+          sum = sum + parseFloat(data[i].rent[key1]) - (!isNaN(parseFloat(data[i].rent[key2]))? parseFloat(data[i].rent[key2]) : 0);
         else
-          sum = sum + parseInt(data[i].payment);
+          sum = sum + parseFloat(data[i].payment);
 
       }
       return sum;

@@ -1,5 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
+import vfsFonts from 'vfs_fonts';
 
 class Documents {
   constructor(Company, Image, Logo, UserService, ClientService, RentService, $filter) {
@@ -13,6 +14,9 @@ class Documents {
     this._Client = ClientService;
     this._Rent = RentService;
     this._filter = $filter;
+
+    const {vfs} = vfsFonts.pdfMake;
+    pdfMake.vfs = vfs;
   }
 
   print() {
@@ -38,10 +42,10 @@ class Documents {
   openContract(data) {
       let self = this;
       self._User.me().then((user) => {
-        self._User.getByRentId(data.rentId).then((authorization) => {
-          this._docDefinition = new makeContractDefinition(self._filter, data, self._Company, self._Logo, self._Image, user.data[0], authorization).getObject();
-          pdfMake.createPdf(this._docDefinition).open();
-        }, (err)=> {})
+        //self._User.getByRentId(data.rentId).then((authorization) => {
+        this._docDefinition = new makeContractDefinition(self._filter, data, self._Company, self._Logo, self._Image, user.data[0]/*, authorization*/).getObject();
+        pdfMake.createPdf(this._docDefinition).open();
+        //}, (err)=> {})
       }, (err)=> {})
   }
 
@@ -65,12 +69,12 @@ class Documents {
 }
 
 class makeContractDefinition {
-  constructor($filter, data, company, logo, image, user, authorization) {
+  constructor($filter, data, company, logo, image, user) {
     moment.locale('es');
     let self = this;
     data = this.noNulls(data);
     let temp;
-    let folioText = `B${moment(data.startDate).format('YYMM')}${data.storageloker.number}${"000".substring((data.client.clientId + "").length,3) + data.client.clientId}`;
+    let folioText = `B${moment(data.startDate).format('YYMM')}${data.storageloker.number}${"000".substring((data.rentId + "").length,3) + data.rentId}`;
     this.doc = {
       pageMargins: 10,
       content: [{
@@ -83,7 +87,7 @@ class makeContractDefinition {
                 { text: `CONTRATO\n`, fontSize: 17, margin:[0,0,10,0] },
                 'Folio: ', { text: `${data.folio || folioText}\n`, bold: true },
                 { text: `${data.client.lineOfBusiness}\n`, bold: true },
-                { text: `CONTRATO: ${data.rentId}`, bold: true, fontSize: 10 }
+                { text: `CONTRATO: ${data.rentId}`, bold: true }
             ]}
         ]]}, layout: 'noBorders'
       }, {
@@ -119,7 +123,7 @@ class makeContractDefinition {
               { colSpan: 2, style: 'title', text: ['G) DIRECCION:\n', { style: 'info', alignment: 'center', text : `${company.address}`}] }, {}
             ],
             [
-              { colSpan: 2, style: 'title', text: ['H) FECHA:\n', {style: 'info', alignment: 'center',  text: `${moment().format('LL')}`} ] }, {},
+              { colSpan: 2, style: 'title', text: ['H) FECHA:\n', {style: 'info', alignment: 'center',  text: `${moment(data.startDate).format('LL')}`} ] }, {},
               { colSpan: 2, style: 'title', text: ['I) PERIODO INICIAL DE VIGENCIA DE CONTRATO:\n', {style: 'info', alignment: 'center', text: `${moment(data.startDate).format('LL')}` }] } , {}
             ],
             [{ colSpan: 4, style: 'title', margin: [10, 20], text: 'SERVICIOS CONTRATADOS:   ' }, {}, {}, {}],
@@ -129,7 +133,7 @@ class makeContractDefinition {
             [{ colSpan: 2, style: 'title', alignment: 'center', margin: [20, 20], text: 'TOTAL' }, {}, { text: '' }, { alignment: 'right', margin: [20, 20], text: `${$filter('currency')(data.total, '$', 2)}` }],
             [{ colSpan: 4, style: 'title', text: `M) SERVICIO MENSUAL TOTAL:   ${$filter('currency')(data.total, '$', 2)}` }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['N) DEPOSITO:   ', {style: 'info2',text: '$0.00 (00/100 M. N.)'} ]}, {}, {}, {}],
-            [{ colSpan: 4, style: 'title', text: ['O) USUARIOS AUTORIZADOS:   ', {style: 'info2', text: `${_.map(authorization, function(a) { return a.fullName; }).join(', ')}`}]}, {}, {}, {}],
+            [{ colSpan: 4, style: 'title', text: ['O) USUARIOS AUTORIZADOS:   ', {style: 'info2', text: `${(data.authorization)?data.authorization:''}`/*${_.map(authorization, function(a) { return a.fullName; }).join(', ')}*/}]}, {}, {}, {}],
             [{ margin: 5, colSpan: 4, style: 'obs', text: [`OBSERVACIONES: “GuardarTodo” prestará sus servicios de `, { style:'obsbold', text: `Lunes a Viernes de 8:00 a 18:00 horas y Sábados :00-13:00 horas` }, `, salvo los siguientes días de conformidad con el artículo 74 de la Ley Federal del Trabajo: Enero 1, primer lunes de Febrero en conmemoración del 05 de Febrero, el tercer lunes de Marzo en conmemoración del 21 de Marzo, Mayo 1, Septiembre 16, tercer lunes de Noviembre en conmemoración del 20 de Noviembre, Diciembre 25, y cuando tome posesión de su cargo el Presidente de la República. “GuardarTodo” podrá suspender la prestación de los servicios por razones de inestabilidad política, u otros eventos fuera del control de “GuardarTodo”.`] }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['ELABORO:   ', { style: 'info', text : `${user.firstName} ${user.lastName}`}]}, {}, {}, {}]
           ]
@@ -222,6 +226,7 @@ class makeContractDefinition {
         columns : { fontSize: 6.2 }
       },
       defaultStyle: {
+        font: 'Roboto',
         columnGap: 0,
       }
     }

@@ -7,7 +7,10 @@
         <div class="row">
           <div class="form-group col-md-7" ng-class="{ 'has-error': rForm.rClient.$dirty && rForm.rClient.$invalid }">
             <label for="rClient">Cliente</label>
-            <ui-select id="rClient" name="rClient" ng-model="$ctrl._data.client" title="Cliente" ng-required="true">
+            <ui-select id="rClient" name="rClient" title="Cliente"
+                ng-model="$ctrl._data.client"
+                ng-disabled="$ctrl._isEdition"
+                ng-required="true">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.client.name}}</ui-select-match>
               <ui-select-choices repeat="item in $ctrl._clients | filter: $select.search">
                 <span ng-bind-html="item.name | highlight: $select.search"></span>
@@ -19,18 +22,23 @@
           </div>
           <div class="form-group col-md-5">
             <label for="rUser">Usuarios autorizados</label>
-            <ui-select id="rUser" name="rUser" ng-model="$ctrl._data.user" multiple title="Usuarios autorizados">
+            <input type="text" class="form-control" id="rUser" placeholder="Usuarios autorizados" ng-model="$ctrl._data.authorization" maxlength="2000">
+            <!--<ui-select id="rUser" name="rUser" ng-model="$ctrl._data.user" multiple title="Usuarios autorizados">
               <ui-select-match placeholder="- Selecciona -">{{$item.fullName}}</ui-select-match>
               <ui-select-choices repeat="item in $ctrl._users | filter: $select.search">
                 <span ng-bind-html="item.fullName"></span>
               </ui-select-choices>
-            </ui-select>
+            </ui-select>-->
           </div>
         </div>
         <div class="row">
           <div class="form-group col-md-7" ng-class="{ 'has-error': rForm.rStorageloker.$dirty && rForm.rStorageloker.$invalid }">
             <label for="slStorageloker">Bodega</label>
-            <ui-select id="rStorageloker" name="rStorageloker" ng-model="$ctrl._data.storageloker" title="Bodega" on-select="$ctrl.onStoragelokerSelect($ctrl._data.storageloker.storagelokertypeId)" ng-required="true">
+            <ui-select id="rStorageloker" name="rStorageloker" title="Bodega"
+                ng-model="$ctrl._data.storageloker"
+                on-select="$ctrl.onStoragelokerSelect($ctrl._data.storageloker.storagelokertypeId)"
+                ng-required="true"
+                ng-disabled="$ctrl._isEdition">
               <ui-select-match placeholder="- Selecciona -">{{$ctrl._data.storageloker.number}}</ui-select-match>
               <ui-select-choices repeat="item in $ctrl._storagelokers | filter: $select.search">
                 <span ng-bind-html="item.number | highlight: $select.search"></span>
@@ -42,7 +50,9 @@
           </div>
           <div class="form-group col-md-5">
             <label for="rPromotion">Promociones</label>
-            <ui-select id="rPromotion" name="rPromotion" ng-model="$ctrl._data.promotion" multiple title="Promociones">
+            <ui-select id="rPromotion" name="rPromotion" multiple title="Promociones"
+                ng-disabled="$ctrl._isEdition"
+                ng-model="$ctrl._data.promotion">
               <ui-select-match placeholder="- Selecciona -">{{$item.name}}</ui-select-match>
               <ui-select-choices repeat="item in $ctrl._promotions | filter: $select.search">
                 <span ng-bind-html="item.name"></span>
@@ -57,8 +67,14 @@
               <div class="col-md-8">
                 <label for="rDate">Fecha</label>
                 <p class="input-group">
-                  <input type="text" id="rDate" class="form-control" onkeydown="return false;" ng-model="$ctrl._data.startDate" ng-required="true"ng-disabled="$ctrl._saved"
-                    uib-datepicker-popup="dd-MM-yyyy" is-open="$ctrl.popupDatepicker.opened" datepicker-options="$ctrl._dateOptions" close-text="Close" />
+                  <input type="text" id="rDate" class="form-control" onkeydown="return false;"
+                    ng-required="true"
+                    uib-datepicker-popup="dd-MM-yyyy"
+                    is-open="$ctrl.popupDatepicker.opened"
+                    ng-model="$ctrl._data.startDate"
+                    datepicker-options="$ctrl._dateOptions"
+                    close-text="Cerrar"
+                    ng-disabled="$ctrl._saved || $ctrl._isEdition" />
                   <span class="input-group-btn">
                     <button type="button" class="btn btn-default" ng-click="$ctrl.open()"><i class="glyphicon glyphicon-calendar"></i></button>
                   </span>
