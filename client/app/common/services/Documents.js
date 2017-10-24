@@ -1,6 +1,7 @@
 import moment from 'moment';
 import _ from 'lodash';
-import vfsFonts from 'vfs_fonts';
+import pdfMake from 'pdfMake';
+import pdfFonts  from 'vfs_fonts';
 
 class Documents {
   constructor(Company, Image, Logo, UserService, ClientService, RentService, $filter) {
@@ -15,8 +16,7 @@ class Documents {
     this._Rent = RentService;
     this._filter = $filter;
 
-    const {vfs} = vfsFonts.pdfMake;
-    pdfMake.vfs = vfs;
+    pdfMake.vfs = pdfFonts.pdfMake.vfs;
   }
 
   print() {
@@ -79,12 +79,13 @@ class makeContractDefinition {
       pageMargins: 10,
       content: [{
         style: 'table',
+        margin: [0,15,0,10],
         table: {
           widths: ['70%', '*' ],
           body: [[
-            { image : logo.logo2, width: 180, alignment: 'center' },
-            { margin:[0,35,0,0], fontSize: 13, text: [
-                { text: `CONTRATO\n`, fontSize: 17, margin:[0,0,10,0] },
+            { image : logo.logo2, width: 170, alignment: 'center' },
+            { margin:[0,35,0,5], fontSize: 11, text: [
+                { text: `CONTRATO\n`, fontSize: 14, margin:[0,0,20,0] },
                 'Folio: ', { text: `${data.folio || folioText}\n`, bold: true },
                 { text: `${data.client.lineOfBusiness}\n`, bold: true },
                 { text: `CONTRATO: ${data.rentId}`, bold: true }
@@ -112,9 +113,10 @@ class makeContractDefinition {
         }
       }, {
         style: 'table',
+        margin: [0,20,0,0],
         pageBreak: 'after',
         table: {
-          headerRows: 1,
+          headerRows: 2,
           widths: [ '30%', '30%', '20%', '20%' ],
           body: [
             [{ colSpan: 4, style:'header', text: 'DATOS DE CONTRATACION' }, {}, {}, {}],
@@ -128,13 +130,13 @@ class makeContractDefinition {
             ],
             [{ colSpan: 4, style: 'title', margin: [10, 20], text: 'SERVICIOS CONTRATADOS:   ' }, {}, {}, {}],
             [{ colSpan: 2, text: ''}, {}, {text: 'PRECIO', style: 'title', alignment: 'center', fontSize:10 }, {text: 'PRECIO CON I.V.A.', style: 'title', alignment: 'center', fontSize: 10 }],
-            [{ colSpan: 2, style: 'title', text: ['J) BODEGA DE TAMAÑO:   ', {style: 'info', alignment: 'center', text: `${data.storagelokertype.name}  ${data.storageloker.number}` }] }, {}, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.cost, '$', 2)}` }, { alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.total, '$', 2)}` }],
-            [{ colSpan: 2, style: 'title', text: 'L) SERVICIOS ADICIONALES:   ' }, {}, {margin: [20, 0], alignment: 'right', colSpan: 2, text: `${$filter('currency')(data.extra, '$', 2)}` }, {}],
-            [{ colSpan: 2, style: 'title', alignment: 'center', margin: [20, 20], text: 'TOTAL' }, {}, { text: '' }, { alignment: 'right', margin: [20, 20], text: `${$filter('currency')(data.total, '$', 2)}` }],
-            [{ colSpan: 4, style: 'title', text: `M) SERVICIO MENSUAL TOTAL:   ${$filter('currency')(data.total, '$', 2)}` }, {}, {}, {}],
+            [{ colSpan: 2, style: 'title', text: ['J) BODEGA DE TAMAÑO:   ', {style: 'info', alignment: 'center', text: `${data.storagelokertype.name}  ${data.storageloker.number}` }] }, {}, {style: 'info', alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.cost, '$', 2)}` }, { style: 'info', alignment: 'right', margin: [20, 0], text: `${$filter('currency')(data.total, '$', 2)}` }],
+            [{ colSpan: 2, style: 'title', text: 'L) SERVICIOS ADICIONALES:   ' }, {}, {style: 'info', margin: [20, 0], alignment: 'right', colSpan: 2, text: `${$filter('currency')(data.extra, '$', 2)}` }, {}],
+            [{ colSpan: 2, style: 'title', alignment: 'center', margin: [20, 20], text: 'TOTAL' }, {}, { text: '' }, {style: 'info', alignment: 'right', margin: [20, 20], text: `${$filter('currency')(data.total, '$', 2)}` }],
+            [{ colSpan: 4, style: 'title', text: [`M) SERVICIO MENSUAL TOTAL:   `, {style: 'info2', text: `${$filter('currency')(data.total, '$', 2)}` }]}, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['N) DEPOSITO:   ', {style: 'info2',text: '$0.00 (00/100 M. N.)'} ]}, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['O) USUARIOS AUTORIZADOS:   ', {style: 'info2', text: `${(data.authorization)?data.authorization:''}`/*${_.map(authorization, function(a) { return a.fullName; }).join(', ')}*/}]}, {}, {}, {}],
-            [{ margin: 5, colSpan: 4, style: 'obs', text: [`OBSERVACIONES: “GuardarTodo” prestará sus servicios de `, { style:'obsbold', text: `Lunes a Viernes de 8:00 a 18:00 horas y Sábados :00-13:00 horas` }, `, salvo los siguientes días de conformidad con el artículo 74 de la Ley Federal del Trabajo: Enero 1, primer lunes de Febrero en conmemoración del 05 de Febrero, el tercer lunes de Marzo en conmemoración del 21 de Marzo, Mayo 1, Septiembre 16, tercer lunes de Noviembre en conmemoración del 20 de Noviembre, Diciembre 25, y cuando tome posesión de su cargo el Presidente de la República. “GuardarTodo” podrá suspender la prestación de los servicios por razones de inestabilidad política, u otros eventos fuera del control de “GuardarTodo”.`] }, {}, {}, {}],
+            [{ colSpan: 4, style: 'obs', text: [`OBSERVACIONES: “GuardarTodo” prestará sus servicios de `, { style:'obsbold', text: `Lunes a Viernes de 8:00 a 18:00 horas y Sábados :00-13:00 horas` }, `, salvo los siguientes días de conformidad con el artículo 74 de la Ley Federal del Trabajo: Enero 1, primer lunes de Febrero en conmemoración del 05 de Febrero, el tercer lunes de Marzo en conmemoración del 21 de Marzo, Mayo 1, Septiembre 16, tercer lunes de Noviembre en conmemoración del 20 de Noviembre, Diciembre 25, y cuando tome posesión de su cargo el Presidente de la República. “GuardarTodo” podrá suspender la prestación de los servicios por razones de inestabilidad política, u otros eventos fuera del control de “GuardarTodo”.`] }, {}, {}, {}],
             [{ colSpan: 4, style: 'title', text: ['ELABORO:   ', { style: 'info', text : `${user.firstName} ${user.lastName}`}]}, {}, {}, {}]
           ]
         },
@@ -193,30 +195,31 @@ class makeContractDefinition {
           alignment: 'center',
           fillColor: 'black',
           color: 'white',
-          fontSize: 14,
-          margin:2
+          fontSize: 12,
+          margin:4
         },
         right: {
           fontSize: 18,
           alignment: 'right'
         },
         title: {
-          fontSize: 13,
-          margin:2
+          fontSize: 10,
+          margin:3
         },
         info: {
           bold: true,
-          fontSize: 13,
-          margin:2
+          fontSize: 10,
+          margin:3
         },
         info2: {
           bold: true,
-          fontSize: 13,
-          margin:2
+          fontSize: 10,
+          margin:3
         },
         obs: {
           alignment: 'center',
-          fontSize: 8
+          fontSize: 8,
+          margin:8
         },
         rightme: {
           alignment: 'right'
@@ -343,18 +346,18 @@ class makeCredentialPerStoragelokerDefinition {
   constructor($filter, data, company, image, client, rent, date) {
     moment.locale('es');
     this.doc = {
-      pageSize: 'A6',
-      pageOrientation: 'landscape',
+      //pageSize: 'A6',
+      //pageOrientation: 'landscape',
       pageMargins: [ 40, 60, 40, 60 ],
       content: [{
         style: 'table',
         table: {
-          widths: ['*', '*', '*', '*' ],
+          widths: [80, 80, 80, 80 ],
           body: [
             [{
               colSpan: 2,
               border: [true, true, true, false],
-              margin: [0, 0, 0, 8],
+              margin: [0, 0, 0, 0],
               style: 'table',
               table: {
                 widths : ['*', '*', '*', '*'],
@@ -404,7 +407,7 @@ class makeCredentialPerStoragelokerDefinition {
       }, {
         style: 'table',
         table: {
-          widths: ['*', '*' ],
+          widths: [169, 169 ],
           body: [[
               {text:`Vigente hasta ${moment(date.date).format('L')}`, style: 'middletextWhite', fillColor: '#cc1c1c'},
               {text:'Tarjeta para acceso a bodega', style: 'middletextWhite', fillColor: '#1b53cc'}
@@ -434,7 +437,6 @@ class makeCredentialPerStoragelokerDefinition {
     return this.doc
   }
 }
-
 
 class makePaymentDefinition {
   constructor($filter, data, image) {

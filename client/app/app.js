@@ -10,6 +10,7 @@ import 'waypoints';
 import 'scrollTo';
 import 'pdfMake';
 import 'vfs_fonts';
+import 'jquery-mask-plugin';
 
 import angular from 'angular';
 import toastr from 'angular-toastr';

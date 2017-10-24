@@ -1,10 +1,11 @@
 export default class InstanceCtrl {
-  constructor($uibModalInstance, $log, $scope, $filter, client, KindOfBusiness, LineOfBusiness) {
+  constructor($uibModalInstance, $log, $scope, $filter, $timeout, client, KindOfBusiness, LineOfBusiness) {
     "ngInject";
 
     this._uibModalInstance = $uibModalInstance;
     this._log = $log;
     this._scope =$scope;
+    this._$timeout = $timeout;
 
     this._client = client;
 
@@ -22,6 +23,11 @@ export default class InstanceCtrl {
   }
 
   $onInit() {
+    this._$timeout(function() {
+      $('.gt-mask-phone').mask('000 000 0000');
+      $('.gt-mask-zipcode').mask('00000');
+    }, 0);
+
     if (this._client) {
       this._data = this._client;
       delete this._data.enable;
